@@ -1,3 +1,5 @@
+.idea/
+
 # Angular specific
 /dist/
 /out-tsc/
