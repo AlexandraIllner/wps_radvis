@@ -1,28 +1,24 @@
+# IntelliJ
 .idea/
 
 # Angular specific
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
+coverage/
+e2e/test-output/
 .angular/
 
 # Node modules and dependency files
-/node_modules/
-/package-lock.json
-/yarn.lock
-
-# Environment files
-/.env
+node_modules/
+yarn.lock
+## removed package-lock.json
+## see https://dev.to/adamklein/package-lock-json-in-git-or-not-50l5
+*.tsbuildinfo
 
 # Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
+.angular-cli.json
+.ng/
 
-# TypeScript cache
-*.tsbuildinfo
+# Environment files
+.env
 
 # Logs
 npm-debug.log*
