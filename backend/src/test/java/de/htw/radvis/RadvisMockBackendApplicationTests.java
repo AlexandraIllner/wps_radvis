@@ -1,4 +1,4 @@
-package de.htw.radvis_mock_backend;
+package de.htw.radvis;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
