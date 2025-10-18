@@ -1,4 +1,4 @@
-package de.htw.radvis_mock_backend;
+package de.htw.radvis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
