@@ -30,5 +30,6 @@ export class App {
     'Falsche Beschilderung',
     'Poller/Hindernis',
     'Unklare Markierung',
+    'Unebenheiten/Bodenwellen'
   ];
 }
