@@ -6,7 +6,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: update   # für Dev ok (erzwingt Schema-Erzeugung/-Anpassung)
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:

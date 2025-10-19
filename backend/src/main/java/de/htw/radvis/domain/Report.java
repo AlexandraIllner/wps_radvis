@@ -19,8 +19,8 @@ public class Report implements Serializable {
     @Column(length = 255)
     private String description;
 
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 
     @Column(nullable = false, updatable = false)
     private Instant creationDate = Instant.now();
@@ -56,7 +56,7 @@ public class Report implements Serializable {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
