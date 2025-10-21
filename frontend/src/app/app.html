@@ -27,12 +27,20 @@
     <mat-label>Beschreibung</mat-label>
     <textarea
       matInput
-      placeholder="Beschreibe den Mangel kurz"
+      placeholder="Beschreibe den Mängel kurz"
       [(ngModel)]="description"
       maxlength="200"
       rows="4"
     ></textarea>
     <mat-hint align="end">{{ description?.length || 0 }} / 200 Zeichen</mat-hint>
   </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    style="width: 280px; margin-top: 1rem;"
+  >
+    Absenden
+  </button>
 
 </main>
