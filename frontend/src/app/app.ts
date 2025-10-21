@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -32,4 +34,6 @@ export class App {
     'Unklare Markierung',
     'Unebenheiten/Bodenwellen'
   ];
+
+  description: string = '';
 }
