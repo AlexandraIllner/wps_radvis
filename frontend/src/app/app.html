@@ -23,5 +23,16 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
+    <mat-label>Beschreibung</mat-label>
+    <textarea
+      matInput
+      placeholder="Beschreibe den Mangel kurz"
+      [(ngModel)]="description"
+      maxlength="200"
+      rows="4"
+    ></textarea>
+    <mat-hint align="end">{{ description?.length || 0 }} / 200 Zeichen</mat-hint>
+  </mat-form-field>
 
 </main>
