@@ -39,6 +39,7 @@
     mat-raised-button
     color="primary"
     style="width: 280px; margin-top: 1rem;"
+    [disabled]="!selectedCategory && description.trim() === ''"
   >
     Absenden
   </button>
