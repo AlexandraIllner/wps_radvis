@@ -29,10 +29,10 @@
       matInput
       placeholder="Beschreibe den Mängel kurz"
       [(ngModel)]="description"
-      maxlength="200"
+      maxlength="1000"
       rows="4"
     ></textarea>
-    <mat-hint align="end">{{ description?.length || 0 }} / 200 Zeichen</mat-hint>
+    <mat-hint align="end">{{ description?.length || 0 }} / 1000 Zeichen</mat-hint>
   </mat-form-field>
 
   <p
