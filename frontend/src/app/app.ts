@@ -5,12 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
-
-
+import {HttpClient,HttpClientModule} from '@angular/common/http';
+import {OnInit} from '@angular/core';
+import {environment} from '../enviroments/enviroment';
 
 @Component({
-  selector: 'app-root',
+ selector: 'app-root',
   standalone: true,
   imports: [
     FormsModule,
@@ -18,11 +18,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-  ],
+    MatButtonModule,
+    HttpClientModule,
+      ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit {
 
   protected readonly title = signal('frontend');
 
@@ -40,4 +42,17 @@ export class App {
   ];
 
   description: string = '';
+
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  ngOnInit() {
+    this.http.post(`${environment.apiUrl}/api/issue}api/issue`, {}).subscribe({
+      next: response => console.log('Backnd antwortet', response),
+      error: error => console.log('Fehler beim Laden', error),
+
+    });
+  }
 }
