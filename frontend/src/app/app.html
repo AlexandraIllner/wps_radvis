@@ -35,6 +35,13 @@
     <mat-hint align="end">{{ description?.length || 0 }} / 200 Zeichen</mat-hint>
   </mat-form-field>
 
+  <p
+    *ngIf="!selectedCategory && description.trim() === ''"
+    style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;"
+  >
+    Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
+  </p>
+
   <button
     mat-raised-button
     color="primary"
