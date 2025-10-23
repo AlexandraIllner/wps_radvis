@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import {IssuesService} from './issues.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -35,6 +36,15 @@ export class App implements OnInit {
         this.categories = data;
       },
       error: (err) => {
+        console.error('Fehler beim Laden der Mängellabels:', err);
+      }
+    });
+
+    this.issuesService.getIssueLabelsMap().subscribe({
+      next: (labelMap) => {
+        this.issueLabels = labelMap;
+      },
+      error: (err) => {
         console.error('Fehler beim Laden der Mängelkategorien:', err);
       }
     });
@@ -44,6 +54,7 @@ export class App implements OnInit {
   selectedCategory: string | null = null;
 
   categories: string[] = [];
+  issueLabels: Record<string, string> = {};
 
   description: string = '';
 }
