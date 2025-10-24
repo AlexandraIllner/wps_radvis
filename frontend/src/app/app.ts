@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {HttpClient,HttpClientModule} from '@angular/common/http';
 import {OnInit} from '@angular/core';
 import {environment} from '../enviroments/enviroment';
+import {ApiService} from './core/globalService/api.services';
 
 @Component({
  selector: 'app-root',
@@ -44,18 +45,26 @@ export class App implements OnInit {
   description: string = '';
 
 
-  constructor(private http: HttpClient) {
+  constructor(private apiService: ApiService ) {
 
   }
 
   ngOnInit() {
-    this.http.get(`${environment.apiUrl}/api/issue`, {}).subscribe({
+
+    //GET vom Backend
+    this.apiService.getIssue().subscribe({
       next: response => console.log('Backend antwortet', response),
       error: error => console.log('Fehler beim Laden', error),
 
     });
 
-    this.http.post(`${environment.apiUrl}/api/reports`, {}).subscribe({
+    //POST zum Backend
+    const reportData={
+      category: this.selectedCategory,
+      description: this.description,
+    };
+
+    this.apiService.createReport(`${environment.apiUrl}/api/reports`, {}).subscribe({
       next: response => console.log('Backend antwortet', response),
       error: error => console.log('Fehler beim Laden', error),
     });

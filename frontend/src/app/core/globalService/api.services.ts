@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../enviroments/enviroment';
+import {environment} from '../../../enviroments/enviroment';
 import { Observable } from 'rxjs';
 
 
@@ -15,10 +15,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
   })
 
-export class ApiServices{
-  private readonly baseUrl=environment.apiUrl;
-  constructor(private http: HttpClient) {}
-
+export class ApiService{
+  private readonly baseUrl = environment.apiUrl;  constructor(private http: HttpClient) {}
 
   //GET-Abfrage: Issue
   getIssue(): Observable<any>{
