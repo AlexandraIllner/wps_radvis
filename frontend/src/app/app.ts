@@ -49,10 +49,15 @@ export class App implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post(`${environment.apiUrl}/api/issue}api/issue`, {}).subscribe({
-      next: response => console.log('Backnd antwortet', response),
+    this.http.get(`${environment.apiUrl}/api/issue`, {}).subscribe({
+      next: response => console.log('Backend antwortet', response),
       error: error => console.log('Fehler beim Laden', error),
 
+    });
+
+    this.http.post(`${environment.apiUrl}/api/reports`, {}).subscribe({
+      next: response => console.log('Backend antwortet', response),
+      error: error => console.log('Fehler beim Laden', error),
     });
   }
 }
