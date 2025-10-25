@@ -47,6 +47,7 @@
     color="primary"
     style="width: 280px; margin-top: 1rem;"
     [disabled]="!selectedCategory && description.trim() === ''"
+    (click)="submitReport()"
   >
     Absenden
   </button>
