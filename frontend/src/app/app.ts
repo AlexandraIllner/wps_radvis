@@ -50,28 +50,29 @@ export class App implements OnInit {
   }
 
   ngOnInit() {
-
-    //GET: Daten fetchen beim Start
+    // Lädt beim Start der Komponente alle bestehenden Mängel-Meldungen vom Backend
+    // GET-Request an /api/issues
     this.apiService.getIssue().subscribe({
       next: response => console.log('Backend antwortet', response),
       error: error => console.log('Fehler beim Laden', error),
-
     });
   }
-    //POST: Mängel melden
-    submitReport()
-    {
-      //POST zum Backend
-      const reportData = {
-        category: this.selectedCategory,
-        description: this.description,
-      };
 
-      this.apiService.createReport({reportData}).subscribe({
-        next: response => console.log('Backend antwortet', response),
-        error: error => console.log('Fehler beim Laden', error),
-      });
-    }
+  /**
+   * Sendet die Mängel-Meldung an das Backend
+   * Wird aufgerufen beim Klick auf den "Absenden"-Button
+   */
+  submitReport() {
+    // Sammelt die Formulardaten (Kategorie und Beschreibung)
+    const reportData = {
+      category: this.selectedCategory,
+      description: this.description,
+    };
+
+    // Sendet POST-Request mit den Formulardaten an /api/reports
+    this.apiService.createReport(reportData).subscribe({
+      next: response => console.log('Report erfolgreich gesendet', response),
+      error: error => console.log('Fehler beim Senden', error),
+    });
   }
-
-
+}
