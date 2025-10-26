@@ -33,14 +33,18 @@ export class App implements OnInit {
 
   description: string = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit() {
     // Lädt beim Start der Komponente alle bestehenden Mängel-Meldungen vom Backend
     // GET-Request an /api/issues
     this.apiService.getIssue().subscribe({
-      next: response => console.log('Backend antwortet', response),
-      error: err => console.error('Fehler beim Laden:', err)
+      next: response => {
+        console.log('Backend antwortet', response);
+        this.categories = response;
+      },
+      error: err => console.error('Fehler beim Laden:', err),
     });
   }
 
@@ -80,3 +84,4 @@ export class App implements OnInit {
     });
   }
 }
+

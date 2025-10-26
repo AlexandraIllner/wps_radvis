@@ -11,17 +11,17 @@
   "
 >
   <h1>Mängel melden</h1>
-  
+
   <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
     <mat-label>Mängelkategorie</mat-label>
     <mat-select [(ngModel)]="selectedCategory" name="category">
       <mat-option [value]="null" disabled>Bitte wählen…</mat-option>
       <mat-option *ngFor="let cat of categories" [value]="cat">
-        {{ formatCategory(cat) }}
+        {{cat}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  
+
   <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
     <mat-label>Beschreibung</mat-label>
     <textarea
@@ -33,14 +33,13 @@
     ></textarea>
     <mat-hint align="end">{{ description?.length || 0 }} / 1000 Zeichen</mat-hint>
   </mat-form-field>
-  
+
   <p
     *ngIf="!selectedCategory && description.trim() === ''"
     style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;"
   >
     Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
   </p>
-  
   <button
     mat-raised-button
     color="primary"
@@ -50,4 +49,5 @@
   >
     Absenden
   </button>
+
 </main>
