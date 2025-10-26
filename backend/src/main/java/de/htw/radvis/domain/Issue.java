@@ -1,4 +1,5 @@
 package de.htw.radvis.domain;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Issue {
     SCHLAGLOCH("Schlagloch"),
@@ -15,7 +16,7 @@ public enum Issue {
     Issue(String label){
         this.label = label;
     }
-
+    @JsonValue
     public String getLabel(){
         return this.label;
     }
