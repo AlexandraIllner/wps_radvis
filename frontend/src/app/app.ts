@@ -25,21 +25,12 @@ import { ApiService } from './core/globalService/api.services';
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
-  
+
   selectedCategory: string | null = null;
-  
+
   // Kategorien im Backend-Format
-  categories: string[] = [
-    'SCHLAGLOCH',
-    'SCHLECHTER_STRASSENBELAG',
-    'BEWUCHS',
-    'FEHLENDE_BESCHILDERUNG',
-    'FALSCHE_BESCHILDERUNG',
-    'POLLER_HINDERNIS',
-    'UNKLARE_MARKIERUNG',
-    'UNEBENHEITEN_BODENWELLEN'
-  ];
-  
+  categories: string[] = [];
+
   description: string = '';
 
   constructor(private apiService: ApiService) {}
@@ -53,16 +44,6 @@ export class App implements OnInit {
     });
   }
 
-  /**
-   * Macht Kategorien lesbarer für die Anzeige
-   * "SCHLAGLOCH" → "Schlagloch"
-   */
-  formatCategory(cat: string): string {
-    return cat
-      .replace(/_/g, ' ')
-      .toLowerCase()
-      .replace(/\b\w/g, c => c.toUpperCase());
-  }
 
   /**
    * Sendet die Mängel-Meldung an das Backend
