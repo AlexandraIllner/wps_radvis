@@ -51,17 +51,6 @@ export class App implements OnInit {
   }
 
   /**
-   * Macht Kategorien lesbarer für die Anzeige
-   * "SCHLAGLOCH" → "Schlagloch"
-   */
-  formatCategory(cat: string): string {
-    return cat
-      .replace(/_/g, ' ')
-      .toLowerCase()
-      .replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  /**
    * Sendet die Mängel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
