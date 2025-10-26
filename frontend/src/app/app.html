@@ -18,7 +18,7 @@
     <mat-select [(ngModel)]="selectedCategory">
       <mat-option [value]="null" disabled>Bitte wählen…</mat-option>
       <mat-option *ngFor="let cat of categories" [value]="cat">
-        {{ cat }}
+        {{ formatCategory(cat) }}
       </mat-option>
     </mat-select>
   </mat-form-field>
