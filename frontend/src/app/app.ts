@@ -25,31 +25,28 @@ import { ApiService } from './core/globalService/api.services';
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
-  
+
   selectedCategory: string | null = null;
-  
-  // Kategorien im Backend-Format
-  categories: string[] = [
-    'SCHLAGLOCH',
-    'SCHLECHTER_STRASSENBELAG',
-    'BEWUCHS',
-    'FEHLENDE_BESCHILDERUNG',
-    'FALSCHE_BESCHILDERUNG',
-    'POLLER_HINDERNIS',
-    'UNKLARE_MARKIERUNG',
-    'UNEBENHEITEN_BODENWELLEN'
-  ];
-  
+
+  // Kategorien werden aus dem Backend gezogen
+  categories: string[] = [];
+
   description: string = '';
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    // Lädt beim Start der Komponente alle bestehenden Mängel-Meldungen vom Backend
-    // GET-Request an /api/issues
+    // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
-      next: response => console.log('Backend antwortet', response),
-      error: err => console.error('Fehler beim Laden:', err)
+      next: response => {
+        this.categories = response;  // ⭐ Kategorien aus Backend setzen
+        console.log('Kategorien vom Backend geladen:', this.categories);
+      },
+      error: error => {
+        console.error('Fehler beim Laden der Kategorien:', error);
+        // Fallback: Zeige dem User eine Meldung
+        alert('Kategorien konnten nicht geladen werden!');
+      }
     });
   }
 
