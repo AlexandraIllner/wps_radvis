@@ -33,13 +33,14 @@ export class App implements OnInit {
 
   description: string = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit() {
     // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
       next: response => {
-        this.categories = response;  // ⭐ Kategorien aus Backend setzen
+        this.categories = response;  
         console.log('Kategorien vom Backend geladen:', this.categories);
       },
       error: error => {
@@ -85,3 +86,4 @@ export class App implements OnInit {
     });
   }
 }
+
