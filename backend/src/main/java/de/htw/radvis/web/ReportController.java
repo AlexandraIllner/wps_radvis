@@ -24,7 +24,7 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<ReportResponseDTO>createReport(@Valid @RequestBody ReportCreateDTO reportCreateDTO) {
         var response = reportService.create(reportCreateDTO);
-        var location = URI.create("/api/reports" + response.id());
+        var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
     }
 }
