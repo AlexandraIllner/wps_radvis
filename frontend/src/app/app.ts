@@ -28,7 +28,7 @@ export class App implements OnInit {
 
   selectedCategory: string | null = null;
 
-  // Kategorien im Backend-Format
+  // Kategorien werden aus dem Backend gezogen
   categories: string[] = [];
 
   description: string = '';
@@ -37,17 +37,19 @@ export class App implements OnInit {
   }
 
   ngOnInit() {
-    // Lädt beim Start der Komponente alle bestehenden Mängel-Meldungen vom Backend
-    // GET-Request an /api/issues
+    // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
       next: response => {
-        console.log('Backend antwortet', response);
-        this.categories = response;
+        this.categories = response;  
+        console.log('Kategorien vom Backend geladen:', this.categories);
       },
-      error: err => console.error('Fehler beim Laden:', err),
+      error: error => {
+        console.error('Fehler beim Laden der Kategorien:', error);
+        // Fallback: Zeige dem User eine Meldung
+        alert('Kategorien konnten nicht geladen werden!');
+      }
     });
   }
-
 
   /**
    * Sendet die Mängel-Meldung an das Backend
