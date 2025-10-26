@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './core/globalService/api.services';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import { ApiService } from './core/globalService/api.services';
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
+    MatSnackBarModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -33,14 +35,14 @@ export class App implements OnInit {
 
   description: string = '';
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
       next: response => {
-        this.categories = response;  
+        this.categories = response;
         console.log('Kategorien vom Backend geladen:', this.categories);
       },
       error: error => {
@@ -76,6 +78,9 @@ export class App implements OnInit {
     this.apiService.createReport(reportData).subscribe({
       next: response => {
         console.log('Report gesendet', response);
+        this.snackBar.open('Danke, dass Sie den Mängel gemeldet haben!', '', {
+          duration: 3000,
+        });
         // Formular zurücksetzen
         this.selectedCategory = null;
         this.description = '';
