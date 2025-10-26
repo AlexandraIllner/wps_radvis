@@ -7,7 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {HttpClientModule} from '@angular/common/http';
 import {OnInit} from '@angular/core';
-import {environment} from '../enviroments/enviroment';
 import {ApiService} from './core/globalService/api.services';
 
 @Component({
@@ -32,14 +31,14 @@ export class App implements OnInit {
   selectedCategory: string | null = null;
 
   categories: string[] = [
-    'Schlagloch',
-    'Schlechter Straßenbelag',
-    'Bewuchs',
-    'Fehlende Beschilderung',
-    'Falsche Beschilderung',
-    'Poller/Hindernis',
-    'Unklare Markierung',
-    'Unebenheiten/Bodenwellen'
+    'SCHLAGLOCH',
+    'SCHLECHTER_STRASSENBELAG',
+    'BEWUCHS',
+    'FEHLENDE_BESCHILDERUNG',
+    'FALSCHE_BESCHILDERUNG',
+    'POLLER_HINDERNIS',
+    'UNKLARE_MARKIERUNG',
+    'UNEBENHEITEN_BODENWELLEN'
   ];
 
   description: string = '';
@@ -53,26 +52,54 @@ export class App implements OnInit {
     // Lädt beim Start der Komponente alle bestehenden Mängel-Meldungen vom Backend
     // GET-Request an /api/issues
     this.apiService.getIssue().subscribe({
-      next: response => console.log('Backend antwortet', response),
-      error: error => console.log('Fehler beim Laden', error),
+      next: response => console.log('Backend antwortet', response)
     });
   }
 
+  /**
+   * Macht Kategorien lesbarer für die Anzeige
+   * "SCHLAGLOCH" → "Schlagloch"
+   */
+  formatCategory(cat: string): string {
+    return cat
+      .replace(/_/g, ' ')
+      .toLowerCase()
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
   /**
    * Sendet die Mängel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
   submitReport() {
+
+    if(!this.selectedCategory) {
+      alert('Bitte wähle eine Kategorie aus!');
+      return;
+    }
     // Sammelt die Formulardaten (Kategorie und Beschreibung)
     const reportData = {
-      category: this.selectedCategory,
+      issue: this.selectedCategory,        // "issue" statt "category"!
       description: this.description,
+      latitude: 52.52,                     // Berlin Beispiel
+      longitude: 13.405                    // Berlin Beispiel
     };
+
+
+    console.log('Sende diese Daten:', reportData);
+    console.log('Als JSON:', JSON.stringify(reportData));
 
     // Sendet POST-Request mit den Formulardaten an /api/reports
     this.apiService.createReport(reportData).subscribe({
-      next: response => console.log('Report erfolgreich gesendet', response),
-      error: error => console.log('Fehler beim Senden', error),
+      next: response => {
+        console.log('Report gesendet', response);
+        // Formular wird zurück´gesetzt
+        this.selectedCategory = null;
+        this.description = '';
+      },
+      error: error => {
+
+        console.error('Fehler beim Submit', error);
+      }
     });
   }
 }
