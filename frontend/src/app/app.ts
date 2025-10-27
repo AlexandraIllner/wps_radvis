@@ -62,35 +62,32 @@ export class App implements OnInit {
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
   submitReport() {
-    if (!this.selectedCategory) {
-      alert('Bitte wähle eine Kategorie aus!');
+    if (!this.selectedCategory && this.description.trim() === '') {
+      alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
       return;
     }
 
-    // Sammelt die Formulardaten (Kategorie und Beschreibung)
     const reportData = {
-      issue: this.selectedCategory,
-      description: this.description,
-      latitude: 52.52,
-      longitude: 13.405
-    };
+    issue: this.selectedCategory ?? 'KEINE_KATEGORIE',
+    description: (this.description ?? '').trim(),
+    latitude: 52.52,
+    longitude: 13.405
+  };
+
 
     this.isLoading = true;
 
     console.log('Sende diese Daten:', reportData);
-    console.log('Als JSON:', JSON.stringify(reportData));
 
-    // Sendet POST-Request mit den Formulardaten an /api/reports
     this.apiService.createReport(reportData).subscribe({
       next: response => {
         console.log('Report gesendet', response);
         this.snackBar.open('Danke, dass Sie den Mängel gemeldet haben!', '', {
           duration: 3000,
         });
-        // Formular zurücksetzen
         this.selectedCategory = null;
         this.description = '';
-        this.isLoading= false;
+        this.isLoading = false;
       },
       error: error => {
         this.isLoading = false;
@@ -99,4 +96,3 @@ export class App implements OnInit {
     });
   }
 }
-
