@@ -9,7 +9,7 @@ import { catchError, throwError } from 'rxjs';
 export const errorInterceptor: HttpInterceptorFn =(req,next) => {
   return next(req).pipe(
     catchError((error) => {
-      console.error('HTTP Fehler:', error);      // Status 0 = Server ist offline oder nicht erreichbar
+      console.error('HTTP Fehler:', error);
       // Status 0 = Server offline/nicht erreichbar
       if (error.status === 0) {
         alert('Server nicht erreichbar!');
