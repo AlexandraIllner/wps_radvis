@@ -13,10 +13,12 @@ public class Report implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Issue issue;
 
-    @Column(length = 255)
+    @Column(length = 255, nullable= true)
     private String description;
 
     private Double latitude;
@@ -64,7 +66,7 @@ public class Report implements Serializable {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

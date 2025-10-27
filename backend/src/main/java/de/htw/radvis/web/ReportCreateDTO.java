@@ -8,10 +8,9 @@ import jakarta.validation.constraints.Size;
 
 public class ReportCreateDTO {
 
-    @NotNull
     private Issue issue;
 
-    @NotNull @Size(min = 1, max = 255)
+    @Size(max = 255)
     private String description;
 
     // latitude ∈ [-90, 90], longitude ∈ [-180, 180]
