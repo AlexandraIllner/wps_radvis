@@ -68,7 +68,7 @@ export class App implements OnInit {
     }
 
     const reportData = {
-    issue: this.selectedCategory ?? 'KEINE_KATEGORIE',
+    issue: this.selectedCategory ?? 'Keine Kategorie',
     description: (this.description ?? '').trim(),
     latitude: 52.52,
     longitude: 13.405
