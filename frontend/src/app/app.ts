@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './core/globalService/api.services';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -33,6 +35,8 @@ export class App implements OnInit {
   categories: string[] = [];
 
   description: string = '';
+
+  isLoading = false;
 
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {
   }
@@ -70,6 +74,8 @@ export class App implements OnInit {
       longitude: 13.405
     };
 
+    this.isLoading = true;
+
     console.log('Sende diese Daten:', reportData);
     console.log('Als JSON:', JSON.stringify(reportData));
 
@@ -83,8 +89,10 @@ export class App implements OnInit {
         // Formular zurücksetzen
         this.selectedCategory = null;
         this.description = '';
+        this.isLoading= false;
       },
       error: error => {
+        this.isLoading = false;
         console.error('Fehler beim Submit', error);
       }
     });

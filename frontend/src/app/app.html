@@ -39,4 +39,8 @@
     Absenden
   </button>
 
+  <div *ngIf="isLoading" style="margin-top: 1rem;">
+    <mat-spinner diameter="30" color="primary"></mat-spinner>
+  </div>
+
 </main>
