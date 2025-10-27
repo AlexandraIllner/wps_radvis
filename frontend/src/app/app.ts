@@ -26,7 +26,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  protected readonly title = signal('frontend');
 
   selectedCategory: string | null = null;
 

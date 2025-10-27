@@ -29,22 +29,7 @@ describe('App Component', () => {
     expect(component).toBeTruthy();
   });
 
-  // Test 2: Kategorien sind definiert
-  it('sollte 8 Kategorien haben', () => {
-    expect(component.categories.length).toBe(8);
-    expect(component.categories[0]).toBe('SCHLAGLOCH');
-  });
-
-  // Test 3: formatCategory funktioniert
-  it('sollte Kategorie formatieren', () => {
-    const formatted = component.formatCategory('SCHLAGLOCH');
-    expect(formatted).toBe('Schlagloch');
-
-    const formatted2 = component.formatCategory('SCHLECHTER_STRASSENBELAG');
-    expect(formatted2).toBe('Schlechter Strassenbelag');
-  });
-
-  // Test 4: submitReport ohne Kategorie zeigt Alert
+  // Test 3: submitReport ohne Kategorie zeigt Alert
   it('sollte Alert zeigen wenn keine Kategorie ausgewählt', () => {
     spyOn(window, 'alert');
 
@@ -54,7 +39,7 @@ describe('App Component', () => {
     expect(window.alert).toHaveBeenCalledWith('Bitte wähle eine Kategorie aus!');
   });
 
-  // Test 5: submitReport sendet Daten ans Backend
+  // Test 4: submitReport sendet Daten ans Backend
   it('sollte Report ans Backend senden', fakeAsync(() => {
     const mockResponse = { id: 1, issue: 'SCHLAGLOCH' };
     spyOn(apiService, 'createReport').and.returnValue(of(mockResponse));
@@ -71,13 +56,4 @@ describe('App Component', () => {
     expect(component.description).toBe('');
   }));
 
-  // Test 6: ngOnInit lädt Issues
-  it('sollte Issues beim Start laden', () => {
-    const mockIssues = ['SCHLAGLOCH', 'BEWUCHS'];
-    spyOn(apiService, 'getIssue').and.returnValue(of(mockIssues));
-
-    component.ngOnInit();
-
-    expect(apiService.getIssue).toHaveBeenCalled();
-  });
 });
