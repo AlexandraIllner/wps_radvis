@@ -1,8 +1,8 @@
 <main>
-  <h1>Mängel melden</h1>
+  <h1>Mangel melden</h1>
 
   <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
-    <mat-label>Mängelkategorie</mat-label>
+    <mat-label>Mangelkategorie</mat-label>
     <mat-select [(ngModel)]="selectedCategory" name="category">
       <mat-option [value]="null" disabled>Bitte wählen…</mat-option>
       <mat-option *ngFor="let cat of categories" [value]="cat">
@@ -14,7 +14,7 @@
   <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
     <mat-label>Beschreibung</mat-label>
     <textarea    matInput
-      placeholder="Beschreibe den Mängel kurz"
+      placeholder="Beschreibe den Mangel kurz"
       [(ngModel)]="description"
       maxlength="1000"
       rows="4"

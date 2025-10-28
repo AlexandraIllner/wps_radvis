@@ -54,7 +54,7 @@ export class App implements OnInit {
   }
 
   /**
-   * Sendet die Mängel-Meldung an das Backend
+   * Sendet die Mangel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
   submitReport() {
@@ -78,7 +78,7 @@ export class App implements OnInit {
     this.apiService.createReport(reportData).subscribe({
       next: response => {
         console.log('Report gesendet', response);
-        this.snackBar.open('Danke, dass Sie den Mängel gemeldet haben!', '', {
+        this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', {
           duration: 3000,
         });
         // Formular zurücksetzen

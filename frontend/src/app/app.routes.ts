@@ -3,5 +3,5 @@ import {App} from './app';
 
 export const routes: Routes = [
 
-  { path: 'mängel', component: App},
+  { path: 'mängel', component: App}, // was passiert hier?
 ];
