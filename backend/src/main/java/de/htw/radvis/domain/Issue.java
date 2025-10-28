@@ -12,7 +12,7 @@ public enum Issue {
     POLLER_HINDERNIS("Poller/Hindernis"),
     UNKLARE_MARKIERUNG("Unklare Markierung"),
     UNEBENHEITEN_BODENWELLEN("Unebenheiten/Bodenwellen"),
-    KEINE_KATEGORIE("Keine Kategorie"); // (opcional pero útil)
+    KEINE_KATEGORIE("Keine Kategorie");
 
     private final String label;
 
