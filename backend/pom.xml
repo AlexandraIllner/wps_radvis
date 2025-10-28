@@ -12,7 +12,7 @@
 	<artifactId>radvis-mock-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>radvis-mock-backend</name>
-	<description>ock backend for RadVIS Mängelmelder project</description>
+	<description>Mock backend for RadVIS Mängelmelder project</description>
 	<url/>
 	<licenses>
 		<license/>
