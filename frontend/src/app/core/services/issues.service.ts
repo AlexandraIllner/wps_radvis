@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { API_BASE_URL } from './env';
+import { API_BASE_URL } from '../../env';
 import {map, Observable} from 'rxjs';
-import {IssueLabelDto} from '../core/issue-label.model';
+import {IssueLabelDto} from '../models/issue-label.model';
 
 @Injectable({providedIn: 'root'})
 export class IssuesService {

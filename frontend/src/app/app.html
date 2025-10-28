@@ -1,42 +1,9 @@
 <main>
-  <h1>Mangel melden</h1>
+  <app-header></app-header>
+  <app-mangel-vorlaeufig></app-mangel-vorlaeufig>
+  <div>
+    <h3>Platzhalter</h3>
+    <app-optionen></app-optionen>
 
-  <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
-    <mat-label>Mangelkategorie</mat-label>
-    <mat-select [(ngModel)]="selectedCategory" name="category">
-      <mat-option [value]="null" disabled>Bitte wählen…</mat-option>
-      <mat-option *ngFor="let cat of categories" [value]="cat">
-        {{cat}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
-    <mat-label>Beschreibung</mat-label>
-    <textarea    matInput
-      placeholder="Beschreibe den Mangel kurz"
-      [(ngModel)]="description"
-      maxlength="1000"
-      rows="4"
-    ></textarea>
-    <mat-hint align="end">{{ description?.length || 0 }} / 1000 Zeichen</mat-hint>
-  </mat-form-field>
-
-  <p
-    *ngIf="!selectedCategory && description.trim() === ''"
-    style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;"
-  >
-    Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
-  </p>
-
-  <button
-    mat-raised-button
-    color="primary"
-    style="width: 280px; margin-top: 1rem;"
-    [disabled]="!selectedCategory && description.trim() === ''"
-    (click)="submitReport()"
-  >
-    Absenden
-  </button>
-
+  </div>
 </main>
