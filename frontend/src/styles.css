@@ -9,10 +9,10 @@ main {
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
+
   padding-top: 3rem;
   text-align: center;
   font-family: system-ui, sans-serif;
-  background-color: #f9f9f9;
 }
 
 form {
