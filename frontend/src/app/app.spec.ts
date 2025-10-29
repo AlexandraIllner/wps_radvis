@@ -2,44 +2,79 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { App } from './app';
 import { ApiService } from './core/globalService/api.services';
-import { of } from 'rxjs';
-
+import { of, throwError } from 'rxjs';
 
 describe('App Component', () => {
   let component: App;
   let fixture: ComponentFixture<App>;
   let apiService: ApiService;
 
-  // Wird vor jedem Test ausgeführt
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        App,  // Standalone Component
+        App, // Standalone Component
         HttpClientTestingModule,
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(App);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
+    fixture.detectChanges();
   });
 
-  // Test 1: Component wird erstellt
+  // --------------------------
+  // Basis
+  // --------------------------
   it('sollte erstellt werden', () => {
     expect(component).toBeTruthy();
   });
 
-  // Test 3: submitReport ohne Kategorie zeigt Alert
+  // --------------------------
+  // Validierung: Beschreibung ODER Kategorie
+  // --------------------------
+  it('Button sollte disabled sein, wenn keine Kategorie und keine Beschreibung gesetzt sind', () => {
+    component.selectedCategory = null;
+    component.description = '';
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBeTrue();
+  });
+
+  it('Button sollte enabled sein, wenn Beschreibung vorhanden ist', () => {
+    component.selectedCategory = null;
+    component.description = 'Ein Test';
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBeFalse();
+  });
+
+  it('Button sollte enabled sein, wenn Kategorie vorhanden ist', () => {
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = '';
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBeFalse();
+  });
+
+  // --------------------------
+  // SubmitReport
+  // --------------------------
   it('sollte Alert zeigen wenn keine Kategorie ausgewählt', () => {
     spyOn(window, 'alert');
 
     component.selectedCategory = null;
+    component.description = '';
     component.submitReport();
 
-    expect(window.alert).toHaveBeenCalledWith('Bitte wähle eine Kategorie aus!');
+    expect(window.alert).toHaveBeenCalledWith(
+      'Bitte wähle eine Kategorie oder gib eine Beschreibung ein!'
+    );
   });
 
-  // Test 4: submitReport sendet Daten ans Backend
   it('sollte Report ans Backend senden', fakeAsync(() => {
     const mockResponse = { id: 1, issue: 'SCHLAGLOCH' };
     spyOn(apiService, 'createReport').and.returnValue(of(mockResponse));
@@ -48,12 +83,24 @@ describe('App Component', () => {
     component.description = 'Test';
     component.submitReport();
 
-    tick();  // Wartet auf alle async Operationen
+    tick(); // Wartet auf async Operationen
 
-    // Prüfe nur ob API aufgerufen wurde und Formular zurückgesetzt
     expect(apiService.createReport).toHaveBeenCalled();
     expect(component.selectedCategory).toBeNull();
     expect(component.description).toBe('');
   }));
 
+  it('sollte isLoading auf false setzen, wenn API-Fehler auftritt', fakeAsync(() => {
+    spyOn(apiService, 'createReport').and.returnValue(throwError(() => new Error('Fehler')));
+    spyOn(console, 'error');
+
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Fehler-Test';
+    component.submitReport();
+
+    tick();
+
+    expect(apiService.createReport).toHaveBeenCalled();
+    expect(component.isLoading).toBeFalse();
+  }));
 });
