@@ -4,7 +4,8 @@
   "scripts": {
     "start:frontend": "ng serve",
     "start:backend": "cd ../backend && ./mvnw spring-boot:run",
-    "start:dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+    "start:dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "test": "ng test --browsers=ChromeHeadless"
   },
   "prettier": {
     "printWidth": 100,
