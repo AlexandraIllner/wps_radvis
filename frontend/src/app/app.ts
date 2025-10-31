@@ -6,10 +6,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; // deprecated, drunter aktueller Client - aber wo wird's genutzt?
+import {provideHttpClient} from '@angular/common/http';
 import { ApiService } from './core/globalService/api.services';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Formular} from './formular/formular';
+import {Header} from './header/header';
+import {Karte} from './karte/karte';
+import {Camera} from './camera/camera';
+import {PhotoUpload} from './photo-upload/photo-upload';
+
 
 @Component({
   selector: 'app-root',
@@ -24,13 +31,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HttpClientModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    Formular,
+    Header,
+    Karte,
+    Camera,
+    PhotoUpload,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
+export class App {
 
-  selectedCategory: string | null = null;
+ /* selectedCategory: string | null = null;
 
   // Kategorien werden aus dem Backend gezogen
   categories: string[] = [];
@@ -57,10 +69,10 @@ export class App implements OnInit {
     });
   }
 
-  /**
+  /!**
    * Sendet die Mängel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
-   */
+   *!/
   submitReport() {
     if (!this.selectedCategory && this.description.trim() === '') {
       alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
@@ -94,5 +106,5 @@ export class App implements OnInit {
         console.error('Fehler beim Submit', error);
       }
     });
-  }
+  }*/
 }
