@@ -1,46 +1,7 @@
 <main>
-  <h1>Neue Meldung</h1>
-
-  <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
-    <mat-label>Mängelkategorie</mat-label>
-    <mat-select [(ngModel)]="selectedCategory" name="category">
-      <mat-option [value]="null" disabled>Bitte wählen…</mat-option>
-      <mat-option *ngFor="let cat of categories" [value]="cat">
-        {{cat}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" style="width: 280px; margin-top: 1rem;">
-    <mat-label>Beschreibung</mat-label>
-    <textarea    matInput
-      placeholder="Beschreibe den Mängel kurz"
-      [(ngModel)]="description"
-      maxlength="1000"
-      rows="4"
-    ></textarea>
-    <mat-hint align="end">{{ description?.length || 0 }} / 1000 Zeichen</mat-hint>
-  </mat-form-field>
-
-  <p
-    *ngIf="!selectedCategory && description.trim() === ''"
-    style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;"
-  >
-    Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
-  </p>
-
-  <button
-    mat-raised-button
-    color="primary"
-    style="width: 280px; margin-top: 1rem;"
-    [disabled]="!selectedCategory && description.trim() === ''"
-    (click)="submitReport()"
-  >
-    Absenden
-  </button>
-
-  <div *ngIf="isLoading" style="margin-top: 1rem;">
-    <mat-spinner diameter="30" color="primary"></mat-spinner>
-  </div>
-
+  <app-header></app-header>
+  <app-formular></app-formular>
+  <app-camera></app-camera>
+  <app-photo-upload></app-photo-upload>
+  <app-karte></app-karte>
 </main>
