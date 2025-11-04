@@ -41,6 +41,12 @@ import {PhotoUpload} from './photo-upload/photo-upload';
   styleUrl: './app.css',
 })
 export class App {
+  photoFile: File | null = null;
+
+  onPhotoFromCamera(file: File | null) {
+    this.photoFile = file;
+    console.log('Foto im Parent empfangen:', file);
+  }
 
  /* selectedCategory: string | null = null;
 
