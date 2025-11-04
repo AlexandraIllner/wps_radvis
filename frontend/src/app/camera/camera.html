@@ -1,1 +1,30 @@
-<h3> hier demnächst Kamera</h3>
+<div style="position:relative; z-index:9999; pointer-events:auto;">
+  <h2 style="margin:.5rem 0">Foto aufnehmen</h2>
+
+
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    capture="environment"
+    (change)="onFileChange($event)"
+    style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); border:0; padding:0;"
+  />
+
+
+  <button
+    type="button"
+    (click)="fileInput.click()"
+    style="display:inline-block; padding:.6rem 1rem; border-radius:10px; background:#1976d2; color:#fff; cursor:pointer; user-select:none; border:none;"
+  >
+    Kamera / Datei öffnen
+  </button>
+
+  <p *ngIf="fileName" style="margin-top:.5rem;">
+    Gewählt: <strong>{{ fileName }}</strong>
+  </p>
+
+  <div *ngIf="previewData" style="margin-top:.5rem;">
+    <img [src]="previewData" alt="Vorschau" style="max-width:280px; border-radius:8px;" />
+  </div>
+</div>
