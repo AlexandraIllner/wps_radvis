@@ -1,1 +1,62 @@
-<h3> hier demnächst Kamera</h3>
+<div class="camera-container">
+    <h2 class="camera-title">Foto aufnehmen</h2>
+
+
+    <input
+        #cameraInput
+        type="file"
+        accept="image/*"
+        capture="environment"
+        (change)="onFileChange($event)"
+        class="hidden-input"
+    />
+    <input
+        #galleryInput
+        type="file"
+        accept="image/*"
+        (change)="onFileChange($event)"
+        class="hidden-input"
+    />
+
+
+    <div class="camera-actions" role="group" aria-label="Fotoquelle wählen">
+        <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                class="camera-btn"
+                (click)="cameraInput.click()"
+                aria-label="Kamera öffnen"
+        >
+             Kamera
+        </button>
+
+        <button
+                type="button"
+                mat-raised-button
+                class="camera-btn"
+                (click)="galleryInput.click()"
+                aria-label="Bild aus Galerie oder Datei wählen"
+        >
+            Galerie/Datei
+        </button>
+    </div>
+
+    <p *ngIf="fileName" class="camera-filename" aria-live="polite">
+        Gewählt: <strong>{{ fileName }}</strong>
+    </p>
+
+    <div *ngIf="previewData" class="camera-preview">
+        <img [src]="previewData" alt="Vorschau des gewählten Fotos" class="camera-img" />
+    </div>
+
+    <button
+            *ngIf="previewData"
+            type="button"
+            class="camera-delete"
+            (click)="removePhoto()"
+            aria-label="Gewähltes Foto löschen"
+    >
+        Foto löschen
+    </button>
+</div>
