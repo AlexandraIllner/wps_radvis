@@ -1,7 +1,14 @@
 <main>
   <app-header></app-header>
   <app-formular></app-formular>
-  <app-camera></app-camera>
+
+  <app-camera (photoTaken)="onPhotoFromCamera($event)"></app-camera>
+
+  <p *ngIf="photoFile" style="margin-top:.5rem; text-align:center;">
+    Foto im Formular: <strong>{{ photoFile.name }}</strong>
+  </p>
+
   <app-photo-upload></app-photo-upload>
   <app-karte></app-karte>
 </main>
+
