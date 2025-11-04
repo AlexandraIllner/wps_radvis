@@ -22,4 +22,9 @@ export class Camera {
     reader.onload = () => this.previewData = reader.result as string;
     reader.readAsDataURL(f);
   }
+
+  removePhoto() {
+    this.fileName = '';
+    this.previewData = null;
+  }
 }

@@ -17,7 +17,7 @@
     (click)="fileInput.click()"
     style="display:inline-block; padding:.6rem 1rem; border-radius:10px; background:#1976d2; color:#fff; cursor:pointer; user-select:none; border:none;"
   >
-    Kamera / Datei öffnen
+    Kamera/Foto hochladen
   </button>
 
   <p *ngIf="fileName" style="margin-top:.5rem;">
@@ -28,3 +28,12 @@
     <img [src]="previewData" alt="Vorschau" style="max-width:280px; border-radius:8px;" />
   </div>
 </div>
+
+<button
+        *ngIf="previewData"
+        type="button"
+        (click)="removePhoto()"
+        class="delete-btn"
+>
+   Foto löschen
+</button>
