@@ -1,1 +1,52 @@
-<h3> hier demnächst Photo-Upload</h3>
+<div>
+  <h3>Foto auswählen</h3>
+
+  <!-- Versteckter Datei-Input -->
+  <input
+    #galleryInput
+    type="file"
+    accept="image/*"
+    (change)="onFilesSelected($event)"
+    multiple
+    class="hidden-input"
+  />
+
+  <!-- Sichtbarer Button -->
+  <button
+    type="button"
+    mat-raised-button
+    class="camera-btn"
+    (click)="galleryInput.click()"
+    aria-label="Bild aus Galerie oder Datei wählen"
+  >
+    Galerie/Datei
+  </button>
+
+  <!-- Vorschau der gewählten Bilder -->
+  <div *ngIf="selectedFiles.length > 0">
+    <p class="camera-filename" aria-live="polite">
+      Gewählt:
+      <strong *ngFor="let file of selectedFiles; let i = index">
+        {{ file.name }}<span *ngIf="i < selectedFiles.length - 1">,&nbsp;</span>
+      </strong>
+    </p>
+
+    <!-- Vorschau der Bilder -->
+    <div *ngFor="let url of previewUrls; let i = index" class="camera-preview">
+      <img
+        [src]="url"
+        [alt]="'Vorschau des gewählten Fotos ' + (i + 1)"
+        class="camera-img"
+      />
+
+      <button
+        type="button"
+        class="camera-delete"
+        (click)="removePhoto(i)"
+        aria-label="Gewähltes Foto löschen"
+      >
+        Foto {{ i + 1 }} löschen
+      </button>
+    </div>
+  </div>
+</div>
