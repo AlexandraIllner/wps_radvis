@@ -10,13 +10,6 @@
         (change)="onFileChange($event)"
         class="hidden-input"
     />
-    <input
-        #galleryInput
-        type="file"
-        accept="image/*"
-        (change)="onFileChange($event)"
-        class="hidden-input"
-    />
 
 
     <div class="camera-actions" role="group" aria-label="Fotoquelle wählen">
@@ -31,15 +24,6 @@
              Kamera
         </button>
 
-        <button
-                type="button"
-                mat-raised-button
-                class="camera-btn"
-                (click)="galleryInput.click()"
-                aria-label="Bild aus Galerie oder Datei wählen"
-        >
-            Galerie/Datei
-        </button>
     </div>
 
     <p *ngIf="fileName" class="camera-filename" aria-live="polite">
