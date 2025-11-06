@@ -5,7 +5,7 @@
   <input
     #galleryInput
     type="file"
-    accept="image/*"
+    accept=".jpg,.png"
     (change)="onFilesSelected($event)"
     multiple
     class="hidden-input"
@@ -18,7 +18,7 @@
     class="camera-btn"
     (click)="galleryInput.click()"
     aria-label="Bild aus Galerie oder Datei wählen"
-  >
+    [disabled]="validFiles.length >=3">
     Galerie/Datei
   </button>
 
