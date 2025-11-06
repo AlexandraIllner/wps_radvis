@@ -16,10 +16,23 @@
     type="button"
     mat-raised-button
     class="camera-btn"
-    (click)="galleryInput.click()"
+    (click)="onUploadClick(galleryInput)"
     aria-label="Bild aus Galerie oder Datei wählen"
-    [disabled]="validFiles.length >=3">
+    [disabled]="validFiles.length >=3 || isLoading">
     Galerie/Datei
+
+    <!-- Spinner, wenn Upload läuft -->
+    <mat-progress-spinner
+      *ngIf="isLoading"
+      diameter="20"
+      mode="indeterminate"
+      class="spinner"
+    ></mat-progress-spinner>
+
+    <!-- Text je nach Ladezustand -->
+
+    <span *ngIf="isLoading">Lädt...</span>
+
   </button>
 
   <!-- Vorschau der gewählten Bilder -->
