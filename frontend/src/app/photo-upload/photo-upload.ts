@@ -21,6 +21,7 @@ export class PhotoUpload {
   isLoading = false;
   validFiles: File[] = [];
   invalidCount= 0;
+  isUploadDisabled = false;
 
 
   constructor(private snackBar: MatSnackBar) {
@@ -55,19 +56,23 @@ export class PhotoUpload {
 
       //Jede hinzugefügte Datei prüfen
       for (const file of files) {
-        if(this.isValidFile(file)) { // wenn gültig → hinzufügen
+        if (this.isValidFile(file)) { // wenn gültig → hinzufügen
           this.validFiles.push(file);
-        }else{
+        } else {
           this.invalidCount++  // wenn ungültig → zählen
         }
       }
       // Warnung anzeigen, falls ungültige Dateien vorhanden sind
-      if(this.invalidCount>0){
+      if (this.invalidCount > 0) {
         this.snackBar.open(`${this.invalidCount} Datei(en) ungültig. Es sind nur JPG/PNG Datein und max. 5MB erlaubt.`,
           'OK',
           {duration: 3000}
         );
-        }
+      }
+
+      // Upload-Button deaktivieren, wenn keine gültigen Dateien da sind
+      this.isUploadDisabled = this.validFiles.length === 0;
+
 
       this.selectedFiles = files;
       this.photosSelected.emit(this.selectedFiles);
@@ -91,6 +96,7 @@ export class PhotoUpload {
 
 
 }
+
 
 
 
