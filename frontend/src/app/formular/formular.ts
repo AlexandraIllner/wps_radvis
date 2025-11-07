@@ -31,6 +31,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 })
 export class Formular implements OnInit {
 
+
   selectedCategory: string | null = null;
 
   // Kategorien werden aus dem Backend gezogen
