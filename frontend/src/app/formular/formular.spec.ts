@@ -3,23 +3,31 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Formular } from './formular';
 import { ApiService } from '../core/globalService/api.services';
 import { of, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('Formular Component', () => {
   let component: Formular;
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
+  let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
 
   beforeEach(async () => {
+    const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
+
     await TestBed.configureTestingModule({
       imports: [
         Formular, // Standalone Component
         HttpClientTestingModule,
+      ],
+      providers: [
+        { provide: MatSnackBar, useValue: snackBarMock },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
+    snackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
     fixture.detectChanges();
   });
 
