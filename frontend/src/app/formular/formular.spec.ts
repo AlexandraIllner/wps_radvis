@@ -102,6 +102,6 @@ describe('Formular Component', () => {
     tick();
 
     expect(apiService.createReport).toHaveBeenCalled();
-    expect(component.isLoading).toBeFalse();
+    expect(component.isLoading()).toBeFalse();
   }));
 });
