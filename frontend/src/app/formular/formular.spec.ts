@@ -9,7 +9,6 @@ describe('Formular Component', () => {
   let component: Formular;
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
-  let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
 
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
@@ -27,7 +26,6 @@ describe('Formular Component', () => {
     fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
-    snackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
     fixture.detectChanges();
   });
 
