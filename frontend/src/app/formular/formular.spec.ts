@@ -20,6 +20,7 @@ describe('Formular Component', () => {
     fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
+    spyOn(apiService, 'getIssue').and.returnValue(of({})); // Mock observable
     fixture.detectChanges();
   });
 
