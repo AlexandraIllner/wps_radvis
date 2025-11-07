@@ -63,7 +63,7 @@ describe('Formular Component', () => {
   // --------------------------
   // SubmitReport
   // --------------------------
-  it('sollte Alert zeigen wenn keine Kategorie ausgewählt', () => {
+  it('sollte Alert zeigen, wenn keine Kategorie ausgewählt ist', () => {
     spyOn(window, 'alert');
 
     component.selectedCategory = null;
