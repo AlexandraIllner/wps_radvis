@@ -28,9 +28,7 @@ export class PhotoUpload {
 
    @Output() photosSelected = new EventEmitter<File[]>()
 
-  constructor(private snackBar: MatSnackBar) {
-
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   onUploadClick(galleryInput: HTMLInputElement): void {
     // Wenn gerade kein Upload läuft
@@ -40,7 +38,7 @@ export class PhotoUpload {
       // Dateiauswahl öffnen
       galleryInput.click();
 
-      // Optional: Ladezustand simulieren (z. B. 2 Sekunden)
+      // Ladezustand simulieren (später ersetzt durch API)
       setTimeout(() => {
         this.isLoading = false; // Ladezustand beenden
       }, 2000);
@@ -51,7 +49,7 @@ export class PhotoUpload {
 
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files) {
+    if(input.files) {
       const files = Array.from(input.files).slice(0, 3);
 
       //Jede hinzugefügte Datei prüfen
