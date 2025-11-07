@@ -31,8 +31,6 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 })
 export class Formular implements OnInit {
 
-  category = new FormControl();
-  descriptionForm = new FormControl();
 
   selectedCategory: string | null = null;
 
