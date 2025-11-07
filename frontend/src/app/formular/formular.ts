@@ -1,5 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {ReactiveFormsModule, FormsModule,} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule, FormControl,} from '@angular/forms';
 import {ApiService} from '../core/globalService/api.services';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatFormField, MatHint} from '@angular/material/form-field';
@@ -30,6 +30,9 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
   styleUrl: './formular.css'
 })
 export class Formular implements OnInit {
+
+  category = new FormControl();
+  descriptionForm = new FormControl();
 
   selectedCategory: string | null = null;
 
