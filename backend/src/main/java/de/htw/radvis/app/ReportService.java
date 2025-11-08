@@ -2,6 +2,7 @@ package de.htw.radvis.app;
 
 import de.htw.radvis.data.ReportRepository;
 import de.htw.radvis.domain.Report;
+import de.htw.radvis.domain.ReportPhoto;
 import de.htw.radvis.web.ReportCreateDTO;
 import de.htw.radvis.web.ReportResponseDTO;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,15 @@ public class ReportService {
         report.setLatitude(dto.getLatitude());
         report.setLongitude(dto.getLongitude());
 
-        if (photos != null && photos.length > 0 && !photos[0].isEmpty()) {
-            report.setPhoto(photos[0].getBytes());
+        if (photos != null) {
+            for (MultipartFile file : photos) {
+                if (file != null && !file.isEmpty()) {
+                    ReportPhoto photoEntity = new ReportPhoto();
+                    photoEntity.setData(file.getBytes());
+                    photoEntity.setReport(report);
+                    report.getPhotos().add(photoEntity);
+                }
+            }
         }
 
         var saved = reportRepository.save(report);
