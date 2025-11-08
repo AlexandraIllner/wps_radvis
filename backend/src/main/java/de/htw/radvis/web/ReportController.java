@@ -1,5 +1,6 @@
 package de.htw.radvis.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htw.radvis.app.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
@@ -23,9 +24,13 @@ public class ReportController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ReportResponseDTO>createReport(
-            @Valid @RequestPart ReportCreateDTO reportCreateDTO,
+            @RequestPart ("report") String reportJson,
             @RequestPart(value = "photo", required = false) MultipartFile photo
     ) throws IOException {
+        
+        ObjectMapper mapper = new ObjectMapper();
+        ReportCreateDTO reportCreateDTO = mapper.readValue(reportJson, ReportCreateDTO.class);
+
         var response = reportService.create(reportCreateDTO, photo);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
