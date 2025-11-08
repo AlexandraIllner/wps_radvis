@@ -1,11 +1,12 @@
 package de.htw.radvis.app;
 
 import de.htw.radvis.data.ReportRepository;
-import de.htw.radvis.domain.Issue;
 import de.htw.radvis.domain.Report;
 import de.htw.radvis.web.ReportCreateDTO;
 import de.htw.radvis.web.ReportResponseDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @Service
 public class ReportService {
@@ -42,3 +43,4 @@ public class ReportService {
                 saved.getCreationDate()
         );
     }
+}
