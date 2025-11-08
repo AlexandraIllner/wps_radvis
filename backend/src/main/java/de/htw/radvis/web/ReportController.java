@@ -25,13 +25,13 @@ public class ReportController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ReportResponseDTO>createReport(
             @RequestPart ("report") String reportJson,
-            @RequestPart(value = "photo", required = false) MultipartFile photo
+            @RequestPart(value = "photos", required = false) MultipartFile photos
     ) throws IOException {
-        
+
         ObjectMapper mapper = new ObjectMapper();
         ReportCreateDTO reportCreateDTO = mapper.readValue(reportJson, ReportCreateDTO.class);
 
-        var response = reportService.create(reportCreateDTO, photo);
+        var response = reportService.create(reportCreateDTO, photos);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
     }
