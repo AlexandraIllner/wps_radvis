@@ -23,8 +23,9 @@ public class ReportController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ReportResponseDTO>createReport(
-            @Valid @RequestBody ReportCreateDTO reportCreateDTO,
-            @RequestPart(value = "photo", required = false) MultipartFile photo) throws IOException {
+            @Valid @RequestPart ReportCreateDTO reportCreateDTO,
+            @RequestPart(value = "photo", required = false) MultipartFile photo
+    ) throws IOException {
         var response = reportService.create(reportCreateDTO, photo);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
