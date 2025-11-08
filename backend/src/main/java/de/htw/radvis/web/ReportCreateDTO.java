@@ -37,7 +37,7 @@ public class ReportCreateDTO {
         this.description = description;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
@@ -45,7 +45,7 @@ public class ReportCreateDTO {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 

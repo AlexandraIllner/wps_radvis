@@ -27,6 +27,11 @@ public class Report implements Serializable {
     @Column(nullable = false, updatable = false)
     private Instant creationDate = Instant.now();
 
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] photo;
+
+
 
     // ----------- Getter & Setter ------------
 
@@ -77,4 +82,7 @@ public class Report implements Serializable {
     public void setCreationDate(Instant creationDate) {
         this.creationDate = creationDate;
     }
+    public byte[] getPhoto() { return photo; }
+
+    public void setPhoto(byte[] photo) { this.photo = photo; }
 }
