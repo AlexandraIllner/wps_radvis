@@ -32,11 +32,17 @@
       </p>
     }
 
+    <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
+    <app-photo-upload #photoUpload></app-photo-upload>
+
+    <app-camera (photoTaken)="onPhotoFromCamera($event)"></app-camera>
+
+
     <button
       mat-raised-button
       color="primary"
       [disabled]="!selectedCategory && description.trim() === ''"
-      (click)="submitReport()"
+      (click)="submitReport(photoUpload)"
     >
       Absenden
     </button>
