@@ -16,24 +16,23 @@ public class ReportService {
         this.reportRepository = reportRepository;
     }
 
-    public ReportResponseDTO create(ReportCreateDTO dto) {
+    public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile photo) throws IOException {
         Report report = new Report();
 
         if (dto.getIssue() != null) {
             report.setIssue(dto.getIssue());
-        } else {
-            report.setIssue(null);
         }
 
         if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
             report.setDescription(dto.getDescription().trim());
-        } else {
-            report.setDescription(null);
         }
 
         report.setLatitude(dto.getLatitude());
         report.setLongitude(dto.getLongitude());
 
+        if (photo != null && !photo.isEmpty()) {
+            report.setPhoto(photo.getBytes());
+        }
 
         var saved = reportRepository.save(report);
 
@@ -43,4 +42,3 @@ public class ReportService {
                 saved.getCreationDate()
         );
     }
-}
