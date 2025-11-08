@@ -13,7 +13,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatProgressSpinnerModule
   ],
   templateUrl: './photo-upload.html',
-  styleUrl: './photo-upload.css'
+  styleUrls: ['./photo-upload.css']
 })
 
 
@@ -26,33 +26,58 @@ export class PhotoUpload {
   isUploadDisabled = false;
 
 
-   @Output() photosSelected = new EventEmitter<File[]>()
+  @Output() photosSelected = new EventEmitter<File[]>()
 
   constructor(private snackBar: MatSnackBar) {}
 
-  onUploadClick(galleryInput: HTMLInputElement): void {
-    // Wenn gerade kein Upload läuft
-    if (!this.isLoading) {
-      this.isLoading = true; // Ladezustand aktivieren
+  // Wird vom Formular (Parent-Komponente) aufgerufen
+  startUpload(): void {
+    if (this.isLoading || !this.validFiles.length) return;
 
-      // Dateiauswahl öffnen
-      galleryInput.click();
+    this.isLoading = true;
 
-      // Ladezustand simulieren (später ersetzt durch API)
-      setTimeout(() => {
-        this.isLoading = false; // Ladezustand beenden
-      }, 2000);
-    }
+    // Simulierter Upload – später durch echten API-Aufruf ersetzen
+    setTimeout(() => {
+      const uploadSuccess = Math.random() > 0.2; // 80 % Erfolgsquote
+
+      if (uploadSuccess) {
+        this.snackBar.open(
+          'Danke! Ihr Mangel wurde mit Fotos gesendet.',
+          'OK',
+          { duration: 3000 }
+        );
+        this.resetUploadState();
+      } else {
+        this.snackBar.open(
+          'Fehler beim Hochladen der Fotos. Bitte erneut versuchen.',
+          'OK',
+          { duration: 3000 }
+        );
+      }
+
+      this.isLoading = false; //Ladezustand beenden
+    }, 2000);
   }
 
 
+  /**
+   * Setzt alle Upload-bezogenen Zustände zurück.
+   * Wird nach einem erfolgreichen Upload aufgerufen,
+   * damit keine alten Dateien oder Vorschauen sichtbar bleiben.
+   */
 
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if(input.files) {
-      const files = Array.from(input.files).slice(0, 3);
+      this.isLoading= true; // Spinner läuft, wenn die Dateiauswahln startet
 
-      //Jede hinzugefügte Datei prüfen
+      const files = Array.from(input.files).slice(0, 3);
+      this.validFiles = [];
+      this.invalidCount = 0;
+      this.previewUrls = [];
+
+
+      //Jede hinzugefügte Datei wird geprüft
       for (const file of files) {
         if (this.isValidFile(file)) { // wenn gültig → hinzufügen
           this.validFiles.push(file);
@@ -82,26 +107,33 @@ export class PhotoUpload {
       this.isUploadDisabled = this.validFiles.length === 0;
 
 
-      this.selectedFiles = files;
       this.photosSelected.emit(this.selectedFiles);
+      this.selectedFiles = files;
 
-      this.previewUrls = []; // reset previews
-      files.forEach(file => {
+      // Previews werden geladen
+      let loaded = 0;
+      this.validFiles.forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
           this.previewUrls.push(reader.result as string);
+          loaded++;
+          if (loaded === this.validFiles.length) this.isLoading = false; // Spinner AUS, wenn alles geladen
         };
         reader.readAsDataURL(file);
       });
+
     }
+    // Keine gültigen Dateien → Spinner sofort aus
+    if (!this.validFiles.length) this.isLoading = false;
   }
 
+  /** Entfernt ein einzelnes Foto aus der Auswahl */
   removePhoto(index: number): void {
     this.selectedFiles.splice(index, 1);
     this.previewUrls.splice(index, 1);
     this.photosSelected.emit(this.selectedFiles);
   }
-
+   /** Prüft die Dateiendung & -größe */
   private isValidFile(file: File): boolean {
     //Konvertierung des gesamten Strings in Kleinbuchstaben-> Einheitliche Prüfung möglich
     const fileName = file.name.toLowerCase();
@@ -118,6 +150,13 @@ export class PhotoUpload {
 
   }
 
+  /** Upload Status wird nach erfolgreichem Upload zurückgesetzt */
+  private resetUploadState(): void {
+    this.selectedFiles = [];
+    this.previewUrls = [];
+    this.validFiles = [];
+    this.invalidCount = 0;
+  }
 
 
 }

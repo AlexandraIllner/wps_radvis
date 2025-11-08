@@ -1,5 +1,11 @@
+
+<!-- Overlay-Spinner -->
+<div *ngIf="isLoading" class="upload-overlay">
+  <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
+</div>
+
 <div>
-  <h3>Fotos auswählen (max. 3) </h3>
+<h3>Fotos auswählen (max. 3) </h3>
 
   <!-- Versteckter Datei-Input -->
   <input
@@ -16,22 +22,10 @@
     type="button"
     mat-raised-button
     class="camera-btn"
-    (click)="onUploadClick(galleryInput)"
+    (click)="galleryInput.click()"
     aria-label="Bild aus Galerie oder Datei wählen"
     [disabled]="validFiles.length >=3 || isLoading">
     Galerie/Datei
-
-    <!-- Spinner, wenn Upload läuft -->
-    <mat-progress-spinner
-      *ngIf="isLoading"
-      diameter="20"
-      mode="indeterminate"
-      class="spinner"
-    ></mat-progress-spinner>
-
-    <!-- Text je nach Ladezustand -->
-
-    <span *ngIf="isLoading">Lädt...</span>
 
   </button>
 
@@ -62,4 +56,5 @@
       </button>
     </div>
   </div>
-</div>
+
+
