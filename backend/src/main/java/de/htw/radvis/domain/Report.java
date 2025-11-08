@@ -27,9 +27,12 @@ public class Report implements Serializable {
     @Column(nullable = false, updatable = false)
     private Instant creationDate = Instant.now();
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] photo;
+    @OneToMany(
+            mappedBy = "report",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private java.util.List<ReportPhoto> photos = new java.util.ArrayList<>();
 
 
 
@@ -79,10 +82,12 @@ public class Report implements Serializable {
         return creationDate;
     }
 
-    public void setCreationDate(Instant creationDate) {
-        this.creationDate = creationDate;
+    public java.util.List<ReportPhoto> getPhotos() {
+        return photos;
     }
-    public byte[] getPhoto() { return photo; }
 
-    public void setPhoto(byte[] photo) { this.photo = photo; }
+    public void setPhotos(java.util.List<ReportPhoto> photos) {
+        this.photos = photos;
+    }
+
 }
