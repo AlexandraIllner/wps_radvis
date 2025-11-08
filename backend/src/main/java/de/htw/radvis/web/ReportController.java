@@ -25,7 +25,7 @@ public class ReportController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ReportResponseDTO>createReport(
             @RequestPart ("report") String reportJson,
-            @RequestPart(value = "photos", required = false) MultipartFile photos
+            @RequestPart(value = "photos", required = false) MultipartFile[] photos
     ) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();

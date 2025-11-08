@@ -17,7 +17,7 @@ public class ReportService {
         this.reportRepository = reportRepository;
     }
 
-    public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile photo) throws IOException {
+    public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile[] photos) throws IOException {
         Report report = new Report();
 
         if (dto.getIssue() != null) {
@@ -31,8 +31,8 @@ public class ReportService {
         report.setLatitude(dto.getLatitude());
         report.setLongitude(dto.getLongitude());
 
-        if (photo != null && !photo.isEmpty()) {
-            report.setPhoto(photo.getBytes());
+        if (photos != null && photos.length > 0 && !photos[0].isEmpty()) {
+            report.setPhoto(photos[0].getBytes());
         }
 
         var saved = reportRepository.save(report);
