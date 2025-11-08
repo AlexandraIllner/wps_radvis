@@ -2,13 +2,13 @@ package de.htw.radvis.web;
 
 import de.htw.radvis.app.ReportService;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 
 @Controller
@@ -21,9 +21,11 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @PostMapping
-    public ResponseEntity<ReportResponseDTO>createReport(@Valid @RequestBody ReportCreateDTO reportCreateDTO) {
-        var response = reportService.create(reportCreateDTO);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ReportResponseDTO>createReport(
+            @Valid @RequestBody ReportCreateDTO reportCreateDTO,
+            @RequestPart(value = "photo", required = false) MultipartFile photo) throws IOException {
+        var response = reportService.create(reportCreateDTO, photo);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
     }
