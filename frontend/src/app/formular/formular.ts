@@ -69,7 +69,7 @@ export class Formular implements OnInit {
       return;
     }
 
-  //FormData anstatt JSON
+// FormData anstatt JSON
     const formData = new FormData();
     formData.append('issue', this.selectedCategory ?? '');
     formData.append('description', this.description.trim());
