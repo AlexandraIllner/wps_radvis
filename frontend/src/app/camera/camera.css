@@ -5,15 +5,15 @@
 
 .camera-container{
   position: relative;
-  z-index: 9999;
   pointer-events: auto;
   text-align: center;
   padding: .5rem 0;
 }
 
+
 .camera-title {
   margin: .5rem 0 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 

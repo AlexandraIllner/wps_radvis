@@ -7,15 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http'; // deprecated, drunter aktueller Client - aber wo wird's genutzt?
-import {provideHttpClient} from '@angular/common/http';
-import { ApiService } from './core/globalService/api.services';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Formular} from './formular/formular';
 import {Header} from './header/header';
 import {Karte} from './karte/karte';
-import {Camera} from './camera/camera';
-import {PhotoUpload} from './photo-upload/photo-upload';
+
 
 
 @Component({
@@ -34,8 +31,7 @@ import {PhotoUpload} from './photo-upload/photo-upload';
     Formular,
     Header,
     Karte,
-    Camera,
-    PhotoUpload,
+
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
