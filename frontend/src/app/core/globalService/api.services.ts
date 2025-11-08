@@ -1,7 +1,7 @@
 /**
  * ===========================================================================
  * ApiService - Kommunikation mit dem Backend
- * Zentrale Stelle für alle Backend- Kommunikationen
+ * Zentrale Stelle für alle Backend-Kommunikationen
  * ============================================================================
  **/
 
