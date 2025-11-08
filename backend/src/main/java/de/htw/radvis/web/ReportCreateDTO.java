@@ -3,7 +3,6 @@ package de.htw.radvis.web;
 import de.htw.radvis.domain.Issue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class ReportCreateDTO {
