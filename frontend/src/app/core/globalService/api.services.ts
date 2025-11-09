@@ -34,7 +34,7 @@ export class ApiService {
    * POST Request an /api/reports
    * data enthält: category und description
    */
-  createReport(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/reports`, data);
-  }
+ createReport(data: FormData): Observable<any> {
+   return this.http.post(`${this.baseUrl}/api/reports`, data);
+ }
 }
