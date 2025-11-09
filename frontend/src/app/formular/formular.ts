@@ -65,46 +65,41 @@ export class Formular implements OnInit {
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
   submitReport(photoUpload: any): void {
-    // 1.Prüft den Eingang der Meldung
     if (!this.selectedCategory && this.description.trim() === '') {
       alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
       return;
     }
 
-    //2. Daten werden vorbereitet
-    const reportData = {
-      issue: this.selectedCategory ?? 'Keine Kategorie',
-      description: (this.description ?? '').trim(),
-      latitude: 52.52,
-      longitude: 13.405
-    };
+// FormData anstatt JSON
+    const formData = new FormData();
+    formData.append('issue', this.selectedCategory ?? '');
+    formData.append('description', this.description.trim());
+    formData.append('latitude', '52.52');
+    formData.append('longitude', '13.405');
 
-    //Ladezustand wird aktiviert
-    this.isLoading.update((isLoading) => !isLoading);
+    if (photoUpload && photoUpload.validFiles && photoUpload.validFiles.length > 0) {
+      photoUpload.validFiles.forEach((file: File) => {
+        formData.append('photo', file);
+      });
+    }
 
-    console.log('Sende diese Daten:', reportData);
+    this.isLoading.set(true);
+    console.log('Sende FormData ab...');
 
-    // 3. Meldung wird ans Backend gesendet
-    this.apiService.createReport(reportData).subscribe({
+    this.apiService.createReport(formData).subscribe({
       next: response => {
-        console.log('Report gesendet', response);
-        this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', {
-          duration: 3000,
-        });
+        this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
-        // 4️. Upload erst nach erfolgreicher Formularmeldung starten
-        if (photoUpload) {
-          photoUpload.startUpload();
-        }
-
-        // Formularfelder werden zurückgesetzt
         this.selectedCategory = null;
         this.description = '';
-        this.isLoading.update((isLoading) => !isLoading);
+        if (photoUpload) photoUpload.resetFiles();
+
+        this.isLoading.set(false);
       },
       error: error => {
-        this.isLoading.update((isLoading) => !isLoading);
+        this.isLoading.set(false);
         console.error('Fehler beim Submit', error);
+        this.snackBar.open('Fehler beim Senden!', '', { duration: 2500 });
       }
     });
   }
