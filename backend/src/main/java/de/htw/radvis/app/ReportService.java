@@ -1,10 +1,10 @@
 package de.htw.radvis.app;
 
 import de.htw.radvis.data.ReportRepository;
-import de.htw.radvis.domain.Report;
-import de.htw.radvis.domain.ReportPhoto;
-import de.htw.radvis.web.ReportCreateDTO;
-import de.htw.radvis.web.ReportResponseDTO;
+import de.htw.radvis.domain.report.Report;
+import de.htw.radvis.domain.report.ReportPhoto;
+import de.htw.radvis.web.report.ReportCreateDTO;
+import de.htw.radvis.web.report.ReportResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;

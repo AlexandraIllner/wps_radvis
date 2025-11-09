@@ -1,8 +1,7 @@
-package de.htw.radvis.web;
+package de.htw.radvis.web.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htw.radvis.app.ReportService;
-import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
