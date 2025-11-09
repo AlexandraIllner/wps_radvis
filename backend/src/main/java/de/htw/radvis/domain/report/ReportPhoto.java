@@ -1,4 +1,4 @@
-package de.htw.radvis.domain;
+package de.htw.radvis.domain.report;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
