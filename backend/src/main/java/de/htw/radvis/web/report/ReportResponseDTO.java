@@ -1,6 +1,6 @@
-package de.htw.radvis.web;
+package de.htw.radvis.web.report;
 
-import de.htw.radvis.domain.Issue;
+import de.htw.radvis.domain.issue.Issue;
 
 import java.time.Instant;
 
