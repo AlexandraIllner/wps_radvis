@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-karte',
-  imports: [],
   templateUrl: './karte.html',
-  styleUrl: './karte.css'
+  styleUrls: ['./karte.css'],
+  standalone: true,
 })
-export class Karte {
+export class Karte implements OnInit {
+  map?: L.Map;
 
+  ngOnInit(): void {
+    this.map = L.map('map').fitWorld();
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+  }).addTo(this.map);
+  }
 }
