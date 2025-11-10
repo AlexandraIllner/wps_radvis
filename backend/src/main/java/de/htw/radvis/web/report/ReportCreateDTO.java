@@ -1,9 +1,8 @@
-package de.htw.radvis.web;
+package de.htw.radvis.web.report;
 
-import de.htw.radvis.domain.Issue;
+import de.htw.radvis.domain.issue.Issue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class ReportCreateDTO {
@@ -37,7 +36,7 @@ public class ReportCreateDTO {
         this.description = description;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
@@ -45,7 +44,7 @@ public class ReportCreateDTO {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
