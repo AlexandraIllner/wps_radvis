@@ -63,11 +63,13 @@ export class PhotoUpload {
           { duration: 3000 }
         );
       }
-
+      // Gesamtgröße prüfen (max. 30 MB)
+      const totalSize = this.validFiles.reduce((sum, f) => sum + f.size, 0);
+      const maxTotalSize = 30 * 1024 * 1024; // 30 MB
 
       // Warnung anzeigen, falls ungültige Dateien vorhanden sind
       if (this.invalidCount > 0) {
-        this.snackBar.open(`${this.invalidCount} Datei(en) ungültig. Es sind nur JPG/PNG Datein und max. 5MB erlaubt.`,
+        this.snackBar.open(`${this.invalidCount} Datei(en) ungültig. Erlaubt sind JPG/PNG Datein und max. 10MB pro Bild.`,
           'OK',
           {duration: 3000}
         );
@@ -107,7 +109,7 @@ export class PhotoUpload {
   private isValidFile(file: File): boolean {
     //Konvertierung des gesamten Strings in Kleinbuchstaben-> Einheitliche Prüfung möglich
     const fileName = file.name.toLowerCase();
-    const maxSize = 5 * 1024 * 1024; //Max. 5 MB
+    const maxSize = 10 * 1024 * 1024; //Max. 5 MB
 
     //1. Prüft die Dateiendung
     const hasValidExtension = fileName.endsWith(".jpg") || fileName.endsWith(".png");
