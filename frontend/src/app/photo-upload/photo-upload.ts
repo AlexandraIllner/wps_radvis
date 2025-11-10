@@ -109,7 +109,7 @@ export class PhotoUpload {
   private isValidFile(file: File): boolean {
     //Konvertierung des gesamten Strings in Kleinbuchstaben-> Einheitliche Prüfung möglich
     const fileName = file.name.toLowerCase();
-    const maxSize = 10 * 1024 * 1024; //Max. 5 MB
+    const maxSize = 10 * 1024 * 1024; //Max. 10 MB
 
     //1. Prüft die Dateiendung
     const hasValidExtension = fileName.endsWith(".jpg") || fileName.endsWith(".png");
