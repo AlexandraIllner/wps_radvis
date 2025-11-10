@@ -30,36 +30,6 @@ export class PhotoUpload {
 
   constructor(private snackBar: MatSnackBar) {}
 
-  // Wird vom Formular (Parent-Komponente) aufgerufen
-  startUpload(): void {
-    if (this.isLoading || !this.validFiles.length) return;
-
-    this.isLoading = true;
-
-    // Simulierter Upload – später durch echten API-Aufruf ersetzen
-    setTimeout(() => {
-      const uploadSuccess = Math.random() > 0.2; // 80 % Erfolgsquote
-
-      if (uploadSuccess) {
-        this.snackBar.open(
-          'Danke! Ihr Mangel wurde mit Fotos gesendet.',
-          'OK',
-          { duration: 3000 }
-        );
-        this.resetUploadState();
-      } else {
-        this.snackBar.open(
-          'Fehler beim Hochladen der Fotos. Bitte erneut versuchen.',
-          'OK',
-          { duration: 3000 }
-        );
-      }
-
-      this.isLoading = false; //Ladezustand beenden
-    }, 2000);
-  }
-
-
   /**
    * Setzt alle Upload-bezogenen Zustände zurück.
    * Wird nach einem erfolgreichen Upload aufgerufen,
