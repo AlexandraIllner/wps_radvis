@@ -30,8 +30,7 @@ import { PhotoUpload } from './photo-upload/photo-upload';
     Formular,
     Header,
     Karte,
-    Camera,
-    PhotoUpload,
+
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
