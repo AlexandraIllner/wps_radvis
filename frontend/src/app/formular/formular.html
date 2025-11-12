@@ -33,9 +33,9 @@
     }
 
     <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
-    <app-photo-upload #photoUpload></app-photo-upload>
+    <app-photo-upload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
 
-    <app-camera (photoTaken)="onPhotoFromCamera($event)"></app-camera>
+    <<app-camera (photoTaken)="onPhotoAdded($event)"></app-camera>
 
 
     <button
