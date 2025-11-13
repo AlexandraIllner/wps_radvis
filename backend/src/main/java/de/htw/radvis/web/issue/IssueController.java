@@ -1,6 +1,6 @@
-package de.htw.radvis.web;
+package de.htw.radvis.web.issue;
 
-import de.htw.radvis.domain.Issue;
+import de.htw.radvis.domain.issue.Issue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
