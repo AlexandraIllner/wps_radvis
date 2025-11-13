@@ -72,18 +72,25 @@ export class Formular implements OnInit {
       return;
     }
 
-// FormData anstatt JSON
+    //  Create Report Object
+    const report = {
+    issue: this.selectedCategory,
+    description: this.description.trim(),
+    latitude: 52.52,
+    longitude: 13.405
+  };
+    // send as BLOB
     const formData = new FormData();
-    formData.append('issue', this.selectedCategory ?? '');
-    formData.append('description', this.description.trim());
-    formData.append('latitude', '52.52');
-    formData.append('longitude', '13.405');
+    formData.append(
+    'report',
+    new Blob([JSON.stringify(report)], { type: 'application/json' })
+  );
 
-    if (this.selectedFiles.length > 0) {
-      this.selectedFiles.forEach((file: File) => {
-        formData.append('photo', file);
-      });
-    }
+  // send fotos with same name than backend
+  this.selectedFiles.forEach((file: File) => {
+  formData.append('photos', file);
+  });
+
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
