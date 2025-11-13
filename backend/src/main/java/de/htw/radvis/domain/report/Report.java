@@ -1,5 +1,6 @@
-package de.htw.radvis.domain;
+package de.htw.radvis.domain.report;
 
+import de.htw.radvis.domain.issue.Issue;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,6 +27,14 @@ public class Report implements Serializable {
 
     @Column(nullable = false, updatable = false)
     private Instant creationDate = Instant.now();
+
+    @OneToMany(
+            mappedBy = "report",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private java.util.List<ReportPhoto> photos = new java.util.ArrayList<>();
+
 
 
     // ----------- Getter & Setter ------------
@@ -74,7 +83,12 @@ public class Report implements Serializable {
         return creationDate;
     }
 
-    public void setCreationDate(Instant creationDate) {
-        this.creationDate = creationDate;
+    public java.util.List<ReportPhoto> getPhotos() {
+        return photos;
     }
+
+    public void setPhotos(java.util.List<ReportPhoto> photos) {
+        this.photos = photos;
+    }
+
 }
