@@ -43,6 +43,8 @@ export class Formular implements OnInit {
 
   isLoading = signal(false);
 
+  selectedFiles: File[] = [];
+
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -77,8 +79,8 @@ export class Formular implements OnInit {
     formData.append('latitude', '52.52');
     formData.append('longitude', '13.405');
 
-    if (photoUpload && photoUpload.validFiles && photoUpload.validFiles.length > 0) {
-      photoUpload.validFiles.forEach((file: File) => {
+    if (this.selectedFiles.length > 0) {
+      this.selectedFiles.forEach((file: File) => {
         formData.append('photo', file);
       });
     }
@@ -102,6 +104,32 @@ export class Formular implements OnInit {
         this.snackBar.open('Fehler beim Senden!', '', { duration: 2500 });
       }
     });
+  }
+
+  /**
+   * Wird aufgerufen, wenn ein Foto über die Kamera aufgenommen wird.
+   * Speichert das Foto in selectedFiles, damit es beim Absenden des Formulars mitgeschickt wird.
+   * console.log, dient nur zum Testen.
+   */
+  onPhotoAdded(photo: File | null): void {
+    if (photo) {
+      console.log('Kamera-Foto empfangen:', photo.name);
+      this.selectedFiles.push(photo);
+    } else {
+      console.warn('onPhotoAdded aufgerufen, aber kein Foto empfangen.');
+    }
+  }
+
+  /**
+   * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
+   * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
+   * console.log dient nur zum Testen.
+   */
+  onPhotosSelected(files: File[]): void {
+    if (files && files.length > 0) {
+      console.log('Upload-Fotos empfangen:', files.map(f => f.name));
+      this.selectedFiles.push(...files);
+    }
   }
 
   /**

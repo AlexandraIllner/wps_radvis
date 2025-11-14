@@ -33,10 +33,9 @@
     }
 
     <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
-    <app-photo-upload #photoUpload></app-photo-upload>
+    <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
 
-    <app-camera (photoTaken)="onPhotoFromCamera($event)"></app-camera>
-
+    <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
 
     <button
       mat-raised-button
