@@ -18,14 +18,16 @@ module.exports = function (config) {
     /*
     auskommentierte Teile für Linux-Systeme,
     die ChromeHeadless nicht out of the box unterstützen
-     */
-    // browsers: ['google-chrome-stable --headless', 'ChromeHeadlessCI'],
+    LINUX:
+    browsers: ['google-chrome-stable --headless', 'ChromeHeadlessCI'],
+    */
     browsers: ['ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true,
     customLaunchers: {
       ChromeHeadlessCI: {
-        // base: 'google-chrome-stable --headless',
+        // LINUX
+        //base: 'google-chrome-stable --headless',
         base: 'ChromeHeadless',
         flags: ['--no-sandbox', '--disable-gpu'],
       },
