@@ -1,5 +1,4 @@
-
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,11 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http'; // deprecated, drunter aktueller Client - aber wo wird's genutzt?
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Formular} from './formular/formular';
-import {Header} from './header/header';
-import {Karte} from './karte/karte';
-
-
+import { Formular } from './formular/formular';
+import { Header } from './header/header';
+import { Karte } from './karte/karte';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +28,6 @@ import {Karte} from './karte/karte';
     Formular,
     Header,
     Karte,
-
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -43,6 +39,4 @@ export class App {
     this.photoFile = file;
     console.log('Foto im Parent empfangen:', file);
   }
-
-
 }
