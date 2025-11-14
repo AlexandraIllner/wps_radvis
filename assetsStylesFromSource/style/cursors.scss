@@ -13,13 +13,19 @@
  */
 
 .point-selection-cursor {
-  cursor: url('../../frontend/src/assets/punkt_auswahl.svg') 12 12, auto;
+  cursor:
+    url("../../frontend/src/assets/punkt_auswahl.svg") 12 12,
+    auto;
 }
 
 .schere-cursor {
-  cursor: url('../../frontend/src/assets/schere.svg') 12 12, auto;
+  cursor:
+    url("../../frontend/src/assets/schere.svg") 12 12,
+    auto;
 }
 
 .flag-cursor {
-  cursor: url('../../frontend/src/assets/add_flag.png') 12 12, auto;
+  cursor:
+    url("../../frontend/src/assets/add_flag.png") 12 12,
+    auto;
 }
