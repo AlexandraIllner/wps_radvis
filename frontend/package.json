@@ -5,7 +5,11 @@
     "start:frontend": "ng serve",
     "start:backend": "cd ../backend && ./mvnw spring-boot:run",
     "start:dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "test": "ng test --browsers=ChromeHeadless"
+    "test": "ng test --browsers=ChromeHeadless",
+    "linux-test": "ng test --browsers=ChromeHeadlessCI",
+    "trunk": "trunk",
+    "lint": "trunk check",
+    "fmt": "trunk fmt"
   },
   "prettier": {
     "printWidth": 100,
