@@ -6,13 +6,13 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma'),
+      require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      clearContext: false,
+      clearContext: false
     },
     jasmineHtmlReporter: {
-      suppressAll: true,
+      suppressAll: true
     },
     reporters: ['progress', 'kjhtml'],
     /*
@@ -27,10 +27,10 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         // LINUX
-        //base: 'google-chrome-stable --headless',
+        // base: 'google-chrome-stable --headless',
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu'],
+        flags: ['--no-sandbox', '--disable-gpu']
       },
-    },
-  });
-};
+    }
+  })
+}
