@@ -11,8 +11,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Formular } from './formular/formular';
 import { Header } from './header/header';
 import { Karte } from './karte/karte';
-import { Camera } from './camera/camera';
-import { PhotoUpload } from './photo-upload/photo-upload';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +28,6 @@ import { PhotoUpload } from './photo-upload/photo-upload';
     Formular,
     Header,
     Karte,
-
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
