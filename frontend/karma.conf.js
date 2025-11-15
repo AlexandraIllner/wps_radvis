@@ -15,14 +15,22 @@ module.exports = function (config) {
       suppressAll: true
     },
     reporters: ['progress', 'kjhtml'],
+    /*
+    auskommentierte Teile für Linux-Systeme,
+    die ChromeHeadless nicht out of the box unterstützen
+    LINUX:
+    browsers: ['google-chrome-stable --headless', 'ChromeHeadlessCI'],
+    */
     browsers: ['ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true,
     customLaunchers: {
       ChromeHeadlessCI: {
+        // LINUX
+        // base: 'google-chrome-stable --headless',
         base: 'ChromeHeadless',
         flags: ['--no-sandbox', '--disable-gpu']
-      }
+      },
     }
-  });
-};
+  })
+}
