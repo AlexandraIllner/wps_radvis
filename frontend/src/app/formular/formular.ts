@@ -43,6 +43,8 @@ export class Formular implements OnInit {
 
   isLoading = signal(false);
 
+  selectedFiles: File[] = [];
+
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -70,18 +72,25 @@ export class Formular implements OnInit {
       return;
     }
 
-// FormData anstatt JSON
+    //  Create Report Object
+    const report = {
+    issue: this.selectedCategory,
+    description: this.description.trim(),
+    latitude: 52.52,
+    longitude: 13.405
+  };
+    // send as BLOB
     const formData = new FormData();
-    formData.append('issue', this.selectedCategory ?? '');
-    formData.append('description', this.description.trim());
-    formData.append('latitude', '52.52');
-    formData.append('longitude', '13.405');
+    formData.append(
+    'report',
+    new Blob([JSON.stringify(report)], { type: 'application/json' })
+  );
 
-    if (photoUpload && photoUpload.validFiles && photoUpload.validFiles.length > 0) {
-      photoUpload.validFiles.forEach((file: File) => {
-        formData.append('photo', file);
-      });
-    }
+  // send fotos with same name than backend
+  this.selectedFiles.forEach((file: File) => {
+  formData.append('photos', file);
+  });
+
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
@@ -102,6 +111,32 @@ export class Formular implements OnInit {
         this.snackBar.open('Fehler beim Senden!', '', { duration: 2500 });
       }
     });
+  }
+
+  /**
+   * Wird aufgerufen, wenn ein Foto über die Kamera aufgenommen wird.
+   * Speichert das Foto in selectedFiles, damit es beim Absenden des Formulars mitgeschickt wird.
+   * console.log, dient nur zum Testen.
+   */
+  onPhotoAdded(photo: File | null): void {
+    if (photo) {
+      console.log('Kamera-Foto empfangen:', photo.name);
+      this.selectedFiles.push(photo);
+    } else {
+      console.warn('onPhotoAdded aufgerufen, aber kein Foto empfangen.');
+    }
+  }
+
+  /**
+   * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
+   * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
+   * console.log dient nur zum Testen.
+   */
+  onPhotosSelected(files: File[]): void {
+    if (files && files.length > 0) {
+      console.log('Upload-Fotos empfangen:', files.map(f => f.name));
+      this.selectedFiles.push(...files);
+    }
   }
 
   /**
