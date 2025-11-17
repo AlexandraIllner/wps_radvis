@@ -1,0 +1,12 @@
+.image-container {
+  width: 4vw;
+  height: 8vh;
+  margin-bottom: 10px;
+  justify-content: right;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}

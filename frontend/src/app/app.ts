@@ -33,6 +33,7 @@ import { Karte } from './karte/karte';
   styleUrl: './app.css',
 })
 export class App {
+  public showMap = true;
   photoFile: File | null = null;
 
   onPhotoFromCamera(file: File | null) {
