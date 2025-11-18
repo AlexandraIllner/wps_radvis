@@ -72,18 +72,28 @@ export class Formular implements OnInit {
       return;
     }
 
-// FormData anstatt JSON
-    const formData = new FormData();
-    formData.append('issue', this.selectedCategory ?? '');
-    formData.append('description', this.description.trim());
-    formData.append('latitude', '52.52');
-    formData.append('longitude', '13.405');
+  /// Backend erwartet ein "report"
+    const report = {
+   issue: this.selectedCategory ?? '',
+   description: this.description.trim(),
+   latitude: 52.52,
+   longitude: 13.405
+ };
 
+ // FormData mit Report und JSON
+  const formData = new FormData();
+  formData.append(
+   'report',
+   new Blob([JSON.stringify(report)], { type: 'application/json' })
+ );
+
+ // Fotos (MockBackend "photo")
     if (this.selectedFiles.length > 0) {
-      this.selectedFiles.forEach((file: File) => {
-        formData.append('photo', file);
-      });
-    }
+      this.selectedFiles.forEach(file => {
+      formData.append('photo', file);
+   });
+ }
+
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
