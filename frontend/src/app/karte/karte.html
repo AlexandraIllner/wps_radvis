@@ -1,26 +1,23 @@
-<!-- <!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>RadVIS-Viewer</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <!- Make sure you put this AFTER Leaflet's CSS ->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
-</head> -->
-
-    <div id="map">
-        <p>Karte hier</p>
+<!--@if (showMap) {-->
+  <div class="karte">
+      <div class="karte-body">
+        <h3 class="karte-title">Teilen Sie ihren Standort oder markieren Sie ihn auf der Karte</h3>
+        <div class="row">
+          <form class="col">
+            <button mat-raised-button color="primary" disabled>
+              Auf der Karte markieren
+            </button>
+          </form>
+        </div>
+        <!-- Map -->
+        <div
+          leaflet
+          [leafletOptions]="options"
+          (leafletMapReady)="onMapReady($event)"
+          style="height: 400px; width: 100%;"
+        >
+        </div>
+      </div>
     </div>
-    <script>
-        const map = L.map('map').fitWorld();
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
-    </script>
+<!--}-->
