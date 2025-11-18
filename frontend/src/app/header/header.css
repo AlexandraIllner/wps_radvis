@@ -2,7 +2,8 @@
   width: 4vw;
   height: 8vh;
   margin-bottom: 10px;
-  justify-content: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .image-container img {
