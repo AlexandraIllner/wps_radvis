@@ -34,7 +34,9 @@
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@bluehalo/ngx-leaflet": "^20.0.0",
+    "@runette/ngx-leaflet-locate": "^2.0.7",
     "leaflet": "^1.9.4",
+    "leaflet.locatecontrol": "^0.85.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
