@@ -18,7 +18,7 @@ export class Karte {
   osmUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   osmAttrib = 'Map data © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
   private lat_long: [number, number] = [48.72720881940671, 9.266967773437502];
-  currentLocation: [number, number] = [52.513172, 13.270004];
+  currentLocation: [number, number] | undefined = undefined;
   getCurrentLocation(latLng: L.LatLng) {
     this.currentLocation = [latLng.lat, latLng.lng];
     return this.currentLocation;
