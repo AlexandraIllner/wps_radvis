@@ -38,6 +38,7 @@
     <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
 
     <button
+      type="button"
       mat-raised-button
       color="primary"
       [disabled]="!selectedCategory && description.trim() === ''"
@@ -45,6 +46,7 @@
     >
       Absenden
     </button>
+
 
     @if (isLoading()) {
       <div style="margin-top: 1rem;  display: flex; justify-content: center;" >
