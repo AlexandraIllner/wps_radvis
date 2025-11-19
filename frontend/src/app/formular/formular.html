@@ -1,6 +1,12 @@
 <div class="formular-container">
   <h1>Neue Meldung</h1>
 
+  @if (!selectedCategory && description.trim() === '') {
+    <p style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;">
+      Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
+    </p>
+  }
+
   <form>
     <mat-form-field appearance="outline">
       <mat-label>Mängelkategorie</mat-label>
@@ -26,16 +32,12 @@
           Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
         </p>-->
 
-    @if (!selectedCategory && description.trim() === '') {
-      <p style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;">
-        Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
-      </p>
-    }
 
     <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
+    <div class="upload-camera-container">
     <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
-
     <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
+    </div>
 
     <button
       type="button"
@@ -54,8 +56,6 @@
       </div>
     }
   </form>
-
-
 </div>
 
 

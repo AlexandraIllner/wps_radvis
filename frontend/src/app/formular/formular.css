@@ -1,0 +1,11 @@
+.upload-camera-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.upload-camera-container app-photo-upload,
+.upload-camera-container app-camera {
+  flex: 1 1 0;
+}
