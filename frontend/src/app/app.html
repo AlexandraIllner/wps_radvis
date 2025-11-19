@@ -1,12 +1,19 @@
 <main>
   <app-header></app-header>
+  <!--  @defer {
+      <app-karte></app-karte>
+    } @placeholder {
+      <div style="margin-top: 1rem;  display: flex; justify-content: center;">
+        <mat-spinner diameter="30" color="primary"></mat-spinner>
+      </div>
+    } @error {
+      <p>Karte und Formular können nicht geladen werden.</p>
+    }-->
+  <app-karte></app-karte>
   <app-formular></app-formular>
-
-
   <p *ngIf="photoFile" style="margin-top:.5rem; text-align:center;">
     Foto im Formular: <strong>{{ photoFile.name }}</strong>
   </p>
 
-  <app-karte></app-karte>
 </main>
 
