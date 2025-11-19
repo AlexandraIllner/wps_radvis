@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -23,9 +23,9 @@ export class PhotoUpload {
   isLoading = false;
   validFiles: File[] = [];
   invalidCount= 0;
-  isUploadDisabled = false;
 
 
+  @ViewChild('galleryInput') galleryInput!: ElementRef<HTMLInputElement>;
   @Output() photosSelected = new EventEmitter<File[]>()
 
   constructor(private snackBar: MatSnackBar) {}
@@ -150,11 +150,15 @@ export class PhotoUpload {
   }
 
   /** Upload Status wird nach erfolgreichem Upload zurückgesetzt */
-  private resetUploadState(): void {
+  resetUploadState(): void {
     this.selectedFiles = [];
     this.previewUrls = [];
     this.validFiles = [];
     this.invalidCount = 0;
+
+    if (this.galleryInput) {
+      this.galleryInput.nativeElement.value = '';
+    }
   }
 
 
