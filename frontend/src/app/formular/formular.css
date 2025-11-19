@@ -9,3 +9,22 @@
 .upload-camera-container app-camera {
   flex: 1 1 0;
 }
+
+.hinweistext {
+  background: #FFF4D6;
+  border: 1.5px solid #F6C56A;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  /*margin: 0 auto 1rem auto;
+  width: 100%;*/
+  max-width: 420px;
+  width: 280px;
+  margin-top: 1rem;
+  align-self: center;
+
+  color: #5A4A20;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+
