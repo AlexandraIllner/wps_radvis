@@ -99,9 +99,11 @@ export class Formular implements OnInit {
       next: response => {
         this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
+        // NACH erfolgreichem Senden:
         this.selectedCategory = null;
         this.description = '';
-        if (photoUpload) photoUpload.resetFiles();
+        this.selectedFiles = [];  // ← Fotos zurücksetzen
+
 
         this.isLoading.set(false);
       },
