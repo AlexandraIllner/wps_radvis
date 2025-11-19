@@ -6,7 +6,7 @@
       <mat-label>Mängelkategorie</mat-label>
       <mat-select [(ngModel)]="selectedCategory" name="category">
         @for (cat of categories; track cat) {
-          <mat-option [value]="cat.valueOf">{{ cat }}</mat-option>
+        <mat-option [value]="cat">{{ cat }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -38,6 +38,7 @@
     <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
 
     <button
+      type="button"
       mat-raised-button
       color="primary"
       [disabled]="!selectedCategory && description.trim() === ''"
@@ -46,8 +47,9 @@
       Absenden
     </button>
 
+
     @if (isLoading()) {
-      <div animate.enter="enter-animation" style="margin-top: 1rem;">
+      <div style="margin-top: 1rem;  display: flex; justify-content: center;" >
         <mat-spinner diameter="30" color="primary"></mat-spinner>
       </div>
     }
