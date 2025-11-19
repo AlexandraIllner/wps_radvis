@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ViewChild} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {ApiService} from '../core/globalService/api.services';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -44,6 +44,9 @@ export class Formular implements OnInit {
   isLoading = signal(false);
 
   selectedFiles: File[] = [];
+
+  @ViewChild('photoUpload') photoUpload!: PhotoUpload;
+
 
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
@@ -104,6 +107,7 @@ export class Formular implements OnInit {
         this.description = '';
         this.selectedFiles = [];  // ← Fotos zurücksetzen
 
+        this.photoUpload.resetUploadState();
 
         this.isLoading.set(false);
       },
