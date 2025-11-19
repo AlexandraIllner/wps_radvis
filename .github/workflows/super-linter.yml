@@ -25,7 +25,6 @@ jobs:
         uses: github/super-linter@v4
         env:
           FIX_TYPESCRIPT_ES: true
-          FIX_CSS_PRETTIER: true
           VALIDATE_CSS: false
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_TYPESCRIPT_STANDARD: false
