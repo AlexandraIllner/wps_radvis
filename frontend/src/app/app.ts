@@ -12,6 +12,7 @@ import { Formular } from './formular/formular';
 import { Header } from './header/header';
 import { Karte } from './karte/karte';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
