@@ -6,7 +6,7 @@
       <mat-label>Mängelkategorie</mat-label>
       <mat-select [(ngModel)]="selectedCategory" name="category">
         @for (cat of categories; track cat) {
-          <mat-option [value]="cat.valueOf">{{ cat }}</mat-option>
+        <mat-option [value]="cat">{{ cat }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
