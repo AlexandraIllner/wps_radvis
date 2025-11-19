@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ViewChild} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {ApiService} from '../core/globalService/api.services';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -44,6 +44,9 @@ export class Formular implements OnInit {
   isLoading = signal(false);
 
   selectedFiles: File[] = [];
+
+  @ViewChild('photoUpload') photoUpload!: PhotoUpload;
+
 
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
@@ -99,9 +102,12 @@ export class Formular implements OnInit {
       next: response => {
         this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
+        // NACH erfolgreichem Senden:
         this.selectedCategory = null;
         this.description = '';
-        if (photoUpload) photoUpload.resetFiles();
+        this.selectedFiles = [];  // ← Fotos zurücksetzen
+
+        this.photoUpload.resetUploadState();
 
         this.isLoading.set(false);
       },
