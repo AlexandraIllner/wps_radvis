@@ -3,11 +3,10 @@
 
   @if (!selectedCategory && description.trim() === '') {
     <p class="hinweistext">
-    Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
+    Bitte wählen Sie eine Kategorie oder geben Sie eine Beschreibung ein!
   </p>
 }
 
-<form class="form-spacing">
   <mat-form-field appearance="outline" class="category-field">
     <mat-label>Mängelkategorie</mat-label>
     <mat-select [(ngModel)]="selectedCategory" name="category">
@@ -61,7 +60,6 @@
         <mat-spinner diameter="30" color="primary"></mat-spinner>
       </div>
     }
-  </form>
 </div>
 
 

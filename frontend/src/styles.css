@@ -50,22 +50,21 @@ button {
     max-width: 500px;
   }
 }
-/*
-  nur, weil es so komisch aussah - gerne ändern!
- */
-mat-form-field, mat-raised-button{
-  width: 280px;
-  margin-top: 1rem;
-  align-self: center;
-}
-
-h1, button, mat-spinner {
-  align-self: center;
-}
 
 .formular-container {
+  max-width: 448px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 20px;
+  background: linear-gradient(to bottom, #f9fafb, white);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1rem;
 }
 
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
