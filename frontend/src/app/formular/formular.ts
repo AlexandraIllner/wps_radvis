@@ -136,7 +136,6 @@ export class Formular implements OnInit {
   /**
    * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
    * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
-   * console.log dient nur zum Testen.
    */
   onPhotosSelected(files: File[]): void {
     const newOnes = files.filter(
