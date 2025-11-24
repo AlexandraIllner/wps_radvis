@@ -6,6 +6,9 @@ import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
+
+
+
 @Component({
   selector: 'app-karte',
   templateUrl: './karte.html',
@@ -22,6 +25,8 @@ export class Karte {
 
   selectedLat: number | null = null;
   selectedLng: number | null = null;
+
+  marker?: L.CircleMarker;
 
   getCurrentLocation(latLng: L.LatLng) {
     this.currentLocation = [latLng.lat, latLng.lng];
@@ -61,7 +66,31 @@ export class Karte {
       this.getCurrentLocation(latLng);
       console.log(this.currentLocation);
     });
+
+    // Aktiviert Click Event auf Karte
+    this.map.on('click', (event: L.LeafletMouseEvent) => this.onMapClick(event));
   }
+
+  setMarker(lat: number, lng: number): void {
+    if (!this.map) return;
+
+    // alten Marker entfernen
+    if (this.marker) {
+      this.map.removeLayer(this.marker);
+    }
+
+    // neuen CircleMarker setzen
+    this.marker = L.circleMarker([lat, lng], {
+      radius: 10,
+      color: '#d32f2f',
+      weight: 3,
+      fillColor: '#f44336',
+      fillOpacity: 0.9,
+    });
+
+    this.marker.addTo(this.map);
+
+}
 
   onMapClick(event: L.LeafletMouseEvent): void {
     this.selectedLat = event.latlng.lat;
@@ -71,8 +100,12 @@ export class Karte {
       lat: this.selectedLat,
       lng: this.selectedLng,
     });
-  }
 
+
+    if (this.selectedLat !== null && this.selectedLng !== null) {
+      this.setMarker(this.selectedLat, this.selectedLng);
+    }
+  }
   sendLocation() {
     this.showMap = false;
     console.log('loc sent!', this.currentLocation);
