@@ -19,6 +19,7 @@
         leaflet
         [leafletOptions]="options"
         (leafletMapReady)="onMapReady($event)"
+        (leafletClick)="onMapClick($event)"
         style="height: 400px; width: 100%;"
       >
       </div>
