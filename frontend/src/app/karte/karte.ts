@@ -19,6 +19,10 @@ export class Karte {
   osmAttrib = 'Map data © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
   private lat_long: [number, number] = [48.72720881940671, 9.266967773437502];
   currentLocation: [number, number] | undefined = undefined;
+
+  selectedLat: number | null = null;
+  selectedLng: number | null = null;
+
   getCurrentLocation(latLng: L.LatLng) {
     this.currentLocation = [latLng.lat, latLng.lng];
     return this.currentLocation;
@@ -56,6 +60,16 @@ export class Karte {
       // Call your function with the latLng
       this.getCurrentLocation(latLng);
       console.log(this.currentLocation);
+    });
+  }
+
+  onMapClick(event: L.LeafletMouseEvent): void {
+    this.selectedLat = event.latlng.lat;
+    this.selectedLng = event.latlng.lng;
+
+    console.log('Ausgewählte Koordinaten:', {
+      lat: this.selectedLat,
+      lng: this.selectedLng,
     });
   }
 
