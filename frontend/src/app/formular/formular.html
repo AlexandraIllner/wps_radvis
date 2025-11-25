@@ -2,11 +2,13 @@
   <h1>Neue Meldung</h1>
 
 
-  @if (!selectedCategory && description.trim() === '') {
-    <p class="hinweistext">
-    Bitte wählen Sie eine Kategorie oder geben Sie eine Beschreibung ein!
-  </p>
-}
+    @if (!selectedCategory && description.trim() === '') {
+  <div class="radmelder-hinweis">
+    <mat-icon class="hinweis-icon">info_outline</mat-icon>
+    <span>Bitte wählen Sie eine Kategorie oder geben Sie eine Beschreibung ein.</span>
+  </div>
+    }
+
 
   <mat-form-field appearance="outline" class="radmelder-select">
   <mat-label>Mängelkategorie</mat-label>
