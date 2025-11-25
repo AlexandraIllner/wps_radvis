@@ -40,12 +40,51 @@ body {
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 
+// RadMELDER Palettes
+$radmelder-blue: (
+  0: #000000,
+  10: #001d35,
+  20: #00325a,
+  25: #003e6f,
+  30: #004a84,
+  35: #00569a,
+  40: #1D6FAF,
+  50: #4589c9,
+  60: #67a4e0,
+  70: #89bff7,
+  80: #b3d6ff,
+  90: #d8e9ff,
+  95: #ecf4ff,
+  98: #f8f9ff,
+  99: #fcfcff,
+  100: #ffffff,
+);
+
+$radmelder-pink: (
+  0: #000000,
+  10: #3d0022,
+  20: #5f0037,
+  25: #710043,
+  30: #84004f,
+  35: #97005b,
+  40: #ab0067,
+  50: #D6127D,
+  60: #e94096,
+  70: #f76baf,
+  80: #ff95c8,
+  90: #ffc0de,
+  95: #ffdde9,
+  98: #fff0f3,
+  99: #fffbff,
+  100: #ffffff,
+);
+
 
 html {
   @include mat.theme((
     color: (
-      primary: mat.$rose-palette,
-      tertiary: mat.$red-palette,
+      primary: $radmelder-blue,
+      tertiary: $radmelder-pink,
     ),
     typography: Roboto,
     density: 0,

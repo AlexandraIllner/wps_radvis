@@ -44,25 +44,6 @@
   }
 }
 
-/*
-.media-field {
-  width: 100%;
-  background: #ffffff;
-  border: 2px dashed #d1d5db;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-
-.media-inner {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  justify-content: space-between;
-}*/
-
 @media (max-width: 600px) {
   .media-inner {
     flex-direction: column;
@@ -71,23 +52,22 @@
 
 .media-field {
   width: 100%;
-  max-width: 400px; /* wie andere Felder */
+  max-width: 400px;
   background: #ffffff;
   border: 2px dashed #d1d5db;
-  border-radius: 16px; /* passend zu mat-form-field */
+  border-radius: 16px;
   padding: 1rem;
-  margin-top: 1rem; /* wie andere Felder */
+  margin-top: 1rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* vertikaler Abstand zwischen Buttons und Vorschau */
+  gap: 0.75rem;
 }
 
-/* Inhalte nebeneinander */
 .media-inner {
   display: flex;
   flex-direction: row;
-  gap: 8px; /* kleiner Abstand zwischen Kamera und Galerie */
+  gap: 8px;
   justify-content: space-between;
   width: 100%;
 }
@@ -95,6 +75,52 @@
 .media-inner app-photo-upload,
 .media-inner app-camera {
   flex: 1;
+}
+
+::ng-deep .mat-mdc-text-field-radmelder-select,
+::ng-deep .mdc-line-ripple {
+  display: none !important;
+}
+
+::ng-deep .radmelder-select,
+::ng-deep .radmelder-textarea {
+  width: 100%;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__leading,
+::ng-deep .radmelder-textarea .mdc-notched-outline__leading {
+  border-radius: 16px 0 0 16px !important;
+  border-width: 2px !important;
+  border-color: #e5e7eb !important;
+  border-right: none !important;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__trailing,
+::ng-deep .radmelder-textarea .mdc-notched-outline__trailing {
+  border-radius: 0 16px 16px 0 !important;
+  border-width: 2px !important;
+  border-color: #e5e7eb !important;
+  border-left: none !important;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__notch,
+::ng-deep .radmelder-textarea .mdc-notched-outline__notch {
+  border-width: 2px 0 !important;
+  border-color: #e5e7eb !important;
+}
+
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__leading,
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__notch,
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__trailing,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__leading,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__notch,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__trailing {
+  border-color: #1D6FAF !important;
+}
+
+::ng-deep .radmelder-select.mat-focused .mat-mdc-floating-label,
+::ng-deep .radmelder-textarea.mat-focused .mat-mdc-floating-label {
+  color: #1D6FAF !important;
 }
 
 
