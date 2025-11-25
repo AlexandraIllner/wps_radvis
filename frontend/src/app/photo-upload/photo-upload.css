@@ -3,7 +3,6 @@
   display: block;
 }
 
-
 .camera-container{
   position: relative;
   pointer-events: auto;
@@ -75,6 +74,5 @@
   border-radius: 10px;
   z-index: 10;
 }
-
 
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
