@@ -1,6 +1,7 @@
 <div class="formular-container">
   <h1>Neue Meldung</h1>
 
+
   @if (!selectedCategory && description.trim() === '') {
     <p class="hinweistext">
     Bitte wählen Sie eine Kategorie oder geben Sie eine Beschreibung ein!
@@ -39,27 +40,30 @@
           </p>-->
 
     <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
-    <div class="upload-camera-container">
-    <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
-    <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
-    </div>
 
-    <button
-      type="button"
-      mat-raised-button
-      color="primary"
-      class="submit-button"
-      [disabled]="!selectedCategory && description.trim() === ''"
-      (click)="submitReport(photoUpload)"
-    >
-      Meldung senden
-    </button>
+  <div class="media-field">
+    <div class="media-inner">
+   <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
+   <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
+   </div>
+  </div>
 
-    @if (isLoading()) {
-      <div style="margin-top: 1rem;  display: flex; justify-content: center;" >
-        <mat-spinner diameter="30" color="primary"></mat-spinner>
-      </div>
-    }
+   <button
+     type="button"
+     mat-raised-button
+     color="primary"
+     class="submit-button"
+     [disabled]="!selectedCategory && description.trim() === ''"
+     (click)="submitReport(photoUpload)"
+   >
+     Meldung senden
+   </button>
+
+   @if (isLoading()) {
+     <div style="margin-top: 1rem;  display: flex; justify-content: center;" >
+       <mat-spinner diameter="30" color="primary"></mat-spinner>
+     </div>
+   }
 </div>
 
 
