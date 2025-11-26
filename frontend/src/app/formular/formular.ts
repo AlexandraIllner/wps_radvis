@@ -10,6 +10,7 @@ import {MatButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {PhotoUpload} from '../photo-upload/photo-upload';
 import {Camera} from '../camera/camera';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-formular',
@@ -27,6 +28,7 @@ import {Camera} from '../camera/camera';
     MatOption,
     PhotoUpload,
     Camera,
+    MatIconModule
   ],
   templateUrl: './formular.html',
   styleUrl: './formular.css'
