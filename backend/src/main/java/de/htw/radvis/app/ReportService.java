@@ -37,6 +37,8 @@ public class ReportService {
 
         if (photos != null) {
             photoValidator.validatePhotos(photos);
+            System.out.println("Received photos: " + photos.length);
+
 
             for (MultipartFile file : photos) {
                 if (file != null && !file.isEmpty()) {
@@ -49,7 +51,7 @@ public class ReportService {
         }
 
         var saved = reportRepository.save(report);
-
         return new ReportResponseDTO(saved.getId(), saved.getIssue(), saved.getCreationDate());
+
     }
 }
