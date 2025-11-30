@@ -1,25 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { App } from './app';
-import { ApiService } from './core/globalService/api.services';
 
 describe('App Component', () => {
   let component: App;
-  let fixture: ComponentFixture<App>;
-  let apiService: ApiService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        App, // Standalone Component
-        HttpClientTestingModule,
-      ],
-    }).compileComponents();
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [App], // Standalone Component
+    });
 
-    fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(App);
     component = fixture.componentInstance;
-    apiService = TestBed.inject(ApiService);
-    fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
