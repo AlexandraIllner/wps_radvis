@@ -20,4 +20,21 @@ describe('Camera', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // überprüft, ob ein Event aufgerufen wurde
+  it('soll photoTaken emitten, wenn eine Datei ausgewählt wird', () => {
+    spyOn(component.photoTaken, 'emit');
+
+    // Mock file
+    const blob = new Blob([''], { type: 'image/png'});
+    const file = new File([blob], 'test.png');
+
+    // Mock event
+    const event = {
+      target: {
+        files: [file],
+        value: 'path to file'
+      }
+    } as unknown as Event;
+  });
 });
