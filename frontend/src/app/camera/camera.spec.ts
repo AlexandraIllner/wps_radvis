@@ -42,4 +42,18 @@ describe('Camera', () => {
     expect(component.fileName).toBe('test.png');
     expect(component.photoTaken.emit).toHaveBeenCalledWith(file);
   });
+
+  it('soll photoTaken mit null emitten, wenn removePhoto aufgerufen wird', () => {
+    spyOn(component.photoTaken, 'emit');
+
+    // Zustand der Komponente setzen
+    component.fileName = 'test.png';
+    component.previewData = 'data:image...';
+
+    component.removePhoto();
+
+    expect(component.fileName).toBe('');
+    expect(component.previewData).toBeNull();
+    expect(component.photoTaken.emit).toHaveBeenCalledWith(null);
+  });
 });
