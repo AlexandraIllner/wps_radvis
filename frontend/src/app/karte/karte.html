@@ -1,1 +1,28 @@
-<h3> hier demnächst Karte</h3>
+@if (showMap) {
+  <div class="karte">
+    <div class="karte-body">
+      <h3 class="karte-title">Teilen Sie Ihren Standort oder markieren Sie ihn auf der Karte</h3>
+      <mat-grid-list cols="2" rowHeight="5vh">
+        <mat-grid-tile>
+          <button mat-raised-button color="primary" (click)="sendLocation()">
+            Standort senden
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-raised-button color="primary" (click)="selectLocation()">
+            Standort selbst wählen
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <!-- Map -->
+      <div
+        leaflet
+        [leafletOptions]="options"
+        (leafletMapReady)="onMapReady($event)"
+        style="height: 400px; width: 100%;"
+      >
+      </div>
+    </div>
+  </div>
+
+}

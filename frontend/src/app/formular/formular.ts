@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ViewChild} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {ApiService} from '../core/globalService/api.services';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -45,6 +45,9 @@ export class Formular implements OnInit {
 
   selectedFiles: File[] = [];
 
+  @ViewChild('photoUpload') photoUpload!: PhotoUpload;
+
+
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -88,7 +91,7 @@ export class Formular implements OnInit {
 
   // send fotos with same name than backend
   this.selectedFiles.forEach((file: File) => {
-  formData.append('photo', file);
+  formData.append('photos', file, file.name);
   });
 
 
@@ -99,9 +102,12 @@ export class Formular implements OnInit {
       next: response => {
         this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
+        // NACH erfolgreichem Senden:
         this.selectedCategory = null;
         this.description = '';
-        if (photoUpload) photoUpload.resetFiles();
+        this.selectedFiles = [];  // ← Fotos zurücksetzen
+
+        this.photoUpload.resetUploadState();
 
         this.isLoading.set(false);
       },
@@ -130,14 +136,14 @@ export class Formular implements OnInit {
   /**
    * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
    * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
-   * console.log dient nur zum Testen.
    */
   onPhotosSelected(files: File[]): void {
-    if (files && files.length > 0) {
-      console.log('Upload-Fotos empfangen:', files.map(f => f.name));
-      this.selectedFiles.push(...files);
-    }
+    const newOnes = files.filter(
+      f => !this.selectedFiles.some(existing => existing.name === f.name && existing.size === f.size)
+    );
+    this.selectedFiles.push(...newOnes);
   }
+
 
   /**
    * Empfängt das Foto-Event aus der Kamera-Komponente
