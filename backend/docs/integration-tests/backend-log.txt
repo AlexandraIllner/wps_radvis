@@ -1,0 +1,30 @@
+2025-11-30T20:40:01.896+01:00  INFO 1464537 --- [radvis-mock-backend] [nio-8000-exec-2] de.htw.radvis.app.PhotoValidator         : Accepted file: Screenshot from 2024-11-25 17-28-48.png (0.01 MB, image/png)
+[1] Received photos: 3
+[1] Hibernate:
+[1]     insert
+[1]     into
+[1]         report
+[1]         (creation_date, description, issue, latitude, longitude, id)
+[1]     values
+[1]         (?, ?, ?, ?, ?, default)
+[1] Hibernate:
+[1]     insert
+[1]     into
+[1]         report_photo
+[1]         (data, report_id, id)
+[1]     values
+[1]         (?, ?, default)
+[1] Hibernate:
+[1]     insert
+[1]     into
+[1]         report_photo
+[1]         (data, report_id, id)
+[1]     values
+[1]         (?, ?, default)
+[1] Hibernate:
+[1]     insert
+[1]     into
+[1]         report_photo
+[1]         (data, report_id, id)
+[1]     values
+[1]         (?, ?, default)
