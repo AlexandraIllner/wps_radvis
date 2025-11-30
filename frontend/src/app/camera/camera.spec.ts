@@ -36,5 +36,10 @@ describe('Camera', () => {
         value: 'path to file'
       }
     } as unknown as Event;
+
+    component.onFileChange(event);
+
+    expect(component.fileName).toBe('test.png');
+    expect(component.photoTaken.emit).toHaveBeenCalledWith(file);
   });
 });
