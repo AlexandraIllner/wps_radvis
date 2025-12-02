@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Service
 public class ReportService {
@@ -32,8 +34,13 @@ public class ReportService {
             report.setDescription(dto.getDescription().trim());
         }
 
-        report.setLatitude(dto.getLatitude());
-        report.setLongitude(dto.getLongitude());
+        if (dto.getLatitude() != null) {
+            report.setLatitude(dto.getLatitude().setScale(6, RoundingMode.HALF_UP));
+        }
+
+        if (dto.getLongitude() != null) {
+            report.setLongitude(dto.getLongitude().setScale(6, RoundingMode.HALF_UP));
+        }
 
         if (photos != null) {
             photoValidator.validatePhotos(photos);
