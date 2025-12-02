@@ -49,4 +49,38 @@ describe('PhotoUpload', () => {
     expect(component.selectedFiles.length).toBe(0);
     expect(snackBarSpy.open).toHaveBeenCalled(); // Fehlermeldung erwartet
   });
+
+  it('soll nicht mehr als 3 Dateien erlauben (Slice logic)', () => {
+    const mockContent = new Array(1024 * 1024).join('A'); // Simuliert ca. 1MB Daten
+    const options = { type: 'image/jpeg' };
+
+    const f1 = new File([mockContent], '1.jpg', options);
+    const f2 = new File([mockContent], '2.jpg', options);
+    const f3 = new File([mockContent], '3.jpg', options);
+    const f4 = new File([mockContent], '4.jpg', options);
+
+    component.selectedFiles = [];
+
+    const event = { target: { files: [f1, f2, f3, f4], value: '' } } as unknown as Event;
+
+    component.onFilesSelected(event);
+
+    const selectedNames = component.selectedFiles.map(f => f.name);
+
+    expect(component.selectedFiles.length).toBe(3);
+
+    expect(selectedNames).toContain(f1.name); // '1.jpg' sollte enthalten sein
+    expect(selectedNames).toContain(f2.name); // '2.jpg' sollte enthalten sein
+    expect(selectedNames).toContain(f3.name); // '3.jpg' sollte enthalten sein
+
+    // Prüfe den abgeschnittenen Namen
+    expect(selectedNames).not.toContain(f4.name); // '4.jpg' sollte NICHT enthalten sein
+
+    // Testet, ob die korrekte Snackbar für das Überschreiten der Maximalanzahl angezeigt wurde.
+    expect(snackBarSpy.open).toHaveBeenCalledWith(
+      jasmine.stringMatching(/Maximal 3/), // Sucht nach dem korrekten Text
+      'OK',
+      jasmine.any(Object)
+    );
+  });
 });
