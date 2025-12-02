@@ -47,6 +47,13 @@ export class Karte {
     center: latLng(this.lat_long[0], this.lat_long[1]),
   };
 
+  getCoordinates(): { lat: number, lng: number } | null {
+    if (this.selectedLat !== null && this.selectedLng !== null) {
+      return { lat: this.selectedLat, lng: this.selectedLng };
+    }
+    return null;
+  }
+
   onMapReady(map: Map): void {
     this.map = map;
 
