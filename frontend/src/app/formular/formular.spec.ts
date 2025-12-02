@@ -114,4 +114,17 @@ describe('Formular Component', () => {
     expect(apiService.createReport).toHaveBeenCalled();
     expect(component.isLoading()).toBeFalse();
   }));
+
+  it('T5.23 Formular sollte auch ohne Koordinaten gültig sein', () => {
+    component.selectedFiles = [];
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Test ohne Standort';
+
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#submit-btn');
+
+    expect(button.disabled).toBeFalse();
+  });
+
 });

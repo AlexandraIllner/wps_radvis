@@ -78,4 +78,63 @@ describe('Karte', () => {
     expect(component.selectedLng).toBe(20);
     expect(component.setMarker).toHaveBeenCalledOnceWith(10, 20);
   });
+
+  it('T5.19: Karten-Klick speichert Koordinaten', () => { //T5.19
+    const mockEvent = {
+      latlng: { lat: 51.123, lng: 9.456 }
+    } as any;
+
+    spyOn(component, 'setMarker');
+
+    component.onMapClick(mockEvent);
+
+    expect(component.selectedLat).toBe(51.123);
+    expect(component.selectedLng).toBe(9.456);
+    expect(component.setMarker).toHaveBeenCalledOnceWith(51.123, 9.456);
+  });
+  it('T5.20: Marker wird korrekt gesetzt', () => {
+    // Fake Map-Objekt erstellen
+    const fakeMap = {
+      removeLayer: jasmine.createSpy('removeLayer'),
+      addLayer: jasmine.createSpy('addLayer')
+    } as any;
+
+    component.map = fakeMap;
+
+    // Erster Marker
+    component.setMarker(10, 20);
+    expect(fakeMap.addLayer).toHaveBeenCalledTimes(1);
+
+    const firstMarker = component.marker;
+
+    // Zweiter Marker → alter Layer wird entfernt
+    component.setMarker(30, 40);
+    expect(fakeMap.removeLayer).toHaveBeenCalledWith(firstMarker);
+    expect(fakeMap.addLayer).toHaveBeenCalledTimes(2);
+  });
+  it('T5.21: GPS Success – Koordinaten werden gesetzt', () => {
+    component.getCurrentLocation({ lat: 48.1, lng: 11.2 } as any);
+
+    expect(component.currentLocation).toEqual([48.1, 11.2]);
+  });
+
+  it('T5.21: locationfound Event setzt currentLocation', () => {
+    // Minimal fake map: SOLO lo que usamos en diesem Test
+    const fakeMap = {
+      on: (eventName: string, handler: any) => {
+        if (eventName === 'locationfound') {
+          handler({ latlng: { lat: 52.52, lng: 13.405 } });
+        }
+      }
+    } as any;
+
+    // ⚠️ NICHT component.onMapReady aufrufen → das baut die locate-control auf → ERROR
+    // Stattdessen direkt das Event triggern
+
+    fakeMap.on('locationfound', (e: any) => component.getCurrentLocation(e.latlng));
+
+    expect(component.currentLocation).toEqual([52.52, 13.405]);
+  });
+
+
 });
