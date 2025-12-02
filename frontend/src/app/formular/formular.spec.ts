@@ -1,21 +1,30 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Formular } from './formular';
+import { ApiService } from '../core/globalService/api.services';
+import { of, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('Formular Component', () => {
   let component: Formular;
+  let fixture: ComponentFixture<Formular>;
+  let apiService: ApiService;
+
 
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
 
     await TestBed.configureTestingModule({
       imports: [
-        Formular,
+        Formular, // Standalone Component
         HttpClientTestingModule,
       ],
-    });
+      providers: [
+        { provide: MatSnackBar, useValue: snackBarMock },
+      ],
+    }).compileComponents();
 
-    const fixture = TestBed.createComponent(Formular);
+    fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
 
@@ -23,7 +32,10 @@ describe('Formular Component', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  // --------------------------
+  // Basis
+  // --------------------------
+  it('sollte erstellt werden', () => {
     expect(component).toBeTruthy();
   });
 
@@ -90,14 +102,19 @@ describe('Formular Component', () => {
   }));
 
   it('sollte isLoading auf false setzen, wenn API-Fehler auftritt', fakeAsync(() => {
-    spyOn(apiService, 'createReport').and.returnValue(throwError(() => new Error('Fehler')));
+    spyOn(apiService, 'createReport').and.returnValue(
+      throwError(() => new Error('Fehler'))
+    );
     spyOn(console, 'error');
+
+    (component as any).karte = {
+      getCoordinates: () => ({ lat: 52.5, lng: 13.4 }),
+    } as any;
 
     component.selectedCategory = 'SCHLAGLOCH';
     component.description = 'Fehler-Test';
-    component.submitReport();
 
-    tick();
+    component.submitReport();
 
     expect(apiService.createReport).toHaveBeenCalled();
     expect(component.isLoading()).toBeFalse();

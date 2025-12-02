@@ -1,20 +1,29 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService } from './api.services';
+import { environment } from '../../../enviroments/enviroment';
 
 describe('ApiService', () => {
   let service: ApiService;
+  let httpMock: HttpTestingController;
 
+  // Wird vor jedem Test ausgeführt
   beforeEach(() => {
-    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ApiService],
+      imports: [HttpClientTestingModule],  // Fake HTTP für Tests
+      providers: [ApiService]
     });
 
     service = TestBed.inject(ApiService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
+  // Nach jedem Test prüfen ob keine offenen HTTP-Requests existieren
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  // Test 1: Service wird erstellt
   it('sollte erstellt werden', () => {
     expect(service).toBeTruthy();
   });
