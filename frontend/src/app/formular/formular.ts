@@ -143,12 +143,20 @@ export class Formular implements OnInit {
    * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
    */
   onPhotosSelected(files: File[]): void {
-    const newOnes = files.filter(
-      f => !this.selectedFiles.some(existing => existing.name === f.name && existing.size === f.size)
+    const uniqueIncoming = files.filter((file, index, self) =>
+        index === self.findIndex(
+          f => f.name === file.name && f.size === file.size
+        )
     );
+
+    const newOnes = uniqueIncoming.filter(
+      f => !this.selectedFiles.some(
+        existing => existing.name === f.name && existing.size === f.size
+      )
+    );
+
     this.selectedFiles.push(...newOnes);
   }
-
 
   /**
    * Empfängt das Foto-Event aus der Kamera-Komponente

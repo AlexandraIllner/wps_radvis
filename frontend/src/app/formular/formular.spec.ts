@@ -147,4 +147,25 @@ describe('Formular Component', () => {
     expect(button.disabled).toBeFalse();
   });
 
+  it('soll Fotos aus onPhotoAdded und onPhotosSelected ohne Duplikate zusammenführen', () => {
+    const f1 = new File(['aaa'], '1.jpg', { type: 'image/jpeg' });
+    const f2 = new File(['bbb'], '2.jpg', { type: 'image/jpeg' });
+    const f2Duplicate = new File(['bbb'], '2.jpg', { type: 'image/jpeg' });
+
+    // Startzustand
+    component.selectedFiles = [];
+
+    // Foto aus Kamera
+    component.onPhotoAdded(f1);
+
+    // Fotos aus Upload (eins davon Duplikat)
+    component.onPhotosSelected([f2, f2Duplicate]);
+
+    const names = component.selectedFiles.map(f => f.name);
+
+    expect(component.selectedFiles.length).toBe(2);
+    expect(names).toContain('1.jpg');
+    expect(names).toContain('2.jpg');
+  });
+
 });
