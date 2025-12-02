@@ -2,65 +2,91 @@
   display: block;
 }
 
-
-.camera-container{
-  position: relative;
-  pointer-events: auto;
+.camera-container {
   text-align: center;
-  padding: .5rem 0;
+  padding: 0;
 }
 
-
-.camera-title {
-  margin: .5rem 0 1rem;
-  font-weight: 700;
-}
-
-
-.hidden-input{
+.hidden-input {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0,0,0,0);
   border: 0;
   padding: 0;
 }
 
-.camera-actions{
+.camera-btn {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db !important;
+  border-radius: 12px;
+  color: #6b7280 !important;
+  font-size: 15px;
+  font-weight: 500;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: .5rem;
-  margin-bottom: .5rem;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: border-color 0.12s ease, color 0.12s ease;
 }
 
-.camera-btn{
-  min-width: 140px;
+.btn-icon {
+  font-size: 20px;
+  color: inherit !important;
+  font-variation-settings: "FILL" 0;
 }
 
-.camera-filename{
-  margin-top: .25rem;
+.camera-btn:hover,
+.camera-btn:focus,
+.camera-btn:active {
+  border-color: #1D6FAF !important;
+  color: #1D6FAF !important;
 }
 
-.camera-preview{
-  margin-top: .5rem;
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
 }
 
-.camera-img{
-  max-width: 280px;
+.camera-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.camera-img {
+  width: 100%;
+  max-width: 150px;
   border-radius: 10px;
-  animation: fadeIn .2s ease-in;
+  display: block;
+  animation: fadeIn 0.2s ease-in;
 }
 
-.camera-delete{
-  margin-top: .5rem;
-  padding: .4rem .8rem;
-  border-radius: 8px;
-  background: #d32f2f;
+.camera-delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.65);
   color: #fff;
   border: none;
-  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 20;
 }
 
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

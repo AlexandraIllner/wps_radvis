@@ -1,6 +1,4 @@
 <div class="camera-container">
-    <h3 class="camera-title">Foto aufnehmen</h3>
-
 
     <input
         #cameraInput
@@ -21,7 +19,8 @@
                 (click)="cameraInput.click()"
                 aria-label="Kamera öffnen"
         >
-             Kamera
+          <mat-icon class="btn-icon">photo_camera</mat-icon>
+          Kamera
         </button>
 
     </div>
@@ -29,7 +28,7 @@
     <p *ngIf="fileName" class="camera-filename" aria-live="polite">
         Gewählt: <strong>{{ fileName }}</strong>
     </p>
-
+  <div class="camera-wrapper">
     <div *ngIf="previewData" class="camera-preview">
         <img [src]="previewData" alt="Vorschau des gewählten Fotos" class="camera-img" />
     </div>
@@ -37,10 +36,12 @@
     <button
             *ngIf="previewData"
             type="button"
-            class="camera-delete"
+            class="camera-delete-btn"
             (click)="removePhoto()"
             aria-label="Gewähltes Foto löschen"
     >
-        Foto löschen
+      ✕
     </button>
 </div>
+</div>
+
