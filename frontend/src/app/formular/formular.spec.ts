@@ -28,6 +28,10 @@ describe('Formular Component', () => {
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
 
+    // HINWEIS: Der Mock für 'karte' wurde aus dem beforeEach entfernt,
+    // da er nicht stabil war und in den individuellen Tests, die submitReport aufrufen,
+    // neu gesetzt wird, um Race Conditions mit @ViewChild zu vermeiden.
+
     spyOn(apiService, 'getIssue').and.returnValue(of([]));   // <--- CATEGORÍAS VACÍAS
     fixture.detectChanges();
   });
@@ -75,10 +79,16 @@ describe('Formular Component', () => {
   // SubmitReport
   // --------------------------
   it('sollte Alert zeigen, wenn keine Kategorie ausgewählt ist', () => {
+    // Mock für die Abhängigkeit 'karte' in diesem Testblock setzen
+    (component as any).karte = {
+      getCoordinates: () => ({ lat: 0, lng: 0 }),
+    } as any;
+
     spyOn(window, 'alert');
 
     component.selectedCategory = null;
     component.description = '';
+
     component.submitReport();
 
     expect(window.alert).toHaveBeenCalledWith(
@@ -87,6 +97,10 @@ describe('Formular Component', () => {
   });
 
   it('sollte Report ans Backend senden', fakeAsync(() => {
+    (component as any).karte = {
+      getCoordinates: () => ({ lat: 0, lng: 0 }),
+    } as any;
+
     const mockResponse = { id: 1, issue: 'SCHLAGLOCH' };
     spyOn(apiService, 'createReport').and.returnValue(of(mockResponse));
 
@@ -102,14 +116,14 @@ describe('Formular Component', () => {
   }));
 
   it('sollte isLoading auf false setzen, wenn API-Fehler auftritt', fakeAsync(() => {
+    (component as any).karte = {
+      getCoordinates: () => ({ lat: 52.5, lng: 13.4 }),
+    } as any;
+
     spyOn(apiService, 'createReport').and.returnValue(
       throwError(() => new Error('Fehler'))
     );
     spyOn(console, 'error');
-
-    (component as any).karte = {
-      getCoordinates: () => ({ lat: 52.5, lng: 13.4 }),
-    } as any;
 
     component.selectedCategory = 'SCHLAGLOCH';
     component.description = 'Fehler-Test';
@@ -121,6 +135,7 @@ describe('Formular Component', () => {
   }));
 
   it('T5.23 Formular sollte auch ohne Koordinaten gültig sein', () => {
+
     component.selectedFiles = [];
     component.selectedCategory = 'SCHLAGLOCH';
     component.description = 'Test ohne Standort';
