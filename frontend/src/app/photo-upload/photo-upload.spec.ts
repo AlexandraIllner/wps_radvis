@@ -83,4 +83,15 @@ describe('PhotoUpload', () => {
       jasmine.any(Object)
     );
   });
+
+  it('soll Duplikate ignorieren', () => {
+    const f1 = new File(['abc'], 'test.jpg');
+    component.selectedFiles = [f1]; // Datei ist schon da
+
+    const event = { target: { files: [f1], value: '' } } as unknown as Event;
+
+    component.onFilesSelected(event);
+
+    expect(component.selectedFiles.length).toBe(1); // Keine Verdopplung
+  });
 });
