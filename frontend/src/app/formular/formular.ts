@@ -10,6 +10,7 @@ import {MatButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {PhotoUpload} from '../photo-upload/photo-upload';
 import {Camera} from '../camera/camera';
+import {Karte} from '../karte/karte';
 
 @Component({
   selector: 'app-formular',
@@ -69,7 +70,11 @@ export class Formular implements OnInit {
    * Sendet die Mängel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    */
-  submitReport(photoUpload: any): void {
+  @ViewChild(Karte) karte!: Karte;
+
+  submitReport(photoUpload?: any): void {
+    const coords = this.karte.getCoordinates();
+
     if (!this.selectedCategory && this.description.trim() === '') {
       alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
       return;
@@ -79,8 +84,8 @@ export class Formular implements OnInit {
     const report = {
     issue: this.selectedCategory,
     description: this.description.trim(),
-    latitude: 52.52,
-    longitude: 13.405
+      latitude: coords?.lat ?? null,
+      longitude: coords?.lng ?? null
   };
     // send as BLOB
     const formData = new FormData();

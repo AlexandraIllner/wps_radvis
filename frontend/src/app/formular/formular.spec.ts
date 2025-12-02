@@ -5,9 +5,10 @@ import { Formular } from './formular';
 describe('Formular Component', () => {
   let component: Formular;
 
-  beforeEach(() => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
+
+    await TestBed.configureTestingModule({
       imports: [
         Formular,
         HttpClientTestingModule,
@@ -16,9 +17,102 @@ describe('Formular Component', () => {
 
     const fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
+    apiService = TestBed.inject(ApiService);
+
+    spyOn(apiService, 'getIssue').and.returnValue(of([]));   // <--- CATEGORÍAS VACÍAS
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // --------------------------
+  // Validierung: Beschreibung ODER Kategorie
+  // --------------------------
+  it('Button sollte disabled sein, wenn keine Kategorie und keine Beschreibung gesetzt sind', () => {
+    component.selectedCategory = null;
+    component.description = '';
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('#submit-btn');
+
+    // Angular Material markiert disabled mit dieser Klasse
+    expect(button.classList.contains('mat-mdc-button-disabled')).toBeTrue();
+  });
+
+  it('Button sollte enabled sein, wenn Beschreibung vorhanden ist', () => {
+    component.selectedCategory = null;
+    component.description = 'Ein Test';
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+  });
+
+  it('Button sollte enabled sein, wenn Kategorie vorhanden ist', () => {
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = '';
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+  });
+
+  // --------------------------
+  // SubmitReport
+  // --------------------------
+  it('sollte Alert zeigen, wenn keine Kategorie ausgewählt ist', () => {
+    spyOn(window, 'alert');
+
+    component.selectedCategory = null;
+    component.description = '';
+    component.submitReport();
+
+    expect(window.alert).toHaveBeenCalledWith(
+      'Bitte wähle eine Kategorie oder gib eine Beschreibung ein!',
+    );
+  });
+
+  it('sollte Report ans Backend senden', fakeAsync(() => {
+    const mockResponse = { id: 1, issue: 'SCHLAGLOCH' };
+    spyOn(apiService, 'createReport').and.returnValue(of(mockResponse));
+
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Test';
+    component.submitReport();
+
+    tick(); // Wartet auf async Operationen
+
+    expect(apiService.createReport).toHaveBeenCalled();
+    expect(component.selectedCategory).toBeNull();
+    expect(component.description).toBe('');
+  }));
+
+  it('sollte isLoading auf false setzen, wenn API-Fehler auftritt', fakeAsync(() => {
+    spyOn(apiService, 'createReport').and.returnValue(throwError(() => new Error('Fehler')));
+    spyOn(console, 'error');
+
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Fehler-Test';
+    component.submitReport();
+
+    tick();
+
+    expect(apiService.createReport).toHaveBeenCalled();
+    expect(component.isLoading()).toBeFalse();
+  }));
+
+  it('T5.23 Formular sollte auch ohne Koordinaten gültig sein', () => {
+    component.selectedFiles = [];
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Test ohne Standort';
+
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#submit-btn');
+
+    expect(button.disabled).toBeFalse();
+  });
+
 });
