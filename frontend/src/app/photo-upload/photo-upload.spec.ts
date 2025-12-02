@@ -38,4 +38,15 @@ describe('PhotoUpload', () => {
     expect(component.photosSelected.emit).toHaveBeenCalledWith([file]);
     expect(snackBarSpy.open).not.toHaveBeenCalled();
   });
+
+  it('soll ungültige Dateitypen ablehnen und SnackBar zeigen', () => {
+    // Ungültige Endung .txt
+    const file = new File([''], 'invalid.txt', { type: 'text/plain' });
+    const event = { target: { files: [file], value: '' } } as unknown as Event;
+
+    component.onFilesSelected(event);
+
+    expect(component.selectedFiles.length).toBe(0);
+    expect(snackBarSpy.open).toHaveBeenCalled(); // Fehlermeldung erwartet
+  });
 });
