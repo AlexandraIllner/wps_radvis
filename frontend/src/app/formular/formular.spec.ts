@@ -10,6 +10,7 @@ describe('Formular Component', () => {
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
 
+
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
 
@@ -26,7 +27,8 @@ describe('Formular Component', () => {
     fixture = TestBed.createComponent(Formular);
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
-    spyOn(apiService, 'getIssue').and.returnValue(of({})); // Mock observable
+
+    spyOn(apiService, 'getIssue').and.returnValue(of([]));   // <--- CATEGORÍAS VACÍAS
     fixture.detectChanges();
   });
 
@@ -45,8 +47,10 @@ describe('Formular Component', () => {
     component.description = '';
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBeTrue();
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('#submit-btn');
+
+    // Angular Material markiert disabled mit dieser Klasse
+    expect(button.classList.contains('mat-mdc-button-disabled')).toBeTrue();
   });
 
   it('Button sollte enabled sein, wenn Beschreibung vorhanden ist', () => {
@@ -55,7 +59,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBeFalse();
+    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
   });
 
   it('Button sollte enabled sein, wenn Kategorie vorhanden ist', () => {
@@ -64,7 +68,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBeFalse();
+    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
   });
 
   // --------------------------
