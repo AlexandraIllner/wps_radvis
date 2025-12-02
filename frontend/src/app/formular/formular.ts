@@ -94,7 +94,7 @@ export class Formular implements OnInit {
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
    * @param photoUpload
    */
-  submitReport(photoUpload: any): void {
+  submitReport(photoUpload?: any): void {
     if (!this.selectedCategory && this.description.trim() === '') {
       alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
       return;
