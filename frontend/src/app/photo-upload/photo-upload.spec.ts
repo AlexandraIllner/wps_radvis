@@ -35,8 +35,7 @@ describe('PhotoUpload', () => {
 
     component.onFilesSelected(event);
 
-    expect(component.photosSelected.length).toBe(1);
     expect(component.photosSelected.emit).toHaveBeenCalledWith([file]);
     expect(snackBarSpy.open).not.toHaveBeenCalled();
-  })
+  });
 });
