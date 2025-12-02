@@ -72,7 +72,7 @@ export class Formular implements OnInit {
    */
   @ViewChild(Karte) karte!: Karte;
 
-  submitReport(photoUpload: any): void {
+  submitReport(photoUpload?: any): void {
     const coords = this.karte.getCoordinates();
 
     if (!this.selectedCategory && this.description.trim() === '') {
