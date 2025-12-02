@@ -94,4 +94,19 @@ describe('PhotoUpload', () => {
 
     expect(component.selectedFiles.length).toBe(1); // Keine Verdopplung
   });
+
+  it('soll ein Foto entfernen können', () => {
+    const f1 = new File([''], '1.jpg');
+    const f2 = new File([''], '2.jpg');
+    component.selectedFiles = [f1, f2];
+    component.previewUrls = ['url1', 'url2'];
+
+    spyOn(component.photosSelected, 'emit');
+
+    component.removePhoto(0); // Erstes entfernen
+
+    expect(component.selectedFiles.length).toBe(1);
+    expect(component.selectedFiles[0].name).toBe('2.jpg');
+    expect(component.photosSelected.emit).toHaveBeenCalled();
+  });
 });
