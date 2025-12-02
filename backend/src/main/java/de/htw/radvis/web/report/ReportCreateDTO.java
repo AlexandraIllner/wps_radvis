@@ -4,12 +4,16 @@ import de.htw.radvis.domain.issue.Issue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
+@Getter
+@Setter
 public class ReportCreateDTO {
 
+    // Either description or issue must be provided (validated in frontend)
     private Issue issue;
 
-    @Size(max = 255)
+    @Size(max = 1000)
     private String description;
 
     // latitude ∈ [-90, 90], longitude ∈ [-180, 180]
@@ -17,38 +21,4 @@ public class ReportCreateDTO {
     private Double latitude;
     @DecimalMin("-180.0") @DecimalMax("180.0")
     private Double longitude;
-
-    // -------- Getter and Setters ---------
-
-    public Issue getIssue() {
-        return issue;
-    }
-
-    public void setIssue(Issue issue) {
-        this.issue = issue;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
 }
