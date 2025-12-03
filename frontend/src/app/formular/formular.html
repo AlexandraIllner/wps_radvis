@@ -1,5 +1,9 @@
 <div class="formular-container">
-  <h1>Neue Meldung</h1>
+
+  <div class="formular-title">
+    <h1>Neue Meldung</h1>
+  </div>
+
 
 
     @if (!selectedCategory && description.trim() === '') {
@@ -37,6 +41,7 @@
 
   <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
   <div class="media-field">
+    <span class="media-title">Fotos hinzufügen (optional)</span>
     <div class="media-inner">
    <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
    <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>

@@ -56,6 +56,15 @@
   color: #1D6FAF !important;
 }
 
+::ng-deep .upload-btn .mat-mdc-button-persistent-ripple {
+  display: none !important;
+}
+
+::ng-deep .upload-btn .mat-mdc-button-persistent-ripple::before,
+::ng-deep .upload-btn .mat-mdc-button-persistent-ripple::after {
+  background: transparent !important;
+}
+
 .preview-grid {
   display: flex;
   flex-wrap: wrap;
@@ -70,11 +79,12 @@
 }
 
 .gallery-img {
-  width: 100%;
-  max-width: 150px;
-  border-radius: 10px;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
   display: block;
   animation: fadeIn .2s ease-in;
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
 }
 
 .gallery-delete-btn {
@@ -99,5 +109,6 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
 
 

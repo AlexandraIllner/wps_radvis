@@ -50,18 +50,6 @@ button {
     max-width: 500px;
   }
 }
-/*
-  nur, weil es so komisch aussah - gerne ändern!
-
-mat-form-field, mat-raised-button{
-  width: 280px;
-  margin-top,: 1rem;
-  align-self: center;
-}
-
-h1, button, mat-spinner {
-  align-self: center;
-}*/
 
 .formular-container {
   max-width: 448px;

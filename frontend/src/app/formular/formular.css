@@ -1,13 +1,70 @@
+.formular-title {
+}
+
 .upload-camera-container {
   display: flex;
   flex-direction: row;
   gap: 16px;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #ffffff;
+  position: relative;
   align-items: flex-start;
 }
 
-.upload-camera-container app-photo-upload,
-.upload-camera-container app-camera {
-  flex: 1 1 0;
+.media-title {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  color: #374151 !important;
+  font-size: 14px;
+}
+
+.media-field {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #ffffff;
+  align-items: flex-start;
+}
+
+.media-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.camera-actions,
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.camera-btn,
+.upload-btn {
+  min-width: 140px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-inner app-photo-upload,
+.media-inner app-camera {
+  flex: 1;
+}
+
+.upload-camera-title {
+  position: absolute;
+  left: 0;
+  margin-left: 1rem;
 }
 
 .radmelder-hinweis {
@@ -69,31 +126,12 @@
   }
 }
 
-.media-field {
+::ng-deep .radmelder-select,
+::ng-deep .radmelder-textarea {
   width: 100%;
-  max-width: 400px;
-  background: #ffffff;
-  border: 2px dashed #d1d5db;
-  border-radius: 16px;
-  padding: 1rem;
-  margin-top: 1rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.media-inner {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.media-inner app-photo-upload,
-.media-inner app-camera {
-  flex: 1;
+  color: #374151 !important;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 ::ng-deep .mat-mdc-text-field-radmelder-select,
@@ -128,6 +166,7 @@
   border-color: #e5e7eb !important;
 }
 
+
 ::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__leading,
 ::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__notch,
 ::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__trailing,
@@ -141,6 +180,10 @@
 ::ng-deep .radmelder-textarea.mat-focused .mat-mdc-floating-label {
   color: #1D6FAF !important;
 }
+
+
+
+
 
 
 
