@@ -63,8 +63,8 @@ export class Formular implements OnInit {
   /**
    * Konstruktor der Klasse.
    * Injiziert notwendige Services für Api-Kommunikation und Benachrichtigungen
-   * @param apiService- Der Service für Backend-API-Aufrufe.
-   * @param snackBar- Der Angular Material Snackbar Service für Benachrichtigungen.
+   * @param apiService
+   * @param snackBar
    */
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
