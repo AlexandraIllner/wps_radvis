@@ -2,12 +2,17 @@ package de.htw.radvis.domain.report;
 
 import de.htw.radvis.domain.issue.Issue;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table
+@Getter
+@Setter
 public class Report implements Serializable {
 
     @Id
@@ -19,11 +24,13 @@ public class Report implements Serializable {
     @Column(nullable = true)
     private Issue issue;
 
-    @Column(length = 255, nullable= true)
+    @Column(length = 1000, nullable= true)
     private String description;
 
-    private Double latitude;
-    private Double longitude;
+    @Column(precision = 10, scale = 6, nullable = true)
+    private BigDecimal latitude;
+    @Column(precision = 10, scale = 6, nullable = true)
+    private BigDecimal longitude;
 
     @Column(nullable = false, updatable = false)
     private Instant creationDate = Instant.now();
@@ -34,61 +41,4 @@ public class Report implements Serializable {
             orphanRemoval = true
     )
     private java.util.List<ReportPhoto> photos = new java.util.ArrayList<>();
-
-
-
-    // ----------- Getter & Setter ------------
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Issue getIssue() {
-        return issue;
-    }
-
-    public void setIssue(Issue issue) {
-        this.issue = issue;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Instant getCreationDate() {
-        return creationDate;
-    }
-
-    public java.util.List<ReportPhoto> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(java.util.List<ReportPhoto> photos) {
-        this.photos = photos;
-    }
-
 }
