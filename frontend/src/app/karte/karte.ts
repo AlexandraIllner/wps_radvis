@@ -63,8 +63,7 @@ export class Karte {
       flyTo: true,
     });
 
-    this.lc.addTo(this.map);
-    this.lc.start();
+   this.lc.addTo(this.map);
 
     this.map.on('locationfound', (e) => {
       const latLng = e.latlng;
@@ -122,4 +121,36 @@ export class Karte {
     this.showMap = false;
     console.log('noch nicht implementiert, sende currentLocation', this.currentLocation);
   }
+
+  useCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert("Geolocation wird von diesem Browser nicht unterstützt.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        console.log("Standort über Button geholt:", lat, lng);
+
+        // Karte auf Standort setzen
+        this.map.flyTo([lat, lng], 150);
+
+        // Marker setzen
+        this.setMarker(lat, lng);
+
+        // Werte für später speichern
+        this.selectedLat = lat;
+        this.selectedLng = lng;
+        this.currentLocation = [lat, lng];
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        alert("Der Standort konnte nicht abgerufen werden.");
+      }
+    );
+  }
+
 }
