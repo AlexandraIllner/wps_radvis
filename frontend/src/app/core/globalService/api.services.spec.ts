@@ -10,8 +10,8 @@ describe('ApiService', () => {
   // Wird vor jedem Test ausgeführt
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],  // Fake HTTP für Tests
-      providers: [ApiService]
+      imports: [HttpClientTestingModule], // Fake HTTP für Tests
+      providers: [ApiService],
     });
 
     service = TestBed.inject(ApiService);
@@ -46,93 +46,83 @@ describe('ApiService', () => {
     req.flush(mockIssues);
   });
 
-  // Test 3: POST Request funktioniert
-  it('sollte Report ans Backend senden (POST)', () => {
-    // FormData korrekt aufbauen
+  it('sollte Report ans Backend senden (POST)', async () => {
     const formData = new FormData();
     const reportObject = {
       issue: 'SCHLAGLOCH',
       description: 'Großes Loch',
       latitude: 52.52,
-      longitude: 13.405
+      longitude: 13.405,
     };
 
     formData.append(
       'report',
-      new Blob([JSON.stringify(reportObject)], { type: 'application/json' })
+      new Blob([JSON.stringify(reportObject)], { type: 'application/json' }),
     );
 
-    // Mock Response
     const mockResponse = { id: 1, ...reportObject };
 
-    // createReport aufrufen
-    service.createReport(formData).subscribe(response => {
+    service.createReport(formData).subscribe((response) => {
       expect(response.id).toBe(1);
       expect(response.issue).toBe('SCHLAGLOCH');
     });
 
-    // Request abfangen
     const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
     expect(req.request.method).toBe('POST');
-
-    // Body KANN NICHT direkt verglichen werden, aber:
     expect(req.request.body instanceof FormData).toBeTrue();
 
-    const sentReportBlob = req.request.body.get('report') as Blob;
+    const sentBlob = req.request.body.get('report') as Blob;
+    expect(sentBlob).toBeTruthy();
 
-    expect(sentReportBlob).toBeTruthy();
+    const text = await sentBlob.text();
+    const data = JSON.parse(text);
 
-    // Blob → JSON parsen
-    sentReportBlob.text().then(text => {
-      const sentData = JSON.parse(text);
-      expect(sentData.issue).toBe('SCHLAGLOCH');
-    });
+    expect(data.issue).toBe('SCHLAGLOCH');
+    expect(data.description).toBe('Großes Loch');
 
-    // Backend simulieren
     req.flush(mockResponse);
   });
 
-  it('T5.26: sollte Report korrekt per POST senden', () => {
+  // -------------------------------------------------
+  // T5.26 – stricter version: full field validation
+  // -------------------------------------------------
+  it('T5.26: sollte Report korrekt per POST senden', async () => {
     const formData = new FormData();
 
     const reportObject = {
       issue: 'SCHLAGLOCH',
       description: 'Großes Loch',
       latitude: 52.52,
-      longitude: 13.405
+      longitude: 13.405,
     };
 
     formData.append(
       'report',
-      new Blob([JSON.stringify(reportObject)], { type: 'application/json' })
+      new Blob([JSON.stringify(reportObject)], { type: 'application/json' }),
     );
 
     const mockResponse = { id: 1, ...reportObject };
 
-    service.createReport(formData).subscribe(response => {
+    service.createReport(formData).subscribe((response) => {
       expect(response.id).toBe(1);
       expect(response.issue).toBe('SCHLAGLOCH');
     });
 
-    // URL según tu servicio real
     const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body instanceof FormData).toBeTrue();
 
     const blob = req.request.body.get('report') as Blob;
-
     expect(blob).toBeTruthy();
 
-    // Aquí NO va done()
-    return blob.text().then(text => {
-      const sentData = JSON.parse(text);
-      expect(sentData.issue).toBe('SCHLAGLOCH');
-      expect(sentData.description).toBe('Großes Loch');
-      expect(sentData.latitude).toBe(52.52);
-      expect(sentData.longitude).toBe(13.405);
-    }).finally(() => {
-      req.flush(mockResponse);
-    });
-  });
+    const text = await blob.text();
+    const sentData = JSON.parse(text);
 
+    expect(sentData.issue).toBe('SCHLAGLOCH');
+    expect(sentData.description).toBe('Großes Loch');
+    expect(sentData.latitude).toBe(52.52);
+    expect(sentData.longitude).toBe(13.405);
+
+    req.flush(mockResponse);
+  });
 });

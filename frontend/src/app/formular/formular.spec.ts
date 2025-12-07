@@ -10,7 +10,6 @@ describe('Formular Component', () => {
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
 
-
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
 
@@ -19,9 +18,7 @@ describe('Formular Component', () => {
         Formular, // Standalone Component
         HttpClientTestingModule,
       ],
-      providers: [
-        { provide: MatSnackBar, useValue: snackBarMock },
-      ],
+      providers: [{ provide: MatSnackBar, useValue: snackBarMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Formular);
@@ -32,7 +29,7 @@ describe('Formular Component', () => {
     // da er nicht stabil war und in den individuellen Tests, die submitReport aufrufen,
     // neu gesetzt wird, um Race Conditions mit @ViewChild zu vermeiden.
 
-    spyOn(apiService, 'getIssue').and.returnValue(of([]));   // <--- CATEGORÍAS VACÍAS
+    spyOn(apiService, 'getIssue').and.returnValue(of([])); // <--- CATEGORÍAS VACÍAS
     fixture.detectChanges();
   });
 
@@ -63,7 +60,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+    expect(button.hasAttribute('disabled')).toBeFalse(); // FIX
   });
 
   it('Button sollte enabled sein, wenn Kategorie vorhanden ist', () => {
@@ -72,7 +69,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+    expect(button.hasAttribute('disabled')).toBeFalse(); // FIX
   });
 
   // --------------------------
@@ -120,9 +117,7 @@ describe('Formular Component', () => {
       getCoordinates: () => ({ lat: 52.5, lng: 13.4 }),
     } as any;
 
-    spyOn(apiService, 'createReport').and.returnValue(
-      throwError(() => new Error('Fehler'))
-    );
+    spyOn(apiService, 'createReport').and.returnValue(throwError(() => new Error('Fehler')));
     spyOn(console, 'error');
 
     component.selectedCategory = 'SCHLAGLOCH';
@@ -135,7 +130,6 @@ describe('Formular Component', () => {
   }));
 
   it('T5.23 Formular sollte auch ohne Koordinaten gültig sein', () => {
-
     component.selectedFiles = [];
     component.selectedCategory = 'SCHLAGLOCH';
     component.description = 'Test ohne Standort';
@@ -161,7 +155,7 @@ describe('Formular Component', () => {
     // Fotos aus Upload (eins davon Duplikat)
     component.onPhotosSelected([f2, f2Duplicate]);
 
-    const names = component.selectedFiles.map(f => f.name);
+    const names = component.selectedFiles.map((f) => f.name);
 
     expect(component.selectedFiles.length).toBe(2);
     expect(names).toContain('1.jpg');
@@ -170,7 +164,7 @@ describe('Formular Component', () => {
 
   it('T5.24: submitReport darf NICHT senden, wenn Kategorie UND Beschreibung fehlen', () => {
     (component as any).karte = {
-      getCoordinates: () => null
+      getCoordinates: () => null,
     };
 
     spyOn(window, 'alert');
@@ -185,9 +179,9 @@ describe('Formular Component', () => {
     expect(apiService.createReport).not.toHaveBeenCalled();
   });
 
-  it('T5.25: sollte Koordinaten in FormData übernehmen', (done) => {
+  it('T5.25.1: sollte Koordinaten in FormData übernehmen', (done) => {
     (component as any).karte = {
-      getCoordinates: () => ({ lat: 12.3, lng: 45.6 })
+      getCoordinates: () => ({ lat: 12.3, lng: 45.6 }),
     };
 
     component.selectedCategory = 'SCHLAGLOCH';
@@ -209,9 +203,9 @@ describe('Formular Component', () => {
       done();
     });
   });
-  it('T5.25: sollte null senden wenn keine Koordinaten gesetzt sind', (done) => {
+  it('T5.25.2: sollte null senden wenn keine Koordinaten gesetzt sind', (done) => {
     (component as any).karte = {
-      getCoordinates: () => null
+      getCoordinates: () => null,
     };
 
     component.selectedCategory = 'SCHLAGLOCH';
@@ -226,13 +220,11 @@ describe('Formular Component', () => {
     const formDataSent = createSpy.calls.first().args[0];
     const blob = formDataSent.get('report') as Blob;
 
-    blob.text().then(json => {
+    blob.text().then((json) => {
       const obj = JSON.parse(json);
       expect(obj.latitude).toBeNull();
       expect(obj.longitude).toBeNull();
       done();
     });
   });
-
-
 });
