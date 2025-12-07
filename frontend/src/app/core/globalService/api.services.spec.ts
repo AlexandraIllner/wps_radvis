@@ -4,7 +4,7 @@ import { ApiService } from './api.services';
 import { environment } from '../../../enviroments/enviroment';
 
 // -------------------------------------------
-// Shared Test Helpers (eliminan duplicados)
+// Shared Test Helpers (delete duplicates)
 // -------------------------------------------
 function createReportObject() {
   return {
