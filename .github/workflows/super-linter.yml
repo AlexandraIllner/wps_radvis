@@ -8,9 +8,13 @@ name: Lint Code Base
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths:
+      - 'frontend/**'
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths:
+      - 'frontend/**'
 jobs:
   run-lint:
     runs-on: ubuntu-latest

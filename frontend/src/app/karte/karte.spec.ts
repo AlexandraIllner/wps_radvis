@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Karte } from './karte';
-import {MatButton} from '@angular/material/button';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import { MatButton } from '@angular/material/button';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
 describe('Karte', () => {
   let component: Karte;
@@ -67,7 +67,7 @@ describe('Karte', () => {
   // -----------------------------------
   it('onMapClick sollte selectedLat/Lng setzen', () => {
     const mockEvent = {
-      latlng: { lat: 10, lng: 20 }
+      latlng: { lat: 10, lng: 20 },
     } as any;
 
     spyOn(component, 'setMarker'); // Leaflet Call NICHT ausführen
@@ -79,9 +79,10 @@ describe('Karte', () => {
     expect(component.setMarker).toHaveBeenCalledOnceWith(10, 20);
   });
 
-  it('T5.19: Karten-Klick speichert Koordinaten', () => { //T5.19
+  it('T5.19: Karten-Klick speichert Koordinaten', () => {
+    //T5.19
     const mockEvent = {
-      latlng: { lat: 51.123, lng: 9.456 }
+      latlng: { lat: 51.123, lng: 9.456 },
     } as any;
 
     spyOn(component, 'setMarker');
@@ -96,7 +97,7 @@ describe('Karte', () => {
     // Fake Map-Objekt erstellen
     const fakeMap = {
       removeLayer: jasmine.createSpy('removeLayer'),
-      addLayer: jasmine.createSpy('addLayer')
+      addLayer: jasmine.createSpy('addLayer'),
     } as any;
 
     component.map = fakeMap;
@@ -125,7 +126,7 @@ describe('Karte', () => {
         if (eventName === 'locationfound') {
           handler({ latlng: { lat: 52.52, lng: 13.405 } });
         }
-      }
+      },
     } as any;
 
     // ⚠️ NICHT component.onMapReady aufrufen → das baut die locate-control auf → ERROR
@@ -135,6 +136,4 @@ describe('Karte', () => {
 
     expect(component.currentLocation).toEqual([52.52, 13.405]);
   });
-
-
 });

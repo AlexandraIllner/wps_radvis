@@ -1,4 +1,4 @@
-import generated from "@angular-devkit/build-angular/plugins/karma";
+import generated from '@angular-devkit/build-angular/plugins/karma';
 
 module.exports = function (config) {
   config.set({
@@ -8,13 +8,13 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      generated
+      generated,
     ],
     client: {
-      clearContext: false
+      clearContext: false,
     },
     jasmineHtmlReporter: {
-      suppressAll: true
+      suppressAll: true,
     },
     reporters: ['progress', 'kjhtml'],
     /*
@@ -31,8 +31,8 @@ module.exports = function (config) {
         // LINUX
         // base: 'google-chrome-stable --headless',
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu']
+        flags: ['--no-sandbox', '--disable-gpu'],
       },
-    }
-  })
-}
+    },
+  });
+};

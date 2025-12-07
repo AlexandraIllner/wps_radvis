@@ -141,16 +141,46 @@ $black: #000000;
   --radvis-primary-palette-800: #{map-get($radvis-primary-palette, 800)};
   --radvis-primary-palette-900: #{map-get($radvis-primary-palette, 900)};
 
-  --radvis-primary-palette-contrast-50: #{map-get(map-get($radvis-primary-palette, contrast), 50)};
-  --radvis-primary-palette-contrast-100: #{map-get(map-get($radvis-primary-palette, contrast), 100)};
-  --radvis-primary-palette-contrast-200: #{map-get(map-get($radvis-primary-palette, contrast), 200)};
-  --radvis-primary-palette-contrast-300: #{map-get(map-get($radvis-primary-palette, contrast), 300)};
-  --radvis-primary-palette-contrast-400: #{map-get(map-get($radvis-primary-palette, contrast), 400)};
-  --radvis-primary-palette-contrast-500: #{map-get(map-get($radvis-primary-palette, contrast), 500)};
-  --radvis-primary-palette-contrast-600: #{map-get(map-get($radvis-primary-palette, contrast), 600)};
-  --radvis-primary-palette-contrast-700: #{map-get(map-get($radvis-primary-palette, contrast), 700)};
-  --radvis-primary-palette-contrast-800: #{map-get(map-get($radvis-primary-palette, contrast), 800)};
-  --radvis-primary-palette-contrast-900: #{map-get(map-get($radvis-primary-palette, contrast), 900)};
+  --radvis-primary-palette-contrast-50: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      50
+    )};
+  --radvis-primary-palette-contrast-100: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      100
+    )};
+  --radvis-primary-palette-contrast-200: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      200
+    )};
+  --radvis-primary-palette-contrast-300: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      300
+    )};
+  --radvis-primary-palette-contrast-400: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      400
+    )};
+  --radvis-primary-palette-contrast-500: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      500
+    )};
+  --radvis-primary-palette-contrast-600: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      600
+    )};
+  --radvis-primary-palette-contrast-700: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      700
+    )};
+  --radvis-primary-palette-contrast-800: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      800
+    )};
+  --radvis-primary-palette-contrast-900: #{map-get(
+      map-get($radvis-primary-palette, contrast),
+      900
+    )};
 
   --radvis-accent-palette-50: #{map-get($radvis-accent-palette, 50)};
   --radvis-accent-palette-100: #{map-get($radvis-accent-palette, 100)};
@@ -163,16 +193,46 @@ $black: #000000;
   --radvis-accent-palette-800: #{map-get($radvis-accent-palette, 800)};
   --radvis-accent-palette-900: #{map-get($radvis-accent-palette, 900)};
 
-  --radvis-accent-palette-contrast-50: #{map-get(map-get($radvis-accent-palette, contrast), 50)};
-  --radvis-accent-palette-contrast-100: #{map-get(map-get($radvis-accent-palette, contrast), 100)};
-  --radvis-accent-palette-contrast-200: #{map-get(map-get($radvis-accent-palette, contrast), 200)};
-  --radvis-accent-palette-contrast-300: #{map-get(map-get($radvis-accent-palette, contrast), 300)};
-  --radvis-accent-palette-contrast-400: #{map-get(map-get($radvis-accent-palette, contrast), 400)};
-  --radvis-accent-palette-contrast-500: #{map-get(map-get($radvis-accent-palette, contrast), 500)};
-  --radvis-accent-palette-contrast-600: #{map-get(map-get($radvis-accent-palette, contrast), 600)};
-  --radvis-accent-palette-contrast-700: #{map-get(map-get($radvis-accent-palette, contrast), 700)};
-  --radvis-accent-palette-contrast-800: #{map-get(map-get($radvis-accent-palette, contrast), 800)};
-  --radvis-accent-palette-contrast-900: #{map-get(map-get($radvis-accent-palette, contrast), 900)};
+  --radvis-accent-palette-contrast-50: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      50
+    )};
+  --radvis-accent-palette-contrast-100: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      100
+    )};
+  --radvis-accent-palette-contrast-200: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      200
+    )};
+  --radvis-accent-palette-contrast-300: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      300
+    )};
+  --radvis-accent-palette-contrast-400: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      400
+    )};
+  --radvis-accent-palette-contrast-500: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      500
+    )};
+  --radvis-accent-palette-contrast-600: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      600
+    )};
+  --radvis-accent-palette-contrast-700: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      700
+    )};
+  --radvis-accent-palette-contrast-800: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      800
+    )};
+  --radvis-accent-palette-contrast-900: #{map-get(
+      map-get($radvis-accent-palette, contrast),
+      900
+    )};
 
   --radvis-grayscale-0: #{$white};
   --radvis-grayscale-1: #{map-get($grayscale, 1)};
