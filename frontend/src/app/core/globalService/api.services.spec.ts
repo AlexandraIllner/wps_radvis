@@ -4,9 +4,19 @@ import { ApiService } from './api.services';
 import { environment } from '../../../enviroments/enviroment';
 
 // -------------------------------------------
-// Shared Test Helpers (delete duplicates)
+// Typing
 // -------------------------------------------
-function createReportObject() {
+interface ReportData {
+  issue: string;
+  description: string;
+  latitude: number;
+  longitude: number;
+}
+
+// -------------------------------------------
+// Shared Test Helpers (no duplication)
+// -------------------------------------------
+function createReportObject(): ReportData {
   return {
     issue: 'SCHLAGLOCH',
     description: 'Großes Loch',
@@ -15,19 +25,13 @@ function createReportObject() {
   };
 }
 
-function createFormData(reportObject: any): FormData {
-  const formData = new FormData();
-  formData.append(
+function createFormData(report: ReportData): FormData {
+  const fd = new FormData();
+  fd.append(
     'report',
-    new Blob([JSON.stringify(reportObject)], { type: 'application/json' })
+    new Blob([JSON.stringify(report)], { type: 'application/json' })
   );
-  return formData;
-}
-
-async function extractReport(req: any) {
-  const blob = req.request.body.get('report') as Blob;
-  const text = await blob.text();
-  return JSON.parse(text);
+  return fd;
 }
 
 function expectBasicPostRequest(req: any) {
@@ -35,6 +39,61 @@ function expectBasicPostRequest(req: any) {
   expect(req.request.body instanceof FormData).toBeTrue();
 }
 
+async function extractReport(req: any): Promise<ReportData> {
+  const blob = req.request.body.get('report') as Blob;
+  const text = await blob.text();
+  return JSON.parse(text);
+}
+
+/**
+ * Runs the core POST workflow once:
+ * - builds report
+ * - sends request
+ * - intercepts request
+ * - extracts sent report
+ * - passes extracted report to assertion callback
+ */
+async function runReportTest(
+  service: ApiService,
+  httpMock: HttpTestingController,
+  assertionCb: (sent: ReportData) => void
+) {
+  const report = createReportObject();
+  const formData = createFormData(report);
+  const mockResponse = { id: 1, ...report };
+
+  service.createReport(formData).subscribe((res) => {
+    expect(res.id).toBe(1);
+    expect(res.issue).toBe('SCHLAGLOCH');
+  });
+
+  const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
+  expectBasicPostRequest(req);
+
+  const sent = await extractReport(req);
+
+  assertionCb(sent);
+
+  req.flush(mockResponse);
+}
+
+// -------------------------------------------
+// Assertion Logic (unique => no jscpd clone)
+// -------------------------------------------
+function basicAssertions(sent: ReportData) {
+  expect(sent.issue).toBe('SCHLAGLOCH');
+  expect(sent.description).toBe('Großes Loch');
+}
+
+function strictAssertions(sent: ReportData) {
+  basicAssertions(sent);
+  expect(sent.latitude).toBe(52.52);
+  expect(sent.longitude).toBe(13.405);
+}
+
+// -------------------------------------------
+// TEST SUITE
+// -------------------------------------------
 describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
@@ -53,6 +112,9 @@ describe('ApiService', () => {
     httpMock.verify();
   });
 
+  // -------------------------
+  // BASIC TESTS
+  // -------------------------
   it('sollte erstellt werden', () => {
     expect(service).toBeTruthy();
   });
@@ -60,7 +122,7 @@ describe('ApiService', () => {
   it('sollte Issues vom Backend holen (GET)', () => {
     const mockIssues = ['SCHLAGLOCH', 'BEWUCHS'];
 
-    service.getIssue().subscribe((issues: any[]) => {
+    service.getIssue().subscribe((issues: string[]) => {
       expect(issues.length).toBe(2);
       expect(issues[0]).toBe('SCHLAGLOCH');
     });
@@ -72,51 +134,16 @@ describe('ApiService', () => {
   });
 
   // -------------------------
-  // POST TEST 1 (Refactored)
+  // POST TEST 1 (uses helper)
   // -------------------------
   it('sollte Report ans Backend senden (POST)', async () => {
-    const reportObject = createReportObject();
-    const formData = createFormData(reportObject);
-    const mockResponse = { id: 1, ...reportObject };
-
-    service.createReport(formData).subscribe((response) => {
-      expect(response.id).toBe(1);
-      expect(response.issue).toBe('SCHLAGLOCH');
-    });
-
-    const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
-    expectBasicPostRequest(req);
-
-    const sentData = await extractReport(req);
-    expect(sentData.issue).toBe('SCHLAGLOCH');
-    expect(sentData.description).toBe('Großes Loch');
-
-    req.flush(mockResponse);
+    await runReportTest(service, httpMock, basicAssertions);
   });
 
   // -------------------------
-  // POST TEST 2 (Refactored)
+  // POST TEST 2 (unique logic)
   // -------------------------
   it('T5.26: sollte Report korrekt per POST senden', async () => {
-    const reportObject = createReportObject();
-    const formData = createFormData(reportObject);
-    const mockResponse = { id: 1, ...reportObject };
-
-    service.createReport(formData).subscribe((response) => {
-      expect(response.id).toBe(1);
-      expect(response.issue).toBe('SCHLAGLOCH');
-    });
-
-    const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
-    expectBasicPostRequest(req);
-
-    const sentData = await extractReport(req);
-
-    expect(sentData.issue).toBe('SCHLAGLOCH');
-    expect(sentData.description).toBe('Großes Loch');
-    expect(sentData.latitude).toBe(52.52);
-    expect(sentData.longitude).toBe(13.405);
-
-    req.flush(mockResponse);
+    await runReportTest(service, httpMock, strictAssertions);
   });
 });
