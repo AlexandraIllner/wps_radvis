@@ -2,6 +2,7 @@ package de.htw.radvis.web.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htw.radvis.app.ReportService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class ReportController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ReportResponseDTO>createReport(
-            @RequestPart ("report") String reportJson,
+            @Valid @RequestPart ("report") String reportJson,
             @RequestPart(value = "photos", required = false) MultipartFile[] photos
     ) throws IOException {
 
