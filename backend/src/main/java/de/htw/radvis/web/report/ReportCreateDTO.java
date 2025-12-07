@@ -13,9 +13,10 @@ import java.math.BigDecimal;
 @Setter
 public class ReportCreateDTO {
 
+    // Either description or issue must be provided (validated in frontend)
     private Issue issue;
 
-    @Size(max = 255)
+    @Size(max = 1000)
     private String description;
 
     // latitude ∈ [-90, 90], longitude ∈ [-180, 180]
