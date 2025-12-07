@@ -136,5 +136,64 @@ describe('Karte', () => {
     expect(component.currentLocation).toEqual([52.52, 13.405]);
   });
 
+  it('T5.21: useCurrentLocation setzt Marker & zentriert Karte', () => {
+    // Fake Map mit flyTo()
+    component.map = jasmine.createSpyObj('Map', ['flyTo']);
+
+    // Spy auf setMarker()
+    spyOn(component, 'setMarker');
+
+    // navigator.geolocation mocken
+    const mockGeo = {
+      getCurrentPosition: jasmine.createSpy('getCurrentPosition')
+    };
+
+    // in Browser-API injizieren
+    Object.defineProperty(window.navigator, 'geolocation', {
+      value: mockGeo,
+      writable: true
+    });
+
+    const mockPos = {
+      coords: { latitude: 50.1, longitude: 8.6 }
+    };
+
+    mockGeo.getCurrentPosition.and.callFake((success) => success(mockPos));
+
+    // Testaufruf
+    component.useCurrentLocation();
+
+    // Assertions
+    expect(component.selectedLat).toBe(50.1);
+    expect(component.selectedLng).toBe(8.6);
+    expect(component.currentLocation).toEqual([50.1, 8.6]);
+
+    expect(component.map.flyTo).toHaveBeenCalledWith([50.1, 8.6], 150);
+
+    expect(component.setMarker).toHaveBeenCalledWith(50.1, 8.6);
+  });
+
+  it('T5.22: zeigt Fehlermeldung bei GPS Permission Denied', () => {
+    // mock alert
+    spyOn(window, 'alert');
+
+    const mockGeo = {
+      getCurrentPosition: jasmine.createSpy('getCurrentPosition')
+    };
+
+    Object.defineProperty(window.navigator, 'geolocation', {
+      value: mockGeo,
+      writable: true
+    });
+
+    mockGeo.getCurrentPosition.and.callFake((success, error) => {
+      error({ code: 1, message: 'Permission denied' });
+    });
+
+    component.useCurrentLocation();
+
+    expect(window.alert).toHaveBeenCalledWith('Der Standort konnte nicht abgerufen werden.');
+  });
+
 
 });

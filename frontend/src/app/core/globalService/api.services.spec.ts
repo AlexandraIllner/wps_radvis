@@ -91,4 +91,48 @@ describe('ApiService', () => {
     // Backend simulieren
     req.flush(mockResponse);
   });
+
+  it('T5.26: sollte Report korrekt per POST senden', () => {
+    const formData = new FormData();
+
+    const reportObject = {
+      issue: 'SCHLAGLOCH',
+      description: 'Großes Loch',
+      latitude: 52.52,
+      longitude: 13.405
+    };
+
+    formData.append(
+      'report',
+      new Blob([JSON.stringify(reportObject)], { type: 'application/json' })
+    );
+
+    const mockResponse = { id: 1, ...reportObject };
+
+    service.createReport(formData).subscribe(response => {
+      expect(response.id).toBe(1);
+      expect(response.issue).toBe('SCHLAGLOCH');
+    });
+
+    // URL según tu servicio real
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body instanceof FormData).toBeTrue();
+
+    const blob = req.request.body.get('report') as Blob;
+
+    expect(blob).toBeTruthy();
+
+    // Aquí NO va done()
+    return blob.text().then(text => {
+      const sentData = JSON.parse(text);
+      expect(sentData.issue).toBe('SCHLAGLOCH');
+      expect(sentData.description).toBe('Großes Loch');
+      expect(sentData.latitude).toBe(52.52);
+      expect(sentData.longitude).toBe(13.405);
+    }).finally(() => {
+      req.flush(mockResponse);
+    });
+  });
+
 });

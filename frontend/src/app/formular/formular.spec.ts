@@ -168,4 +168,71 @@ describe('Formular Component', () => {
     expect(names).toContain('2.jpg');
   });
 
+  it('T5.24: submitReport darf NICHT senden, wenn Kategorie UND Beschreibung fehlen', () => {
+    (component as any).karte = {
+      getCoordinates: () => null
+    };
+
+    spyOn(window, 'alert');
+    spyOn(apiService, 'createReport');
+
+    component.selectedCategory = null;
+    component.description = '';
+
+    component.submitReport();
+
+    expect(window.alert).toHaveBeenCalled();
+    expect(apiService.createReport).not.toHaveBeenCalled();
+  });
+
+  it('T5.25: sollte Koordinaten in FormData übernehmen', (done) => {
+    (component as any).karte = {
+      getCoordinates: () => ({ lat: 12.3, lng: 45.6 })
+    };
+
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Test';
+
+    const createSpy = spyOn(apiService, 'createReport').and.returnValue(of({}));
+
+    component.submitReport();
+
+    expect(createSpy).toHaveBeenCalled();
+
+    const formDataSent = createSpy.calls.first().args[0];
+    const blob = formDataSent.get('report') as Blob;
+
+    blob.text().then((json) => {
+      const obj = JSON.parse(json);
+      expect(obj.latitude).toBe(12.3);
+      expect(obj.longitude).toBe(45.6);
+      done();
+    });
+  });
+  it('T5.25: sollte null senden wenn keine Koordinaten gesetzt sind', (done) => {
+    (component as any).karte = {
+      getCoordinates: () => null
+    };
+
+    component.selectedCategory = 'SCHLAGLOCH';
+    component.description = 'Test';
+
+    const createSpy = spyOn(apiService, 'createReport').and.returnValue(of({}));
+
+    component.submitReport();
+
+    expect(createSpy).toHaveBeenCalled();
+
+    const formDataSent = createSpy.calls.first().args[0];
+    const blob = formDataSent.get('report') as Blob;
+
+    blob.text().then(json => {
+      const obj = JSON.parse(json);
+      expect(obj.latitude).toBeNull();
+      expect(obj.longitude).toBeNull();
+      done();
+    });
+  });
+
+
 });
