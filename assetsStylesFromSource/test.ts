@@ -12,12 +12,19 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
 
-import 'zone.js/testing';
+import "zone.js/testing";
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
-import { getTestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { getTestBed } from "@angular/core/testing";
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting,
+} from "@angular/platform-browser-dynamic/testing";
 
 // First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
-  teardown: { destroyAfterEach: false },
-});
+getTestBed().initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting(),
+  {
+    teardown: { destroyAfterEach: false },
+  },
+);

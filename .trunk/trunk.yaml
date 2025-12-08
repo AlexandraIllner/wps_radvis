@@ -17,6 +17,9 @@ runtimes:
     - python@3.10.8
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
+  ignore:
+    - path: ".github/**"
+    - path: "backend/mvnw"
   enabled:
     - actionlint@1.7.9
     - checkov@3.2.495
@@ -31,9 +34,9 @@ lint:
     - trufflehog@3.91.2
     - yamllint@1.37.1
 actions:
-  disabled:
+  enabled:
     - trunk-announce
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
-  enabled:
     - trunk-upgrade-available
+

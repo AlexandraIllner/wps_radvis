@@ -8,9 +8,8 @@ describe('Camera', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Camera]
-    })
-    .compileComponents();
+      imports: [Camera],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Camera);
     component = fixture.componentInstance;
@@ -26,15 +25,15 @@ describe('Camera', () => {
     spyOn(component.photoTaken, 'emit');
 
     // Mock file
-    const blob = new Blob([''], { type: 'image/png'});
+    const blob = new Blob([''], { type: 'image/png' });
     const file = new File([blob], 'test.png');
 
     // Mock event
     const event = {
       target: {
         files: [file],
-        value: 'path to file'
-      }
+        value: 'path to file',
+      },
     } as unknown as Event;
 
     component.onFileChange(event);
@@ -60,7 +59,7 @@ describe('Camera', () => {
   it('soll null emitten, wenn Foto-Auswahl abgebrochen wird (keine Datei vorhanden', () => {
     spyOn(component.photoTaken, 'emit');
     // keine files
-    const event = { target: { files: []} } as unknown as Event;
+    const event = { target: { files: [] } } as unknown as Event;
 
     component.onFileChange(event);
 
