@@ -9,7 +9,8 @@
     "linux-test": "ng test --browsers=ChromeHeadlessCI",
     "trunk": "trunk",
     "lint": "trunk check",
-    "fmt": "trunk fmt"
+    "fmt": "trunk fmt",
+    "prepare": "husky"
   },
   "prettier": {
     "printWidth": 100,
@@ -51,6 +52,7 @@
     "@types/leaflet": "^1.9.21",
     "chromium": "^3.0.3",
     "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

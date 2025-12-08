@@ -9,6 +9,25 @@ describe('Formular Component', () => {
   let component: Formular;
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
+  function mockKarte(component: any, coords: { lat: number; lng: number } | null) {
+    component.karte = {
+      getCoordinates: () => coords,
+    };
+  }
+
+  function callSubmitAndParseReport(
+    component: any,
+    apiService: ApiService,
+    response: any = {}
+  ) {
+    const createSpy = spyOn(apiService, 'createReport').and.returnValue(of(response));
+    component.submitReport();
+    return createSpy;
+  }
+
+  function extractReportObject(createSpy: jasmine.Spy, cb: (obj: any) => void) {
+    const formDataSent = createSpy.calls.first().args[0] as FormData;
+    const blob = formDataSent.get('report') as Blob;
 
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
