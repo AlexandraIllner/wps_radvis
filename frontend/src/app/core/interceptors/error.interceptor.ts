@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
-import {inject} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
  * Interceptor fängt alle HTTP-Fehler ab
@@ -40,11 +40,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       snackBar.open(message, 'OK', {
         duration: 4000,
         horizontalPosition: 'center',
-        verticalPosition: 'bottom'
+        verticalPosition: 'bottom',
       });
 
       // Gibt den Fehler weiter, damit er in .subscribe() behandelt werden kann
       return throwError(() => error);
-    })
+    }),
   );
 };

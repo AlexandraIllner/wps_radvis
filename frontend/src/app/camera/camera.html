@@ -1,46 +1,43 @@
 <div class="camera-container">
-    <h3 class="camera-title">Foto aufnehmen</h3>
+  <h3 class="camera-title">Foto aufnehmen</h3>
 
+  <input
+    #cameraInput
+    type="file"
+    accept="image/*"
+    capture="environment"
+    (change)="onFileChange($event)"
+    class="hidden-input"
+  />
 
-    <input
-        #cameraInput
-        type="file"
-        accept="image/*"
-        capture="environment"
-        (change)="onFileChange($event)"
-        class="hidden-input"
-    />
-
-
-    <div class="camera-actions" role="group" aria-label="Fotoquelle wählen">
-        <button
-                type="button"
-                mat-raised-button
-                color="primary"
-                class="camera-btn"
-                (click)="cameraInput.click()"
-                aria-label="Kamera öffnen"
-        >
-             Kamera
-        </button>
-
-    </div>
-
-    <p *ngIf="fileName" class="camera-filename" aria-live="polite">
-        Gewählt: <strong>{{ fileName }}</strong>
-    </p>
-
-    <div *ngIf="previewData" class="camera-preview">
-        <img [src]="previewData" alt="Vorschau des gewählten Fotos" class="camera-img" />
-    </div>
-
+  <div class="camera-actions" role="group" aria-label="Fotoquelle wählen">
     <button
-            *ngIf="previewData"
-            type="button"
-            class="camera-delete"
-            (click)="removePhoto()"
-            aria-label="Gewähltes Foto löschen"
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="camera-btn"
+      (click)="cameraInput.click()"
+      aria-label="Kamera öffnen"
     >
-        Foto löschen
+      Kamera
     </button>
+  </div>
+
+  <p *ngIf="fileName" class="camera-filename" aria-live="polite">
+    Gewählt: <strong>{{ fileName }}</strong>
+  </p>
+
+  <div *ngIf="previewData" class="camera-preview">
+    <img [src]="previewData" alt="Vorschau des gewählten Fotos" class="camera-img" />
+  </div>
+
+  <button
+    *ngIf="previewData"
+    type="button"
+    class="camera-delete"
+    (click)="removePhoto()"
+    aria-label="Gewähltes Foto löschen"
+  >
+    Foto löschen
+  </button>
 </div>

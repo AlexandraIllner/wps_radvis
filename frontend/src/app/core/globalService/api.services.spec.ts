@@ -10,8 +10,8 @@ describe('ApiService', () => {
   // Wird vor jedem Test ausgeführt
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],  // Fake HTTP für Tests
-      providers: [ApiService]
+      imports: [HttpClientTestingModule], // Fake HTTP für Tests
+      providers: [ApiService],
     });
 
     service = TestBed.inject(ApiService);
@@ -54,19 +54,19 @@ describe('ApiService', () => {
       issue: 'SCHLAGLOCH',
       description: 'Großes Loch',
       latitude: 52.52,
-      longitude: 13.405
+      longitude: 13.405,
     };
 
     formData.append(
       'report',
-      new Blob([JSON.stringify(reportObject)], { type: 'application/json' })
+      new Blob([JSON.stringify(reportObject)], { type: 'application/json' }),
     );
 
     // Mock Response
     const mockResponse = { id: 1, ...reportObject };
 
     // createReport aufrufen
-    service.createReport(formData).subscribe(response => {
+    service.createReport(formData).subscribe((response) => {
       expect(response.id).toBe(1);
       expect(response.issue).toBe('SCHLAGLOCH');
     });
@@ -83,7 +83,7 @@ describe('ApiService', () => {
     expect(sentReportBlob).toBeTruthy();
 
     // Blob → JSON parsen
-    sentReportBlob.text().then(text => {
+    sentReportBlob.text().then((text) => {
       const sentData = JSON.parse(text);
       expect(sentData.issue).toBe('SCHLAGLOCH');
     });

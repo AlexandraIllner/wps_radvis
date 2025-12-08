@@ -12,23 +12,36 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
 
-@import 'material-icons/iconfont/material-icons.css';
-@import '@fontsource/roboto/latin.css';
-@import 'theme';
-@import './style/colors';
-@import 'style/splash-screen';
+@import "material-icons/iconfont/material-icons.css";
+@import "@fontsource/roboto/latin.css";
+@import "theme";
+@import "./style/colors";
+@import "style/splash-screen";
 
 html,
 body {
   height: 100%;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {
   margin: 0;
 }
 
-$spaceamounts: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20); // Adjust this to include the pixel amounts you need.
+$spaceamounts: (
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  20
+); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // all positions
 
 @each $space in $spaceamounts {
@@ -212,7 +225,9 @@ $sides: (top, bottom, left, right); // all positions
   background: map-get($grayscale, 200) !important;
 }
 
-.highlight-undetermined .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+.highlight-undetermined
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+  .mdc-line-ripple::before {
   border-bottom-color: rgb(239, 159, 40) !important;
 }
 
@@ -343,28 +358,37 @@ td.group-header,
 }
 
 // Redundant, wenn material anfängt ihre variablen zu nutzen in einer zukünfigten version
-.mat-mdc-unelevated-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before,
-.mat-mdc-outlined-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before,
-.mat-mdc-icon-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before {
+.mat-mdc-unelevated-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before,
+.mat-mdc-outlined-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before,
+.mat-mdc-icon-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before {
   opacity: 0.6 !important;
 }
 
-.mat-mdc-unelevated-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before,
-.icon-toolbar.mat-mdc-icon-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before {
+.mat-mdc-unelevated-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before,
+.icon-toolbar.mat-mdc-icon-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before {
   background-color: white;
 }
 
-.mat-mdc-tab-nav-bar.mat-accent .mat-mdc-tab-link.cdk-keyboard-focused:not(.mat-mdc-tab-disabled) {
+.mat-mdc-tab-nav-bar.mat-accent
+  .mat-mdc-tab-link.cdk-keyboard-focused:not(.mat-mdc-tab-disabled) {
   background-color: map-get($radvis-accent-palette, 300);
   opacity: 1 !important;
 }
 
-.mat-mdc-tab-group.mat-accent .mat-mdc-tab.cdk-keyboard-focused:not(.mat-mdc-tab-disabled) {
+.mat-mdc-tab-group.mat-accent
+  .mat-mdc-tab.cdk-keyboard-focused:not(.mat-mdc-tab-disabled) {
   background-color: #ea3397;
 }
 
 // Redundant, wenn material anfängt ihre variablen zu nutzen in einer zukünfigten version
-.mat-mdc-slide-toggle.mat-mdc-slide-toggle-focused .mdc-switch .mdc-switch__ripple::after {
+.mat-mdc-slide-toggle.mat-mdc-slide-toggle-focused
+  .mdc-switch
+  .mdc-switch__ripple::after {
   opacity: 0.4 !important;
 }
 
@@ -373,12 +397,14 @@ td.group-header,
   background-color: transparent !important;
 }
 
-.mat-mdc-mini-fab.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before {
+.mat-mdc-mini-fab.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before {
   background-color: white !important;
   opacity: 0.6 !important;
 }
 
-.mat-mdc-raised-button.cdk-keyboard-focused .mat-mdc-button-persistent-ripple::before {
+.mat-mdc-raised-button.cdk-keyboard-focused
+  .mat-mdc-button-persistent-ripple::before {
   background-color: white !important;
   opacity: 0.6 !important;
 }

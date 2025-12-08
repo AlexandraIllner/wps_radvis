@@ -6,9 +6,6 @@ import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
-
-
-
 @Component({
   selector: 'app-karte',
   templateUrl: './karte.html',
@@ -47,7 +44,7 @@ export class Karte {
     center: latLng(this.lat_long[0], this.lat_long[1]),
   };
 
-  getCoordinates(): { lat: number, lng: number } | null {
+  getCoordinates(): { lat: number; lng: number } | null {
     if (this.selectedLat !== null && this.selectedLng !== null) {
       return { lat: this.selectedLat, lng: this.selectedLng };
     }
@@ -64,7 +61,6 @@ export class Karte {
     });
 
     this.lc.addTo(this.map);
-    this.lc.start();
 
     this.map.on('locationfound', (e) => {
       const latLng = e.latlng;
@@ -96,8 +92,7 @@ export class Karte {
     });
 
     this.marker.addTo(this.map);
-
-}
+  }
 
   onMapClick(event: L.LeafletMouseEvent): void {
     this.selectedLat = event.latlng.lat;
@@ -107,7 +102,6 @@ export class Karte {
       lat: this.selectedLat,
       lng: this.selectedLng,
     });
-
 
     if (this.selectedLat !== null && this.selectedLng !== null) {
       this.setMarker(this.selectedLat, this.selectedLng);
@@ -121,5 +115,36 @@ export class Karte {
   selectLocation() {
     this.showMap = false;
     console.log('noch nicht implementiert, sende currentLocation', this.currentLocation);
+  }
+
+  useCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert('Geolocation wird von diesem Browser nicht unterstützt.');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        console.log('Standort über Button geholt:', lat, lng);
+
+        // Karte auf Standort setzen
+        this.map.flyTo([lat, lng], 150);
+
+        // Marker setzen
+        this.setMarker(lat, lng);
+
+        // Werte für später speichern
+        this.selectedLat = lat;
+        this.selectedLng = lng;
+        this.currentLocation = [lat, lng];
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        alert('Der Standort konnte nicht abgerufen werden.');
+      },
+    );
   }
 }

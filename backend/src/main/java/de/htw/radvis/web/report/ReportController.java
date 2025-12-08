@@ -25,8 +25,10 @@ public class ReportController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+feat/be/post-report-endpoint
     public ResponseEntity<ReportResponseDTO> createReport(
             @Valid @RequestPart("report") ReportCreateDTO reportCreateDTO,
+
             @RequestPart(value = "photos", required = false) MultipartFile[] photos
     ) throws IOException {
         var response = reportService.create(reportCreateDTO, photos);

@@ -13,7 +13,7 @@
  */
 
 $bicycle-color: #151515;
-$bicycle-accent-color: #E5007D;
+$bicycle-accent-color: #e5007d;
 
 .splash-screen {
   background-color: white;
@@ -136,7 +136,6 @@ $bicycle-accent-color: #E5007D;
 
 .bicycle-container .back-wheel {
   left: 0;
-
 }
 
 .bicycle-container .front-wheel {
@@ -190,7 +189,6 @@ $bicycle-accent-color: #E5007D;
   transform-origin: left;
   transform: rotate(-60deg);
   width: 7.7rem;
-
 }
 
 .bicycle-container .seat-tube-front {
@@ -234,7 +232,7 @@ $bicycle-accent-color: #E5007D;
   width: 2rem;
   background: $bicycle-color;
   border-radius: 1rem;
-  height: 0.5rem
+  height: 0.5rem;
 }
 
 .bicycle-container .down-tube {
@@ -242,7 +240,6 @@ $bicycle-accent-color: #E5007D;
   width: 6.5rem;
   transform-origin: left;
   transform: rotate(-50deg);
-
 }
 
 .bicycle-container .head-tube {

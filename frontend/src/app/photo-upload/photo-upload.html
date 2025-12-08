@@ -1,11 +1,10 @@
-
 <!-- Overlay-Spinner -->
 <div *ngIf="isLoading" class="upload-overlay">
   <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
 </div>
 
 <div>
-<h3>Fotos auswählen (max. 3) </h3>
+  <h3>Fotos auswählen (max. 3)</h3>
 
   <!-- Versteckter Datei-Input -->
   <input
@@ -24,9 +23,9 @@
     class="camera-btn"
     (click)="galleryInput.click()"
     aria-label="Bild aus Galerie oder Datei wählen"
-    [disabled]="validFiles.length >=3 || isLoading">
+    [disabled]="validFiles.length >= 3 || isLoading"
+  >
     Galerie/Datei
-
   </button>
 
   <!-- Vorschau der gewählten Bilder -->
@@ -40,11 +39,7 @@
 
     <!-- Vorschau der Bilder -->
     <div *ngFor="let url of previewUrls; let i = index" class="camera-preview">
-      <img
-        [src]="url"
-        [alt]="'Vorschau des gewählten Fotos ' + (i + 1)"
-        class="camera-img"
-      />
+      <img [src]="url" [alt]="'Vorschau des gewählten Fotos ' + (i + 1)" class="camera-img" />
 
       <button
         type="button"
@@ -57,4 +52,3 @@
     </div>
   </div>
 </div>
-
