@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PhotoUpload } from './photo-upload';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PhotoUpload', () => {
   let component: PhotoUpload;
@@ -13,9 +13,7 @@ describe('PhotoUpload', () => {
 
     await TestBed.configureTestingModule({
       imports: [PhotoUpload, NoopAnimationsModule],
-      providers: [
-        { provide: MatSnackBar, useValue: snackBarSpy }
-      ]
+      providers: [{ provide: MatSnackBar, useValue: snackBarSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PhotoUpload);
@@ -30,8 +28,8 @@ describe('PhotoUpload', () => {
   it('soll gültige Datei erstellen und emitten', () => {
     spyOn(component.photosSelected, 'emit');
 
-    const file = new File([''], 'valid.jpg', { type: 'image/jpeg'});
-    const event = { target: {files: [file], value: ''}} as unknown as Event;
+    const file = new File([''], 'valid.jpg', { type: 'image/jpeg' });
+    const event = { target: { files: [file], value: '' } } as unknown as Event;
 
     component.onFilesSelected(event);
 
@@ -65,7 +63,7 @@ describe('PhotoUpload', () => {
 
     component.onFilesSelected(event);
 
-    const selectedNames = component.selectedFiles.map(f => f.name);
+    const selectedNames = component.selectedFiles.map((f) => f.name);
 
     expect(component.selectedFiles.length).toBe(3);
 
@@ -80,7 +78,7 @@ describe('PhotoUpload', () => {
     expect(snackBarSpy.open).toHaveBeenCalledWith(
       jasmine.stringMatching(/Maximal 3/), // Sucht nach dem korrekten Text
       'OK',
-      jasmine.any(Object)
+      jasmine.any(Object),
     );
   });
 

@@ -50,16 +50,18 @@ export class Camera {
     const input = e.target as HTMLInputElement;
     const f = input.files?.[0] || null;
     this.fileName = f ? f.name : '';
-    if (!f) { this.previewData = null;
+    if (!f) {
+      this.previewData = null;
       this.photoTaken.emit(null);
-      return; }
+      return;
+    }
 
     const reader = new FileReader();
-    reader.onload = () => this.previewData = reader.result as string;
+    reader.onload = () => (this.previewData = reader.result as string);
     reader.readAsDataURL(f);
 
     this.photoTaken.emit(f);
-    input.value = " ";
+    input.value = ' ';
   }
 
   /**

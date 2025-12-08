@@ -2,22 +2,19 @@
   display: block;
 }
 
-
-.camera-container{
+.camera-container {
   position: relative;
   pointer-events: auto;
   text-align: center;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 }
 
-
 .camera-title {
-  margin: .5rem 0 1rem;
+  margin: 0.5rem 0 1rem;
   font-weight: 700;
 }
 
-
-.hidden-input{
+.hidden-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -27,34 +24,34 @@
   padding: 0;
 }
 
-.camera-actions{
+.camera-actions {
   display: flex;
   justify-content: center;
-  gap: .5rem;
-  margin-bottom: .5rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.camera-btn{
+.camera-btn {
   min-width: 140px;
 }
 
-.camera-filename{
-  margin-top: .25rem;
+.camera-filename {
+  margin-top: 0.25rem;
 }
 
-.camera-preview{
-  margin-top: .5rem;
+.camera-preview {
+  margin-top: 0.5rem;
 }
 
-.camera-img{
+.camera-img {
   max-width: 280px;
   border-radius: 10px;
-  animation: fadeIn .2s ease-in;
+  animation: fadeIn 0.2s ease-in;
 }
 
-.camera-delete{
-  margin-top: .5rem;
-  padding: .4rem .8rem;
+.camera-delete {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 8px;
   background: #d32f2f;
   color: #fff;
@@ -63,4 +60,11 @@
   font-size: 16px;
 }
 
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

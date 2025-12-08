@@ -1,16 +1,16 @@
-import {Component, OnInit, signal, ViewChild} from '@angular/core';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {ApiService} from '../core/globalService/api.services';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatFormField, MatHint} from '@angular/material/form-field';
-import {MatLabel} from '@angular/material/form-field';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatInput} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {PhotoUpload} from '../photo-upload/photo-upload';
-import {Camera} from '../camera/camera';
-import {Karte} from '../karte/karte';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ApiService } from '../core/globalService/api.services';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormField, MatHint } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { PhotoUpload } from '../photo-upload/photo-upload';
+import { Camera } from '../camera/camera';
+import { Karte } from '../karte/karte';
 
 /**
  * Komponente für das Mängelmelden-Formular.
@@ -35,7 +35,7 @@ import {Karte} from '../karte/karte';
     Camera,
   ],
   templateUrl: './formular.html',
-  styleUrl: './formular.css'
+  styleUrl: './formular.css',
 })
 export class Formular implements OnInit {
 
@@ -80,15 +80,15 @@ export class Formular implements OnInit {
   ngOnInit() {
     // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
-      next: response => {
+      next: (response) => {
         this.categories = response;
         console.log('Kategorien vom Backend geladen:', this.categories);
       },
-      error: error => {
+      error: (error) => {
         console.error('Fehler beim Laden der Kategorien:', error);
         // Fallback: Zeige dem User eine Meldung
         alert('Kategorien konnten nicht geladen werden!');
-      }
+      },
     });
   }
 
@@ -117,8 +117,8 @@ export class Formular implements OnInit {
 
     //  Erzeugt den Report-Objekt mit allen Daten des Formulares
     const report = {
-    issue: this.selectedCategory,
-    description: this.description.trim(),
+      issue: this.selectedCategory,
+      description: this.description.trim(),
       latitude: coords?.lat ?? null,
       longitude: coords?.lng ?? null
   };
@@ -134,28 +134,32 @@ export class Formular implements OnInit {
   formData.append('photos', file, file.name);
   });
 
+    // send fotos with same name than backend
+    this.selectedFiles.forEach((file: File) => {
+      formData.append('photos', file, file.name);
+    });
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
 
     this.apiService.createReport(formData).subscribe({
-      next: response => {
+      next: (response) => {
         this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
         // NACH erfolgreichem Senden:
         this.selectedCategory = null;
         this.description = '';
-        this.selectedFiles = [];  // ← Fotos zurücksetzen
+        this.selectedFiles = []; // ← Fotos zurücksetzen
 
         this.photoUpload.resetUploadState();
 
         this.isLoading.set(false);
       },
-      error: error => {
+      error: (error) => {
         this.isLoading.set(false);
         console.error('Fehler beim Submit', error);
         this.snackBar.open('Fehler beim Senden!', '', { duration: 2500 });
-      }
+      },
     });
   }
 
@@ -182,16 +186,16 @@ export class Formular implements OnInit {
    * @param files Die ausgewählten Dateien, die von der Upload-Komponente geliefert werden.
    */
   onPhotosSelected(files: File[]): void {
-    const uniqueIncoming = files.filter((file, index, self) =>
-        index === self.findIndex(
-          f => f.name === file.name && f.size === file.size
-        )
+    const uniqueIncoming = files.filter(
+      (file, index, self) =>
+        index === self.findIndex((f) => f.name === file.name && f.size === file.size),
     );
 
     const newOnes = uniqueIncoming.filter(
-      f => !this.selectedFiles.some(
-        existing => existing.name === f.name && existing.size === f.size
-      )
+      (f) =>
+        !this.selectedFiles.some(
+          (existing) => existing.name === f.name && existing.size === f.size,
+        ),
     );
 
     this.selectedFiles.push(...newOnes);

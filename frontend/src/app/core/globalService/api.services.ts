@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 
 // Macht den Service überall in der App nutzbar
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   // Die Backend-URL (z.B. http://localhost:3000)
@@ -34,7 +34,7 @@ export class ApiService {
    * POST Request an /api/reports
    * data enthält: category und description
    */
- createReport(data: FormData): Observable<any> {
-   return this.http.post(`${this.baseUrl}/api/reports`, data);
- }
+  createReport(data: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/reports`, data);
+  }
 }

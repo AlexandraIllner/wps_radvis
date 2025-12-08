@@ -12,7 +12,7 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
 
-@import './colors';
+@import "./colors";
 
 // Peripheral Font-Style
 
@@ -20,4 +20,3 @@ $font-color-peripheral: map-get($grayscale, 800); // AA Contrast
 $font-background-peripheral: map-get($grayscale, 100); // AA Contrast
 
 $font-size-peripheral: 0.75rem;
-

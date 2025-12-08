@@ -9,7 +9,25 @@ describe('Formular Component', () => {
   let component: Formular;
   let fixture: ComponentFixture<Formular>;
   let apiService: ApiService;
+  function mockKarte(component: any, coords: { lat: number; lng: number } | null) {
+    component.karte = {
+      getCoordinates: () => coords,
+    };
+  }
 
+  function callSubmitAndParseReport(
+    component: any,
+    apiService: ApiService,
+    response: any = {}
+  ) {
+    const createSpy = spyOn(apiService, 'createReport').and.returnValue(of(response));
+    component.submitReport();
+    return createSpy;
+  }
+
+  function extractReportObject(createSpy: jasmine.Spy, cb: (obj: any) => void) {
+    const formDataSent = createSpy.calls.first().args[0] as FormData;
+    const blob = formDataSent.get('report') as Blob;
 
   beforeEach(async () => {
     const snackBarMock = jasmine.createSpyObj('MatSnackBar', ['open']);
@@ -19,9 +37,7 @@ describe('Formular Component', () => {
         Formular, // Standalone Component
         HttpClientTestingModule,
       ],
-      providers: [
-        { provide: MatSnackBar, useValue: snackBarMock },
-      ],
+      providers: [{ provide: MatSnackBar, useValue: snackBarMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Formular);
@@ -32,7 +48,7 @@ describe('Formular Component', () => {
     // da er nicht stabil war und in den individuellen Tests, die submitReport aufrufen,
     // neu gesetzt wird, um Race Conditions mit @ViewChild zu vermeiden.
 
-    spyOn(apiService, 'getIssue').and.returnValue(of([]));   // <--- CATEGORÍAS VACÍAS
+    spyOn(apiService, 'getIssue').and.returnValue(of([])); // <--- CATEGORÍAS VACÍAS
     fixture.detectChanges();
   });
 
@@ -63,7 +79,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+    expect(button.hasAttribute('disabled')).toBeFalse(); // FIX
   });
 
   it('Button sollte enabled sein, wenn Kategorie vorhanden ist', () => {
@@ -72,7 +88,7 @@ describe('Formular Component', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.hasAttribute('disabled')).toBeFalse();   // FIX
+    expect(button.hasAttribute('disabled')).toBeFalse(); // FIX
   });
 
   // --------------------------
@@ -120,9 +136,7 @@ describe('Formular Component', () => {
       getCoordinates: () => ({ lat: 52.5, lng: 13.4 }),
     } as any;
 
-    spyOn(apiService, 'createReport').and.returnValue(
-      throwError(() => new Error('Fehler'))
-    );
+    spyOn(apiService, 'createReport').and.returnValue(throwError(() => new Error('Fehler')));
     spyOn(console, 'error');
 
     component.selectedCategory = 'SCHLAGLOCH';
@@ -135,7 +149,6 @@ describe('Formular Component', () => {
   }));
 
   it('T5.23 Formular sollte auch ohne Koordinaten gültig sein', () => {
-
     component.selectedFiles = [];
     component.selectedCategory = 'SCHLAGLOCH';
     component.description = 'Test ohne Standort';
@@ -161,11 +174,10 @@ describe('Formular Component', () => {
     // Fotos aus Upload (eins davon Duplikat)
     component.onPhotosSelected([f2, f2Duplicate]);
 
-    const names = component.selectedFiles.map(f => f.name);
+    const names = component.selectedFiles.map((f) => f.name);
 
     expect(component.selectedFiles.length).toBe(2);
     expect(names).toContain('1.jpg');
     expect(names).toContain('2.jpg');
   });
-
 });
