@@ -95,4 +95,39 @@ class ReportControllerTest {
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isUnsupportedMediaType());
     }
+
+
+    @Test
+    void createReport_withoutLocation_shouldReturn201_andSaveNullCoordinates() throws Exception {
+
+        ReportResponseDTO mockResponse = new ReportResponseDTO(
+                999L,
+                Issue.SCHLAGLOCH,
+                Instant.now()
+        );
+
+        Mockito.when(reportService.create(Mockito.any(), Mockito.any()))
+                .thenReturn(mockResponse);
+
+        String reportJson = """
+    {
+        "issue":"SCHLAGLOCH",
+        "description":"Meldung ohne Standort",
+        "latitude": null,
+        "longitude": null
+    }
+    """;
+
+        MockMultipartFile reportPart = new MockMultipartFile(
+                "report", "", MediaType.APPLICATION_JSON_VALUE,
+                reportJson.getBytes()
+        );
+
+
+        mockMvc.perform(multipart("/api/reports")
+                        .file(reportPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(999))
+    }
 }
