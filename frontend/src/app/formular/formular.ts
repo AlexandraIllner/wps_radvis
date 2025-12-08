@@ -63,9 +63,12 @@ export class Formular implements OnInit {
 
   /**
    * Konstruktor der Klasse.
-   * Injiziert notwendige Services für Api-Kommunikation und Benachrichtigungen
-   * @param apiService
-   * @param snackBar
+   * Hier werden die Services reingeholt, die wir in der Komponente brauchen.
+   * Der ApiService kümmert sich um die Kommunikation mit dem Backend
+   * und der MatSnackBar zeigt kleine Hinweise/Fehlermeldungen im UI an.
+   *
+   * @param apiService - Service für Requests an das Backend
+   * @param snackBar - Angular Material SnackBar für kurze Benachrichtigungen
    */
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
@@ -90,9 +93,13 @@ export class Formular implements OnInit {
   }
 
   /**
-   * Sendet die Mängel-Meldung an das Backend
-   * Wird aufgerufen beim Klick auf den "Absenden"-Button
-   */
+  * Sendet die komplette Mängel-Meldung (Kategorie, Beschreibung, Fotos, Standort)
+  * an das Backend. Wird per Klick auf den "Absenden"-Button ausgelöst.
+  *
+  * Dabei wird ein FormData-Objekt gebaut, das den Report als JSON
+  * und alle ausgewählten Fotos enthält.
+   * @param photoUpload - Referenz zur PhotoUpload-Komponente, um nach dem Senden den Upload-Zustand zurückzusetzen
+  */
   @ViewChild(Karte) karte!: Karte;
 
   /**
