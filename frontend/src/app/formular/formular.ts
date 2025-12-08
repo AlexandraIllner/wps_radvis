@@ -12,6 +12,11 @@ import { PhotoUpload } from '../photo-upload/photo-upload';
 import { Camera } from '../camera/camera';
 import { Karte } from '../karte/karte';
 
+/**
+ * Komponente für das Mängelmelden-Formular.
+ * Verwaltet die Benutzereingaben, Datenuploads und die API-Kommunikation.
+ */
+
 @Component({
   selector: 'app-formular',
   imports: [
@@ -33,24 +38,45 @@ import { Karte } from '../karte/karte';
   styleUrl: './formular.css',
 })
 export class Formular implements OnInit {
+
+  /** Die aktuell ausgewählte Kategorie (z. B. „Straßenschaden“) */
   selectedCategory: string | null = null;
 
-  // Kategorien werden aus dem Backend gezogen
+  /** Kategorien vom Backend, werden beim Laden des Formulars gefüllt */
   categories: string[] = [];
 
+  /** Beschreibung des Mangels, die der Nutzer eingibt */
   description: string = '';
 
+  /** Flag für den Ladezustand – true während einer API-Anfrage */
   isLoading = signal(false);
 
+  /** Alle ausgewählten bzw. aufgenommenen Bilder */
   selectedFiles: File[] = [];
 
+
+  /**
+   * Referenz zur untergeordneten PhotoUpload-Komponente, um deren Methode aufzurufen (z.B. zum Zurücksetzen).
+   **/
   @ViewChild('photoUpload') photoUpload!: PhotoUpload;
 
-  constructor(
-    private apiService: ApiService,
-    private snackBar: MatSnackBar,
-  ) {}
 
+  /**
+   * Konstruktor der Klasse.
+   * Hier werden die Services reingeholt, die wir in der Komponente brauchen.
+   * Der ApiService kümmert sich um die Kommunikation mit dem Backend
+   * und der MatSnackBar zeigt kleine Hinweise/Fehlermeldungen im UI an.
+   *
+   * @param apiService - Service für Requests an das Backend
+   * @param snackBar - Angular Material SnackBar für kurze Benachrichtigungen
+   */
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+
+
+  /**
+   * Lifecycle-Hook von Angular, aufgerufen nach der Initialisierung der Komponente.
+   * Lädt die Kategorien beim Start der Komponente aus dem Backend.
+   */
   ngOnInit() {
     // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
@@ -67,11 +93,20 @@ export class Formular implements OnInit {
   }
 
   /**
-   * Sendet die Mängel-Meldung an das Backend
-   * Wird aufgerufen beim Klick auf den "Absenden"-Button
-   */
+  * Sendet die komplette Mängel-Meldung (Kategorie, Beschreibung, Fotos, Standort)
+  * an das Backend. Wird per Klick auf den "Absenden"-Button ausgelöst.
+  *
+  * Dabei wird ein FormData-Objekt gebaut, das den Report als JSON
+  * und alle ausgewählten Fotos enthält.
+   * @param photoUpload - Referenz zur PhotoUpload-Komponente, um nach dem Senden den Upload-Zustand zurückzusetzen
+  */
   @ViewChild(Karte) karte!: Karte;
 
+  /**
+   * Sendet die Mängel-Meldung an das Backend
+   * Wird aufgerufen beim Klick auf den "Absenden"-Button
+   * @param photoUpload
+   */
   submitReport(photoUpload?: any): void {
     const coords = this.karte.getCoordinates();
 
@@ -80,16 +115,24 @@ export class Formular implements OnInit {
       return;
     }
 
-    //  Create Report Object
+    //  Erzeugt den Report-Objekt mit allen Daten des Formulares
     const report = {
       issue: this.selectedCategory,
       description: this.description.trim(),
       latitude: coords?.lat ?? null,
-      longitude: coords?.lng ?? null,
-    };
-    // send as BLOB
+      longitude: coords?.lng ?? null
+  };
+    // Verpackt den Report als JSON-BLOB
     const formData = new FormData();
-    formData.append('report', new Blob([JSON.stringify(report)], { type: 'application/json' }));
+    formData.append(
+    'report',
+    new Blob([JSON.stringify(report)], { type: 'application/json' })
+  );
+
+  // Fügt alle ausgewählten Fotos hinzu (Name wie im Originalfile)
+  this.selectedFiles.forEach((file: File) => {
+  formData.append('photos', file, file.name);
+  });
 
     // send fotos with same name than backend
     this.selectedFiles.forEach((file: File) => {
@@ -122,11 +165,12 @@ export class Formular implements OnInit {
 
   /**
    * Wird aufgerufen, wenn ein Foto über die Kamera aufgenommen wird.
-   * Speichert das Foto in selectedFiles, damit es beim Absenden des Formulars mitgeschickt wird.
-   * console.log, dient nur zum Testen.
+   * @param photo - Die aufgenommene Foto-Datei oder null, falls der Vorgang abgebrochen wurde
    */
   onPhotoAdded(photo: File | null): void {
     if (photo) {
+
+      // console.log dient nur zum Testen und kann entfernt werden
       console.log('Kamera-Foto empfangen:', photo.name);
       this.selectedFiles.push(photo);
     } else {
@@ -134,9 +178,12 @@ export class Formular implements OnInit {
     }
   }
 
+
   /**
-   * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
-   * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
+   * Wird aufgerufen, wenn neue Fotos aus der Upload-Komponente kommen.
+   * Entfernt Duplikate und fügt nur wirklich neue Dateien hinzu.
+   *
+   * @param files Die ausgewählten Dateien, die von der Upload-Komponente geliefert werden.
    */
   onPhotosSelected(files: File[]): void {
     const uniqueIncoming = files.filter(
@@ -155,8 +202,9 @@ export class Formular implements OnInit {
   }
 
   /**
-   * Empfängt das Foto-Event aus der Kamera-Komponente
-   * Wird aufgerufen, wenn ein neues Foto aufgenommen wurde
+   * Fügt Dateien zur Auswahl hinzu, verhindert Duplikate.
+   * @param photoFile - Die aufgenommene Foto-Datei oder `null`, wenn die Aufnahme
+   * abgebrochen wurde oder fehlgeschlagen ist
    */
   onPhotoFromCamera(photoFile: File | null): void {
     if (photoFile) {
