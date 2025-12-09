@@ -25,10 +25,10 @@
         {{ isLoadingLocation ? 'Standort wird ermittelt...' : 'Aktuellen Standort verwenden' }}
       </button>
 
-      @if(errorMessage) {
-        <div class="error-box">
+      @if (errorMessage) {
+        <mat-card class="error-card">
           {{ errorMessage }}
-        </div>
+        </mat-card>
       }
 
       <!-- Map -->
