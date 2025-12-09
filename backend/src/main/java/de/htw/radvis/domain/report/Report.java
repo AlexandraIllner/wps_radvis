@@ -10,7 +10,14 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table
+@Table(
+        indexes = {
+                @Index(
+                        name = "idx_report_latitude_longitude",
+                        columnList = "latitude, longitude"
+                )
+        }
+)
 @Getter
 @Setter
 public class Report implements Serializable {
