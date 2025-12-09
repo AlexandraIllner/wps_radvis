@@ -2,6 +2,14 @@
   <div class="karte">
     <div class="karte-body">
       <h3 class="karte-title">Teilen Sie Ihren Standort oder markieren Sie ihn auf der Karte</h3>
+
+      @if (!hasLocation()) {
+        <div class="radmelder-hinweis">
+          <mat-icon class="hinweis-icon">info_outline</mat-icon>
+          <span>Wählen Sie einen Standort aus oder verwenden Sie Ihren aktuellen Standort.</span>
+        </div>
+      }
+
       <mat-grid-list cols="2" rowHeight="5vh">
         <mat-grid-tile>
           <button mat-raised-button color="primary" (click)="sendLocation()">
