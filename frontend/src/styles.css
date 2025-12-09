@@ -93,3 +93,9 @@ mat-spinner {
   margin-right: auto;
 }
 
+.mat-mdc-select-panel,
+.mdc-menu-surface,
+.mat-mdc-dialog-surface,
+.mat-mdc-snack-bar-container {
+  background-color: #ffffff !important;
+}
