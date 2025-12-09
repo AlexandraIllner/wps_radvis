@@ -25,6 +25,12 @@
         {{ isLoadingLocation ? 'Standort wird ermittelt...' : 'Aktuellen Standort verwenden' }}
       </button>
 
+      @if(errorMessage) {
+        <div class="error-box">
+          {{ errorMessage }}
+        </div>
+      }
+
       <!-- Map -->
       <div
         leaflet

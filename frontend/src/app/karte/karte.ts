@@ -150,7 +150,7 @@ export class Karte {
       },
       (error) => {
         console.error('Geolocation error:', error);
-        
+
         switch (error.code) {
           case error.PERMISSION_DENIED:
             this.errorMessage = 'Zugriff auf Standort wurde verweigert.';
