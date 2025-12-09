@@ -3,10 +3,11 @@ import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-photo-upload',
-  imports: [MatButton, CommonModule, MatProgressSpinnerModule],
+  imports: [MatButton, CommonModule, MatProgressSpinnerModule, MatIconModule],
   templateUrl: './photo-upload.html',
   styleUrls: ['./photo-upload.css'],
 })

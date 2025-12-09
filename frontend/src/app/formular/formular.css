@@ -69,7 +69,6 @@
 
 .radmelder-hinweis {
     width: 100%;
-    max-width: 400px;
     min-height: 56px;
     box-sizing: border-box;
     background: #EFF6FF;
@@ -120,7 +119,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 350px) {
   .media-inner {
     flex-direction: column;
   }
