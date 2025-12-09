@@ -13,6 +13,7 @@
 ## Architecture
 
 ### Frontend (`/frontend`)
+
 - **Framework**: Angular 20.3.0 (standalone components)
 - **Runtime**: Node.js v20.19.5, npm v10.8.2
 - **UI Library**: Angular Material 20.2.9
@@ -23,6 +24,7 @@
 - **Environment Config**: `src/enviroments/enviroment.ts` (backend URL: http://localhost:8000)
 
 ### Backend (`/backend`)
+
 - **Framework**: Spring Boot 3.5.6
 - **Runtime**: Java 17 (OpenJDK Temurin)
 - **Build Tool**: Maven wrapper (`./mvnw`)
@@ -66,6 +68,7 @@ npm test
 ```
 
 **Known Frontend Issues**:
+
 - Production builds fail due to font inlining from googleapis.com (network blocked)
 - Tests are currently failing because app.ts has commented-out code that tests reference
 - Always use `--configuration=development` for builds
@@ -92,12 +95,14 @@ cd backend
 ```
 
 **Known Backend Issues**:
+
 - One test failure in IssueControllerTest due to enum case mismatch
 - Duplicate dependency warning for spring-boot-starter-validation in pom.xml (line 56)
 
 ### Run Both Together
 
 From frontend directory:
+
 ```bash
 npm run start:dev  # Uses concurrently to start both frontend and backend
 ```
@@ -105,6 +110,7 @@ npm run start:dev  # Uses concurrently to start both frontend and backend
 ## Configuration Files
 
 ### Frontend
+
 - `package.json`: Scripts and dependencies
 - `angular.json`: Angular CLI configuration, build settings
 - `karma.conf.js`: Test runner configuration (ChromeHeadless)
@@ -112,6 +118,7 @@ npm run start:dev  # Uses concurrently to start both frontend and backend
 - `.editorconfig`: Code style (2 spaces, single quotes for TS)
 
 ### Backend
+
 - `pom.xml`: Maven dependencies and build configuration
 - `src/main/resources/application.properties`: Application name
 - `src/main/resources/application.yml`: Database, JPA, H2 console, server port
@@ -119,10 +126,12 @@ npm run start:dev  # Uses concurrently to start both frontend and backend
 ## Key Project Files
 
 **Root**:
+
 - `LICENSE.txt`: European Union Public Licence v1.2
-- `.gitignore`: Excludes .idea/, node_modules/, coverage/, .angular/, *.tsbuildinfo
+- `.gitignore`: Excludes .idea/, node_modules/, coverage/, .angular/, \*.tsbuildinfo
 
 **Frontend Structure**:
+
 ```
 frontend/
   src/
@@ -138,6 +147,7 @@ frontend/
 ```
 
 **Backend Structure**:
+
 ```
 backend/
   src/main/java/de/htw/radvis/
@@ -154,6 +164,7 @@ backend/
 **No GitHub Actions or CI pipelines are currently configured.**
 
 To validate changes:
+
 1. Run `PUPPETEER_SKIP_DOWNLOAD=true npm install` in frontend/
 2. Build frontend with `npx ng build --configuration=development`
 3. Build backend with `./mvnw clean package -DskipTests`
@@ -162,6 +173,7 @@ To validate changes:
 ## Common Workflows
 
 **Making Frontend Changes**:
+
 1. Navigate to `frontend/`
 2. Ensure dependencies installed: `PUPPETEER_SKIP_DOWNLOAD=true npm install`
 3. Make changes to TypeScript/HTML/CSS files
@@ -169,6 +181,7 @@ To validate changes:
 5. Test locally: `npm run start:frontend`
 
 **Making Backend Changes**:
+
 1. Navigate to `backend/`
 2. Make changes to Java files
 3. Build: `./mvnw clean package -DskipTests`
@@ -176,6 +189,7 @@ To validate changes:
 5. Test endpoints with curl: `curl http://localhost:8000/api/ping`
 
 **Adding Dependencies**:
+
 - Frontend: Add to `frontend/package.json`, run `PUPPETEER_SKIP_DOWNLOAD=true npm install`
 - Backend: Add to `backend/pom.xml`, Maven will auto-download on next build
 

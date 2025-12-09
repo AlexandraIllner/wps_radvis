@@ -1,34 +1,24 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { MatIconModule } from '@angular/material/icon';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-photo-upload',
-  imports: [
-    MatButton,
-    CommonModule,
-    MatProgressSpinnerModule,
-    MatIconModule
-  ],
+  imports: [MatButton, CommonModule, MatProgressSpinnerModule],
   templateUrl: './photo-upload.html',
-  styleUrls: ['./photo-upload.css']
+  styleUrls: ['./photo-upload.css'],
 })
-
-
 export class PhotoUpload {
   selectedFiles: File[] = [];
   previewUrls: string[] = [];
   isLoading = false;
   validFiles: File[] = [];
-  invalidCount= 0;
-
+  invalidCount = 0;
 
   @ViewChild('galleryInput') galleryInput!: ElementRef<HTMLInputElement>;
-  @Output() photosSelected = new EventEmitter<File[]>()
+  @Output() photosSelected = new EventEmitter<File[]>();
 
   constructor(private snackBar: MatSnackBar) {}
 
@@ -48,8 +38,9 @@ export class PhotoUpload {
     const incoming = Array.from(input.files);
 
     //  Duplikate vermeiden
-    const notAlreadySelected = incoming.filter(newFile =>
-      !this.selectedFiles.some(f => f.name === newFile.name && f.size === newFile.size)
+    const notAlreadySelected = incoming.filter(
+      (newFile) =>
+        !this.selectedFiles.some((f) => f.name === newFile.name && f.size === newFile.size),
     );
 
     //  Einzeldateien prüfen (Endung + 10 MB)
@@ -67,18 +58,16 @@ export class PhotoUpload {
       this.snackBar.open(
         `${newlyInvalidCount} Datei(en) ungültig. Erlaubt: JPG/JPEG/PNG, max. 10 MB pro Bild.`,
         'OK',
-        { duration: 3000 }
+        { duration: 3000 },
       );
     }
 
     //  Bestehende + neue zusammenführenaber max. 3
     let combined = [...this.selectedFiles, ...newlyValid];
     if (combined.length > 3) {
-      this.snackBar.open(
-        'Maximal 3 Dateien erlaubt. Nur die ersten 3 wurden übernommen.',
-        'OK',
-        { duration: 3000 }
-      );
+      this.snackBar.open('Maximal 3 Dateien erlaubt. Nur die ersten 3 wurden übernommen.', 'OK', {
+        duration: 3000,
+      });
       combined = combined.slice(0, 3);
     }
 
@@ -89,7 +78,7 @@ export class PhotoUpload {
       this.snackBar.open(
         'Gesamtgröße überschreitet 30 MB. Bitte weniger/kleinere Bilder wählen.',
         'OK',
-        { duration: 3500 }
+        { duration: 3500 },
       );
       this.isLoading = false;
       input.value = '';
@@ -98,7 +87,7 @@ export class PhotoUpload {
 
     //  Neue Dateien merken
     const actuallyNew = combined.filter(
-      nf => !this.selectedFiles.some(f => f.name === nf.name && f.size === nf.size)
+      (nf) => !this.selectedFiles.some((f) => f.name === nf.name && f.size === nf.size),
     );
 
     //  Auswahl übernehmen
@@ -114,7 +103,7 @@ export class PhotoUpload {
       return;
     }
 
-    actuallyNew.forEach(file => {
+    actuallyNew.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         this.previewUrls.push(reader.result as string);
@@ -134,21 +123,20 @@ export class PhotoUpload {
     this.previewUrls.splice(index, 1);
     this.photosSelected.emit(this.selectedFiles);
   }
-   /** Prüft die Dateiendung & -größe */
+  /** Prüft die Dateiendung & -größe */
   private isValidFile(file: File): boolean {
     //Konvertierung des gesamten Strings in Kleinbuchstaben-> Einheitliche Prüfung möglich
     const fileName = file.name.toLowerCase();
     const maxSize = 10 * 1024 * 1024; //Max. 10 MB
 
     //1. Prüft die Dateiendung
-    const hasValidExtension = fileName.endsWith(".jpg") || fileName.endsWith(".png");
+    const hasValidExtension = fileName.endsWith('.jpg') || fileName.endsWith('.png');
 
     //2. Prüft die Dateigröße
     const hasValidSize = file.size <= maxSize;
 
     //Beide müssen TRUE sein
     return hasValidExtension && hasValidSize;
-
   }
 
   /** Upload Status wird nach erfolgreichem Upload zurückgesetzt */
@@ -162,10 +150,4 @@ export class PhotoUpload {
       this.galleryInput.nativeElement.value = '';
     }
   }
-
-
 }
-
-
-
-

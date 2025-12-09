@@ -10,8 +10,8 @@ describe('ApiService', () => {
   // Wird vor jedem Test ausgeführt
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],  // Fake HTTP für Tests
-      providers: [ApiService]
+      imports: [HttpClientTestingModule], // Fake HTTP für Tests
+      providers: [ApiService],
     });
 
     service = TestBed.inject(ApiService);
@@ -48,27 +48,47 @@ describe('ApiService', () => {
 
   // Test 3: POST Request funktioniert
   it('sollte Report ans Backend senden (POST)', () => {
-    const reportData = {
+    // FormData korrekt aufbauen
+    const formData = new FormData();
+    const reportObject = {
       issue: 'SCHLAGLOCH',
       description: 'Großes Loch',
       latitude: 52.52,
-      longitude: 13.405
+      longitude: 13.405,
     };
 
-    const mockResponse = { id: 1, ...reportData };
+    formData.append(
+      'report',
+      new Blob([JSON.stringify(reportObject)], { type: 'application/json' }),
+    );
 
-    // Führe createReport() aus
-    service.createReport(reportData).subscribe((response: { id: any; issue: any; }) => {
+    // Mock Response
+    const mockResponse = { id: 1, ...reportObject };
+
+    // createReport aufrufen
+    service.createReport(formData).subscribe((response) => {
       expect(response.id).toBe(1);
       expect(response.issue).toBe('SCHLAGLOCH');
     });
 
-    // Prüfe ob richtiger Request gemacht wurde
+    // Request abfangen
     const req = httpMock.expectOne(`${environment.apiUrl}/api/reports`);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(reportData);
 
-    // Simuliere Backend-Antwort
+    // Body KANN NICHT direkt verglichen werden, aber:
+    expect(req.request.body instanceof FormData).toBeTrue();
+
+    const sentReportBlob = req.request.body.get('report') as Blob;
+
+    expect(sentReportBlob).toBeTruthy();
+
+    // Blob → JSON parsen
+    sentReportBlob.text().then((text) => {
+      const sentData = JSON.parse(text);
+      expect(sentData.issue).toBe('SCHLAGLOCH');
+    });
+
+    // Backend simulieren
     req.flush(mockResponse);
   });
 });

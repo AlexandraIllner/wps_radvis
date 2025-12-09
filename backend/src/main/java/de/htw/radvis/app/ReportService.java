@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 
 @Service
 public class ReportService {
@@ -22,21 +23,12 @@ public class ReportService {
     }
 
     public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile[] photos) throws IOException {
-        Report report = new Report();
-
-        if (dto.getIssue() != null) {
-            report.setIssue(dto.getIssue());
-        }
-
-        if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
-            report.setDescription(dto.getDescription().trim());
-        }
-
-        report.setLatitude(dto.getLatitude());
-        report.setLongitude(dto.getLongitude());
+        Report report = getReport(dto);
 
         if (photos != null) {
             photoValidator.validatePhotos(photos);
+            System.out.println("Received photos: " + photos.length);
+
 
             for (MultipartFile file : photos) {
                 if (file != null && !file.isEmpty()) {
@@ -49,7 +41,28 @@ public class ReportService {
         }
 
         var saved = reportRepository.save(report);
-
         return new ReportResponseDTO(saved.getId(), saved.getIssue(), saved.getCreationDate());
+
+    }
+
+    private static Report getReport(ReportCreateDTO dto) {
+        Report report = new Report();
+
+        if (dto.getIssue() != null) {
+            report.setIssue(dto.getIssue());
+        }
+
+        if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
+            report.setDescription(dto.getDescription().trim());
+        }
+
+        if (dto.getLatitude() != null) {
+            report.setLatitude(dto.getLatitude().setScale(6, RoundingMode.HALF_UP));
+        }
+
+        if (dto.getLongitude() != null) {
+            report.setLongitude(dto.getLongitude().setScale(6, RoundingMode.HALF_UP));
+        }
+        return report;
     }
 }

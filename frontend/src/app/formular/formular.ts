@@ -1,16 +1,22 @@
-import {Component, OnInit, signal, ViewChild} from '@angular/core';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {ApiService} from '../core/globalService/api.services';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatFormField, MatHint} from '@angular/material/form-field';
-import {MatLabel} from '@angular/material/form-field';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatInput} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {PhotoUpload} from '../photo-upload/photo-upload';
-import {Camera} from '../camera/camera';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ApiService } from '../core/globalService/api.services';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormField, MatHint } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { PhotoUpload } from '../photo-upload/photo-upload';
+import { Camera } from '../camera/camera';
+import { Karte } from '../karte/karte';
 import { MatIconModule } from '@angular/material/icon';
+
+/**
+ * Komponente für das Mängelmelden-Formular.
+ * Verwaltet die Benutzereingaben, Datenuploads und die API-Kommunikation.
+ */
 
 @Component({
   selector: 'app-formular',
@@ -27,107 +33,146 @@ import { MatIconModule } from '@angular/material/icon';
     MatButton,
     MatOption,
     PhotoUpload,
+    MatIconModule,
     Camera,
-    MatIconModule
   ],
   templateUrl: './formular.html',
-  styleUrl: './formular.css'
+  styleUrl: './formular.css',
 })
 export class Formular implements OnInit {
 
-
+  /** Die aktuell ausgewählte Kategorie (z. B. „Straßenschaden“) */
   selectedCategory: string | null = null;
 
-  // Kategorien werden aus dem Backend gezogen
+  /** Kategorien vom Backend, werden beim Laden des Formulars gefüllt */
   categories: string[] = [];
 
+  /** Beschreibung des Mangels, die der Nutzer eingibt */
   description: string = '';
 
+  /** Flag für den Ladezustand – true während einer API-Anfrage */
   isLoading = signal(false);
 
+  /** Alle ausgewählten bzw. aufgenommenen Bilder */
   selectedFiles: File[] = [];
 
+
+  /**
+   * Referenz zur untergeordneten PhotoUpload-Komponente, um deren Methode aufzurufen (z.B. zum Zurücksetzen).
+   **/
   @ViewChild('photoUpload') photoUpload!: PhotoUpload;
 
 
+  /**
+   * Konstruktor der Klasse.
+   * Hier werden die Services reingeholt, die wir in der Komponente brauchen.
+   * Der ApiService kümmert sich um die Kommunikation mit dem Backend
+   * und der MatSnackBar zeigt kleine Hinweise/Fehlermeldungen im UI an.
+   *
+   * @param apiService - Service für Requests an das Backend
+   * @param snackBar - Angular Material SnackBar für kurze Benachrichtigungen
+   */
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
 
+
+  /**
+   * Lifecycle-Hook von Angular, aufgerufen nach der Initialisierung der Komponente.
+   * Lädt die Kategorien beim Start der Komponente aus dem Backend.
+   */
   ngOnInit() {
     // Lädt Kategorien vom Backend beim Start
     this.apiService.getIssue().subscribe({
-      next: response => {
+      next: (response) => {
         this.categories = response;
         console.log('Kategorien vom Backend geladen:', this.categories);
       },
-      error: error => {
+      error: (error) => {
         console.error('Fehler beim Laden der Kategorien:', error);
         // Fallback: Zeige dem User eine Meldung
         alert('Kategorien konnten nicht geladen werden!');
-      }
+      },
     });
   }
 
   /**
+  * Sendet die komplette Mängel-Meldung (Kategorie, Beschreibung, Fotos, Standort)
+  * an das Backend. Wird per Klick auf den "Absenden"-Button ausgelöst.
+  *
+  * Dabei wird ein FormData-Objekt gebaut, das den Report als JSON
+  * und alle ausgewählten Fotos enthält.
+   * @param photoUpload - Referenz zur PhotoUpload-Komponente, um nach dem Senden den Upload-Zustand zurückzusetzen
+  */
+  @ViewChild(Karte) karte!: Karte;
+
+  /**
    * Sendet die Mängel-Meldung an das Backend
    * Wird aufgerufen beim Klick auf den "Absenden"-Button
+   * @param photoUpload
    */
-  submitReport(photoUpload: any): void {
+  submitReport(photoUpload?: any): void {
+    const coords = this.karte.getCoordinates();
+
     if (!this.selectedCategory && this.description.trim() === '') {
       alert('Bitte wähle eine Kategorie oder gib eine Beschreibung ein!');
       return;
     }
 
-    //  Create Report Object
+    //  Erzeugt den Report-Objekt mit allen Daten des Formulares
     const report = {
-    issue: this.selectedCategory,
-    description: this.description.trim(),
-    latitude: 52.52,
-    longitude: 13.405
+      issue: this.selectedCategory,
+      description: this.description.trim(),
+      latitude: coords?.lat ?? null,
+      longitude: coords?.lng ?? null
   };
-    // send as BLOB
+    // Verpackt den Report als JSON-BLOB
     const formData = new FormData();
     formData.append(
     'report',
     new Blob([JSON.stringify(report)], { type: 'application/json' })
   );
 
-  // send fotos with same name than backend
+  // Fügt alle ausgewählten Fotos hinzu (Name wie im Originalfile)
   this.selectedFiles.forEach((file: File) => {
   formData.append('photos', file, file.name);
   });
 
+    // send fotos with same name than backend
+    this.selectedFiles.forEach((file: File) => {
+      formData.append('photos', file, file.name);
+    });
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
 
     this.apiService.createReport(formData).subscribe({
-      next: response => {
+      next: (response) => {
         this.snackBar.open('Danke, dass Sie den Mangel gemeldet haben!', '', { duration: 3000 });
 
         // NACH erfolgreichem Senden:
         this.selectedCategory = null;
         this.description = '';
-        this.selectedFiles = [];  // ← Fotos zurücksetzen
+        this.selectedFiles = []; // ← Fotos zurücksetzen
 
         this.photoUpload.resetUploadState();
 
         this.isLoading.set(false);
       },
-      error: error => {
+      error: (error) => {
         this.isLoading.set(false);
         console.error('Fehler beim Submit', error);
         this.snackBar.open('Fehler beim Senden!', '', { duration: 2500 });
-      }
+      },
     });
   }
 
   /**
    * Wird aufgerufen, wenn ein Foto über die Kamera aufgenommen wird.
-   * Speichert das Foto in selectedFiles, damit es beim Absenden des Formulars mitgeschickt wird.
-   * console.log, dient nur zum Testen.
+   * @param photo - Die aufgenommene Foto-Datei oder null, falls der Vorgang abgebrochen wurde
    */
   onPhotoAdded(photo: File | null): void {
     if (photo) {
+
+      // console.log dient nur zum Testen und kann entfernt werden
       console.log('Kamera-Foto empfangen:', photo.name);
       this.selectedFiles.push(photo);
     } else {
@@ -135,21 +180,33 @@ export class Formular implements OnInit {
     }
   }
 
+
   /**
-   * Wird aufgerufen, wenn Fotos über die Upload-Komponente ausgewählt werden.
-   * Fügt alle ausgewählten Dateien zu selectedFiles hinzu, damit sie beim Submit gesendet werden.
+   * Wird aufgerufen, wenn neue Fotos aus der Upload-Komponente kommen.
+   * Entfernt Duplikate und fügt nur wirklich neue Dateien hinzu.
+   *
+   * @param files Die ausgewählten Dateien, die von der Upload-Komponente geliefert werden.
    */
   onPhotosSelected(files: File[]): void {
-    const newOnes = files.filter(
-      f => !this.selectedFiles.some(existing => existing.name === f.name && existing.size === f.size)
+    const uniqueIncoming = files.filter(
+      (file, index, self) =>
+        index === self.findIndex((f) => f.name === file.name && f.size === file.size),
     );
+
+    const newOnes = uniqueIncoming.filter(
+      (f) =>
+        !this.selectedFiles.some(
+          (existing) => existing.name === f.name && existing.size === f.size,
+        ),
+    );
+
     this.selectedFiles.push(...newOnes);
   }
 
-
   /**
-   * Empfängt das Foto-Event aus der Kamera-Komponente
-   * Wird aufgerufen, wenn ein neues Foto aufgenommen wurde
+   * Fügt Dateien zur Auswahl hinzu, verhindert Duplikate.
+   * @param photoFile - Die aufgenommene Foto-Datei oder `null`, wenn die Aufnahme
+   * abgebrochen wurde oder fehlgeschlagen ist
    */
   onPhotoFromCamera(photoFile: File | null): void {
     if (photoFile) {

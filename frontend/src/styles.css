@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 main {
   display: flex;
@@ -15,7 +21,8 @@ main {
   background-color: #f9f9f9;
 }
 
-form, mat-card {
+form,
+mat-card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -50,7 +57,6 @@ button {
     max-width: 500px;
   }
 }
-
 .formular-container {
   max-width: 448px;
   width: 100%;
@@ -69,6 +75,12 @@ button {
   gap: 18px;
 }
 
+h1,
+button,
+mat-spinner {
+  align-self: center;
+}
+
 .karte {
   align-items: center;
   display: flex;
@@ -79,5 +91,4 @@ button {
   padding: 0;
   margin: 0;
 }
-
 
