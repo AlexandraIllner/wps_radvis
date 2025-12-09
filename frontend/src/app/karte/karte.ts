@@ -147,4 +147,17 @@ export class Karte {
       },
     );
   }
+
+  hasLocation(): boolean {
+    return this.selectedLat !== null && this.selectedLng !== null;
+  }
+
+  get formattedLat(): string {
+    return this.selectedLat?.toFixed(6) ?? '';
+  }
+
+  get formattedLng(): string {
+    return this.selectedLng?.toFixed(6) ?? '';
+  }
+
 }

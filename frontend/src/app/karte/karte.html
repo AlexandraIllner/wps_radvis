@@ -31,6 +31,13 @@
         (leafletMapReady)="onMapReady($event)"
         style="height: 400px; width: 100%"
       ></div>
+
+      @if (hasLocation()) {
+        <div class="success-box">
+          ✓ Standort ausgewählt: {{ formattedLat }}, {{ formattedLng }}
+        </div>
+      }
+
     </div>
   </div>
 }
