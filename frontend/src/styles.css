@@ -12,7 +12,7 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   min-height: 100vh;
   padding-top: 3rem;
@@ -57,14 +57,22 @@ button {
     max-width: 500px;
   }
 }
-/*
-  nur, weil es so komisch aussah - gerne ändern!
- */
-mat-form-field,
-mat-raised-button {
-  width: 280px;
-  margin-top: 1rem;
-  align-self: center;
+.formular-container {
+  max-width: 448px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 20px;
+  background: linear-gradient(to bottom, #f9fafb, white);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 h1,
@@ -73,19 +81,21 @@ mat-spinner {
   align-self: center;
 }
 
-.formular-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .karte {
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   padding: 0;
-  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mat-mdc-select-panel,
+.mdc-menu-surface,
+.mat-mdc-dialog-surface,
+.mat-mdc-snack-bar-container {
+  background-color: #ffffff !important;
 }

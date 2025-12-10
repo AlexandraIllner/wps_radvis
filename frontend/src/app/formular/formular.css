@@ -1,0 +1,189 @@
+.formular-title {
+}
+
+.upload-camera-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #ffffff;
+  position: relative;
+  align-items: flex-start;
+}
+
+.media-title {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  color: #374151 !important;
+  font-size: 14px;
+}
+
+.media-field {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #ffffff;
+  align-items: flex-start;
+}
+
+.media-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.camera-actions,
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.camera-btn,
+.upload-btn {
+  min-width: 140px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-inner app-photo-upload,
+.media-inner app-camera {
+  flex: 1;
+}
+
+.upload-camera-title {
+  position: absolute;
+  left: 0;
+  margin-left: 1rem;
+}
+
+.radmelder-hinweis {
+    width: 100%;
+    min-height: 56px;
+    box-sizing: border-box;
+    background: #EFF6FF;
+    border: 1.5px solid #93C5FD;
+    border-radius: 16px;
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #1E3A8A;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: left !important;
+}
+
+.hinweis-icon {
+  color: #1D6FAF !important;
+  font-size: 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+  flex-shrink: 0;
+  font-weight: 300 !important;
+}
+
+.radmelder-hinweis span {
+  flex: 1;
+  text-align: left;
+  line-height: 1.5;
+}
+
+
+.submit-button {
+  width: 100%;
+  height: 40px;
+  border-radius: 25px !important;
+  background: #D6127D !important;
+  color: #fff !important;
+  margin-top: 6px;
+  font-size: 16px;
+  box-shadow: 0 8px 18px rgba(214,18,125,0.14);
+
+  &:not([disabled]):hover {
+    background: #C00F6F !important;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 350px) {
+  .media-inner {
+    flex-direction: column;
+  }
+}
+
+::ng-deep .radmelder-select,
+::ng-deep .radmelder-textarea {
+  width: 100%;
+  color: #374151 !important;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-text-field-radmelder-select,
+::ng-deep .mdc-line-ripple {
+  display: none !important;
+}
+
+::ng-deep .radmelder-select,
+::ng-deep .radmelder-textarea {
+  width: 100%;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__leading,
+::ng-deep .radmelder-textarea .mdc-notched-outline__leading {
+  border-radius: 16px 0 0 16px !important;
+  border-width: 2px !important;
+  border-color: #e5e7eb !important;
+  border-right: none !important;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__trailing,
+::ng-deep .radmelder-textarea .mdc-notched-outline__trailing {
+  border-radius: 0 16px 16px 0 !important;
+  border-width: 2px !important;
+  border-color: #e5e7eb !important;
+  border-left: none !important;
+}
+
+::ng-deep .radmelder-select .mdc-notched-outline__notch,
+::ng-deep .radmelder-textarea .mdc-notched-outline__notch {
+  border-width: 2px 0 !important;
+  border-color: #e5e7eb !important;
+}
+
+
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__leading,
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__notch,
+::ng-deep .radmelder-select.mat-focused .mdc-notched-outline__trailing,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__leading,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__notch,
+::ng-deep .radmelder-textarea.mat-focused .mdc-notched-outline__trailing {
+  border-color: #1D6FAF !important;
+}
+
+::ng-deep .radmelder-select.mat-focused .mat-mdc-floating-label,
+::ng-deep .radmelder-textarea.mat-focused .mat-mdc-floating-label {
+  color: #1D6FAF !important;
+}
+
+
+
+
+
+
+
+

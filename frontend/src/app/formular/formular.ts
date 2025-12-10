@@ -11,6 +11,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { PhotoUpload } from '../photo-upload/photo-upload';
 import { Camera } from '../camera/camera';
 import { Karte } from '../karte/karte';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Komponente für das Mängelmelden-Formular.
@@ -32,6 +33,7 @@ import { Karte } from '../karte/karte';
     MatButton,
     MatOption,
     PhotoUpload,
+    MatIconModule,
     Camera,
   ],
   templateUrl: './formular.html',
