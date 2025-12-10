@@ -1,3 +1,9 @@
+.error-card {
+  margin-top: 8px;
+  background-color: #ffebee;
+  color: #b71c1c;
+}
+
 .success-box {
   background:#e8f5e9;
   color:#1b5e20;

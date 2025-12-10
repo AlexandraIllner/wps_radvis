@@ -5,6 +5,7 @@ import 'leaflet.locatecontrol';
 import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import {MatCard} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 
@@ -12,11 +13,13 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-karte',
   templateUrl: './karte.html',
   styleUrls: ['./karte.css'],
-  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatGridList,MatIconModule, MatGridTile],
+  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatGridList, MatGridTile, MatCard, MatIconModule],
   standalone: true,
 })
 export class Karte {
   showMap = true;
+  isLoadingLocation = false;
+  errorMessage: string | null = null;
   osmUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   osmAttrib = 'Map data © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
   private lat_long: [number, number] = [48.72720881940671, 9.266967773437502];
@@ -121,9 +124,12 @@ export class Karte {
 
   useCurrentLocation() {
     if (!navigator.geolocation) {
-      alert('Geolocation wird von diesem Browser nicht unterstützt.');
+      this.errorMessage = 'Geolocation wird von diesem Browser nicht unterstützt.';
       return;
     }
+
+    this.errorMessage = null;
+    this.isLoadingLocation = true;
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -142,10 +148,27 @@ export class Karte {
         this.selectedLat = lat;
         this.selectedLng = lng;
         this.currentLocation = [lat, lng];
+
+        this.isLoadingLocation = false;
       },
       (error) => {
         console.error('Geolocation error:', error);
-        alert('Der Standort konnte nicht abgerufen werden.');
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            this.errorMessage = 'Zugriff auf Standort wurde verweigert.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            this.errorMessage = 'Standort konnte nicht ermittelt werden.';
+            break;
+          case error.TIMEOUT:
+            this.errorMessage = 'Zeitüberschreitung bei Standort-Ermittlung.';
+            break;
+          default:
+            this.errorMessage = 'Unbekannter Fehler bei der Standort-Ermittlung.';
+        }
+
+        this.isLoadingLocation = false;
       },
     );
   }
@@ -161,5 +184,4 @@ export class Karte {
   get formattedLng(): string {
     return this.selectedLng?.toFixed(6) ?? '';
   }
-
 }
