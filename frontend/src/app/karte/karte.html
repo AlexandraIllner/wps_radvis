@@ -20,9 +20,16 @@
         style="margin-bottom: 3%"
         color="primary"
         (click)="useCurrentLocation()"
+        [disabled]="isLoadingLocation"
       >
-        Aktuellen Standort verwenden
+        {{ isLoadingLocation ? 'Standort wird ermittelt...' : 'Aktuellen Standort verwenden' }}
       </button>
+
+      @if (errorMessage) {
+        <mat-card class="error-card">
+          {{ errorMessage }}
+        </mat-card>
+      }
 
       <!-- Map -->
       <div
