@@ -128,6 +128,6 @@ class ReportControllerTest {
                         .file(reportPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(999))
+                .andExpect(jsonPath("$.id").value(999));
     }
 }

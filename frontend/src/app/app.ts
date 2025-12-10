@@ -10,7 +10,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Formular } from './formular/formular';
 import { Header } from './header/header';
-import { Karte } from './karte/karte';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +26,6 @@ import { Karte } from './karte/karte';
     MatProgressSpinnerModule,
     Formular,
     Header,
-    Karte,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
