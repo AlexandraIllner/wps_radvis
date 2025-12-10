@@ -15,6 +15,7 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 })
 export class Karte {
   showMap = true;
+  isLoadingLocation = false;
   osmUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   osmAttrib = 'Map data © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
   private lat_long: [number, number] = [48.72720881940671, 9.266967773437502];
@@ -123,6 +124,8 @@ export class Karte {
       return;
     }
 
+    this.isLoadingLocation = true;
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const lat = pos.coords.latitude;
@@ -140,10 +143,13 @@ export class Karte {
         this.selectedLat = lat;
         this.selectedLng = lng;
         this.currentLocation = [lat, lng];
+
+        this.isLoadingLocation = false;
       },
       (error) => {
         console.error('Geolocation error:', error);
         alert('Der Standort konnte nicht abgerufen werden.');
+        this.isLoadingLocation = false;
       },
     );
   }
