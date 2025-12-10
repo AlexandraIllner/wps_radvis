@@ -1,12 +1,14 @@
 package de.htw.radvis.web.report;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htw.radvis.app.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,19 +20,16 @@ import java.net.URI;
 public class ReportController {
 
     private final ReportService reportService;
+
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ReportResponseDTO>createReport(
-            @Valid @RequestPart ("report") String reportJson,
+    public ResponseEntity<ReportResponseDTO> createReport(
+            @Valid @RequestPart("report") ReportCreateDTO reportCreateDTO,
             @RequestPart(value = "photos", required = false) MultipartFile[] photos
     ) throws IOException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        ReportCreateDTO reportCreateDTO = mapper.readValue(reportJson, ReportCreateDTO.class);
-
         var response = reportService.create(reportCreateDTO, photos);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
