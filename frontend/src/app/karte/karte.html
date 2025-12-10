@@ -25,6 +25,12 @@
         {{ isLoadingLocation ? 'Standort wird ermittelt...' : 'Aktuellen Standort verwenden' }}
       </button>
 
+      @if (errorMessage) {
+        <mat-card class="error-card">
+          {{ errorMessage }}
+        </mat-card>
+      }
+
       <!-- Map -->
       <div
         leaflet
