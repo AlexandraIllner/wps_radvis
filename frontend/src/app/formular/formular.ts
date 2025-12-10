@@ -11,6 +11,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { PhotoUpload } from '../photo-upload/photo-upload';
 import { Camera } from '../camera/camera';
 import { Karte } from '../karte/karte';
+import { CommonModule } from '@angular/common';
 
 /**
  * Komponente für das Mängelmelden-Formular.
@@ -20,6 +21,7 @@ import { Karte } from '../karte/karte';
 @Component({
   selector: 'app-formular',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormField,

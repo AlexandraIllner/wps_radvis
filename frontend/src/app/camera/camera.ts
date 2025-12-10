@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
+
 /**
  * Komponente zum Aufnehmen oder Auswählen eines Fotos.
  * Stellt eine einfache Oberfläche bereit und gibt das gewählte Bild

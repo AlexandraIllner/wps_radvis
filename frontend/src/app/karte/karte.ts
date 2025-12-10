@@ -7,6 +7,7 @@ import { MatButton } from '@angular/material/button';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import {MatCard} from '@angular/material/card';
 
+
 @Component({
   selector: 'app-karte',
   templateUrl: './karte.html',
