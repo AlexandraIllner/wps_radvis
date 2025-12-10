@@ -5,17 +5,55 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+// RadMELDER Palettes
+$radmelder-blue: (
+  0: #000000,
+  10: #001d35,
+  20: #00325a,
+  25: #003e6f,
+  30: #004a84,
+  35: #00569a,
+  40: #1D6FAF,
+  50: #4589c9,
+  60: #67a4e0,
+  70: #89bff7,
+  80: #b3d6ff,
+  90: #d8e9ff,
+  95: #ecf4ff,
+  98: #f8f9ff,
+  99: #fcfcff,
+  100: #ffffff,
+);
+
+$radmelder-pink: (
+  0: #000000,
+  10: #3d0022,
+  20: #5f0037,
+  25: #710043,
+  30: #84004f,
+  35: #97005b,
+  40: #ab0067,
+  50: #D6127D,
+  60: #e94096,
+  70: #f76baf,
+  80: #ff95c8,
+  90: #ffc0de,
+  95: #ffdde9,
+  98: #fff0f3,
+  99: #fffbff,
+  100: #ffffff,
+);
+
+
 html {
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
+  @include mat.theme((
+    color: (
+      primary: $radmelder-blue,
+      tertiary: $radmelder-pink,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
 }
 
 body {
@@ -35,38 +73,3 @@ body {
   margin: 0;
 }
 
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-
-html {
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$rose-palette,
-        tertiary: mat.$red-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-}
-
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-}

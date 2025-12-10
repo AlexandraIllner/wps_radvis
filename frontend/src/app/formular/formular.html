@@ -1,63 +1,74 @@
 <div class="formular-container">
-  <h1>Neue Meldung</h1>
+  <app-karte #karteComp></app-karte>
+  <div class="formular-title">
+    <h1>Neue Meldung</h1>
+  </div>
 
-  <form>
-    <mat-form-field appearance="outline">
-      <mat-label>Mängelkategorie</mat-label>
-      <mat-select [(ngModel)]="selectedCategory" name="category">
-        @for (cat of categories; track cat) {
-          <mat-option [value]="cat">{{ cat }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Beschreibung</mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="Beschreibe den Mangel kurz"
-        [(ngModel)]="description"
-        maxlength="1000"
-        name="descriptionForm"
-      />
-      <mat-hint align="end">{{ description.length || 0 }} / 1000 Zeichen</mat-hint>
-    </mat-form-field>
-
-    <!-- *ngIf ersetzt wg. deprecation warning
-        <p
-          *ngIf="!selectedCategory && description.trim() === ''"
-          style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem;"
-        >
-          Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
-        </p>-->
 
     @if (!selectedCategory && description.trim() === '') {
-      <p style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.8rem">
-        Bitte wähle eine Kategorie oder gib eine Beschreibung ein!
-      </p>
+  <div class="radmelder-hinweis">
+    <mat-icon class="hinweis-icon">info_outline</mat-icon>
+    <span>Bitte wählen Sie eine Kategorie oder geben Sie eine Beschreibung ein.</span>
+  </div>
     }
 
-    <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
-    <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
 
-    <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
+  <mat-form-field appearance="outline" class="radmelder-select">
+  <mat-label>Mängelkategorie</mat-label>
+    <mat-select [(ngModel)]="selectedCategory" name="category"
+                style="border-bottom: none;">
+      @for (cat of categories; track cat) {
+        <mat-option [value]="cat.valueOf">{{ cat }}</mat-option>
+      }
+    </mat-select>
+    </mat-form-field>
 
-    <button
-      id="submit-btn"
-      type="button"
-      mat-raised-button
-      color="primary"
-      [disabled]="!selectedCategory && description.trim() === ''"
-      (click)="submitReport(photoUpload)"
-    >
-      Absenden
-    </button>
+     <mat-form-field appearance="outline" class="radmelder-textarea">
+     <mat-label>Beschreibung</mat-label>
+       <textarea
+         matInput
+         [(ngModel)]="description"
+         maxlength="1000"
+         placeholder="Beschreiben Sie den Mangel kurz"
+         name="descriptionForm"
+         rows="4"
+       ></textarea>
 
-    @if (isLoading()) {
-      <div style="margin-top: 1rem; display: flex; justify-content: center">
-        <mat-spinner diameter="30" color="primary"></mat-spinner>
-      </div>
-    }
-  </form>
+     <mat-hint align="end">{{ description.length || 0 }}/1000</mat-hint>
+   </mat-form-field>
+
+
+
+  <!-- Template-Referenzvariable: Ermöglicht Kommunikation mit der PhotoUpload-Komponente -->
+  <div class="media-field">
+    <span class="media-title">Fotos hinzufügen (optional)</span>
+    <div class="media-inner">
+      <app-photo-upload #photoUpload (photosSelected)="onPhotosSelected($event)"></app-photo-upload>
+   <app-camera (photoTaken)="onPhotoFromCamera($event); onPhotoAdded($event)"></app-camera>
+   </div>
+  </div>
+
+
+
+   <button
+     type="button"
+     mat-raised-button
+     color="primary"
+     class="submit-button"
+     [disabled]="!selectedCategory && description.trim() === ''"
+     (click)="submitReport(photoUpload)"
+   >
+     Meldung senden
+   </button>
+
+   @if (isLoading()) {
+     <div style="margin-top: 1rem;  display: flex; justify-content: center;" >
+       <mat-spinner diameter="30" color="primary"></mat-spinner>
+     </div>
+   }
+
 </div>
+
+
+

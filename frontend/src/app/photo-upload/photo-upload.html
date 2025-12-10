@@ -1,10 +1,14 @@
 <!-- Overlay-Spinner -->
 <div *ngIf="isLoading" class="upload-overlay">
   <mat-progress-spinner diameter="50" mode="indeterminate" color="primary"></mat-progress-spinner>
-</div>
+  </div>
 
-<div>
-  <h3>Fotos auswählen (max. 3)</h3>
+  <div class="photo-upload-wrapper">
+    <!--<div class="upload-header">
+      <h3 class="upload-title">Fotos hinzufügen</h3>
+      <span class="upload-counter">{{ selectedFiles.length }}/3</span>-->
+    </div>
+
 
   <!-- Versteckter Datei-Input -->
   <input
@@ -17,19 +21,21 @@
   />
 
   <!-- Sichtbarer Button -->
+    <div class="upload-buttons">
   <button
     type="button"
     mat-raised-button
-    class="camera-btn"
+    class="upload-btn"
     (click)="galleryInput.click()"
     aria-label="Bild aus Galerie oder Datei wählen"
-    [disabled]="validFiles.length >= 3 || isLoading"
-  >
-    Galerie/Datei
+    [disabled]="validFiles.length >=3 || isLoading">
+    <mat-icon class="btn-icon">photo_library</mat-icon>
+    Galerie
   </button>
+    </div>
 
   <!-- Vorschau der gewählten Bilder -->
-  <div *ngIf="selectedFiles.length > 0">
+  <div *ngIf="selectedFiles.length > 0" class="upload-preview-grid">
     <p class="camera-filename" aria-live="polite">
       Gewählt:
       <strong *ngFor="let file of selectedFiles; let i = index">
@@ -37,18 +43,12 @@
       </strong>
     </p>
 
-    <!-- Vorschau der Bilder -->
-    <div *ngFor="let url of previewUrls; let i = index" class="camera-preview">
-      <img [src]="url" [alt]="'Vorschau des gewählten Fotos ' + (i + 1)" class="camera-img" />
-
-      <button
-        type="button"
-        class="camera-delete"
-        (click)="removePhoto(i)"
-        aria-label="Gewähltes Foto löschen"
-      >
-        Foto {{ i + 1 }} löschen
-      </button>
+    <div>
+      <div *ngFor="let url of previewUrls; let i = index" class="gallery-wrapper">
+        <img [src]="url" [alt]="'Vorschau des gewählten Fotos ' + (i + 1)" class="gallery-img" />
+        <button type="button" class="gallery-delete-btn" (click)="removePhoto(i)" aria-label="Gewähltes Foto löschen">
+          ✕
+        </button>
+      </div>
     </div>
   </div>
-</div>

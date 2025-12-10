@@ -6,13 +6,15 @@ import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import {MatCard} from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @Component({
   selector: 'app-karte',
   templateUrl: './karte.html',
   styleUrls: ['./karte.css'],
-  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatGridList, MatGridTile, MatCard],
+  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatGridList, MatGridTile, MatCard, MatIconModule],
   standalone: true,
 })
 export class Karte {
@@ -170,5 +172,17 @@ export class Karte {
         this.isLoadingLocation = false;
       },
     );
+  }
+
+  hasLocation(): boolean {
+    return this.selectedLat !== null && this.selectedLng !== null;
+  }
+
+  get formattedLat(): string {
+    return this.selectedLat?.toFixed(6) ?? '';
+  }
+
+  get formattedLng(): string {
+    return this.selectedLng?.toFixed(6) ?? '';
   }
 }

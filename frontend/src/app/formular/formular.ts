@@ -34,7 +34,9 @@ import { CommonModule } from '@angular/common';
     MatButton,
     MatOption,
     PhotoUpload,
+    MatIconModule,
     Camera,
+    Karte,
   ],
   templateUrl: './formular.html',
   styleUrl: './formular.css',
@@ -62,6 +64,10 @@ export class Formular implements OnInit {
    **/
   @ViewChild('photoUpload') photoUpload!: PhotoUpload;
 
+  /**
+   * Referenz zur untergeordneten Karten-Komponente, um deren Methode aufzurufen.
+   */
+  @ViewChild('karteComp') karte!: Karte;
 
   /**
    * Konstruktor der Klasse.
@@ -102,7 +108,6 @@ export class Formular implements OnInit {
   * und alle ausgewählten Fotos enthält.
    * @param photoUpload - Referenz zur PhotoUpload-Komponente, um nach dem Senden den Upload-Zustand zurückzusetzen
   */
-  @ViewChild(Karte) karte!: Karte;
 
   /**
    * Sendet die Mängel-Meldung an das Backend
