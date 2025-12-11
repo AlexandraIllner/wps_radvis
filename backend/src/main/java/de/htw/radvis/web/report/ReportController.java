@@ -30,6 +30,13 @@ public class ReportController {
             @Valid @RequestPart("report") ReportCreateDTO reportCreateDTO,
             @RequestPart(value = "photos", required = false) MultipartFile[] photos
     ) throws IOException {
+        System.out.println("=== REPORT DTO INCOMMING ===");
+        System.out.println("Issue: " + reportCreateDTO.getIssue());
+        System.out.println("Latitude: " + reportCreateDTO.getLatitude());
+        System.out.println("Longitude: " + reportCreateDTO.getLongitude());
+        System.out.println("Description: " + reportCreateDTO.getDescription());
+        System.out.println("Fotos: " + (photos != null ? photos.length : 0));
+        System.out.println("============================");
         var response = reportService.create(reportCreateDTO, photos);
         var location = URI.create("/api/reports/" + response.id());
         return ResponseEntity.created(location).body(response);
