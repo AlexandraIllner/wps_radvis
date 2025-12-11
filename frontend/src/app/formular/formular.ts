@@ -142,11 +142,6 @@ export class Formular implements OnInit {
   formData.append('photos', file, file.name);
   });
 
-    // send fotos with same name than backend
-    this.selectedFiles.forEach((file: File) => {
-      formData.append('photos', file, file.name);
-    });
-
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
 

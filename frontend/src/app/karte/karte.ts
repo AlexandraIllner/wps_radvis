@@ -4,7 +4,6 @@ import L, { Control, latLng, Map, MapOptions, tileLayer } from 'leaflet';
 import 'leaflet.locatecontrol';
 import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import {MatCard} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -14,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-karte',
   templateUrl: './karte.html',
   styleUrls: ['./karte.css'],
-  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatGridList, MatGridTile, MatCard, MatIconModule],
+  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatCard, MatIconModule],
   standalone: true,
 })
 export class Karte {

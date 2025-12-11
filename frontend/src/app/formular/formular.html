@@ -19,7 +19,7 @@
     <mat-select [(ngModel)]="selectedCategory" name="category"
                 style="border-bottom: none;">
       @for (cat of categories; track cat) {
-        <mat-option [value]="cat.valueOf">{{ cat }}</mat-option>
+        <mat-option [value]="cat">{{ cat }}</mat-option>
       }
     </mat-select>
     </mat-form-field>
