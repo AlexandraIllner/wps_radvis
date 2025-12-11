@@ -12,6 +12,7 @@ import { PhotoUpload } from '../photo-upload/photo-upload';
 import { Camera } from '../camera/camera';
 import { Karte } from '../karte/karte';
 import { CommonModule } from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
 
 /**
  * Komponente für das Mängelmelden-Formular.
