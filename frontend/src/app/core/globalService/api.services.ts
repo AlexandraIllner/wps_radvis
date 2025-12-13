@@ -22,17 +22,21 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Holt alle Meldungen vom Backend
-   * GET Request an /api/issues
+   * Holt alle Meldungen vom Backend.
+   *
+   * @returns Observable mit allen vorhandenen Meldungen vom Backend
    */
   getIssue(): Observable<any> {
     return this.http.get(`${this.baseUrl}/api/issues`);
   }
 
   /**
-   * Schickt eine neue Meldung ans Backend
-   * POST Request an /api/reports
-   * data enthält: category und description
+   * Schickt eine neue Meldung ans Backend.
+   * Der Request enthält die Mangel-Daten als FormData
+   * (z. B. Kategorie, Beschreibung und Bilder).
+   *
+   * @param data FormData mit allen Informationen zur neuen Meldung
+   * @returns Observable mit der Server-Antwort nach dem Erstellen der Meldung
    */
   createReport(data: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/reports`, data);
