@@ -4,8 +4,8 @@ import L, { Control, latLng, Map, MapOptions, tileLayer } from 'leaflet';
 import 'leaflet.locatecontrol';
 import { NgxLeafletLocateModule } from '@runette/ngx-leaflet-locate';
 import { MatButton } from '@angular/material/button';
+import {MatCard} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 
 
 
@@ -13,7 +13,7 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
   selector: 'app-karte',
   templateUrl: './karte.html',
   styleUrls: ['./karte.css'],
-  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatIconModule, MatGridTile, MatGridList],
+  imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatCard, MatIconModule],
   standalone: true,
 })
 /**
@@ -30,14 +30,8 @@ export class Karte {
 
   /** Steuert, ob die Karte angezeigt wird */
   showMap = true;
-
-  /** Zeigt an, ob gerade der Standort geladen wird */
   isLoadingLocation = false;
-
-  /** Fehlermeldung bei Problemen mit der Standort-Ermittlung */
   errorMessage: string | null = null;
-
-  /** URL für OpenStreetMap-Kartenkacheln */
   osmUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
   /** Copyright-Hinweis für OpenStreetMap */

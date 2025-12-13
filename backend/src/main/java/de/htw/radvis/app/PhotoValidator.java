@@ -14,7 +14,7 @@ public class PhotoValidator {
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
     private static final long MAX_TOTAL_SIZE = 30 * 1024 * 1024;
     private static final Set<String> ALLOWED_IMAGE_TYPES = Set.of("image/jpg", "image/jpeg", "image/png");
-    private static final Logger log = LoggerFactory.getLogger(PhotoValidator.class);
+    public static final Logger log = LoggerFactory.getLogger(PhotoValidator.class);
 
 
     public void validatePhotos(MultipartFile[] photos) {

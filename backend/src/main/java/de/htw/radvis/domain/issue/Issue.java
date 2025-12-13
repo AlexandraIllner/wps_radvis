@@ -1,5 +1,6 @@
 package de.htw.radvis.domain.issue;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Issue {
@@ -20,4 +21,13 @@ public enum Issue {
     @JsonValue
     public String getLabel(){ return this.label; }
 
+    @JsonCreator
+    public static Issue fromLabel(String value) {
+        for (Issue issue : Issue.values()) {
+            if (issue.label.equalsIgnoreCase(value)) {
+                return issue;
+            }
+        }
+        throw new IllegalArgumentException("Unknown issue label: " + value);
+    }
 }

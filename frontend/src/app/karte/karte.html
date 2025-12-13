@@ -2,27 +2,29 @@
   <div class="karte">
     <div class="karte-body">
       <h3 class="karte-title">Teilen Sie Ihren Standort oder markieren Sie ihn auf der Karte</h3>
-      <mat-grid-list cols="2" rowHeight="5vh">
-        <mat-grid-tile>
-          <button mat-raised-button color="primary" (click)="sendLocation()">
-            Standort senden
-          </button>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <button mat-raised-button color="primary" (click)="selectLocation()">
-            Standort selbst wählen
-          </button>
-        </mat-grid-tile>
-      </mat-grid-list>
+
+      @if (!hasLocation()) {
+        <div class="radmelder-hinweis">
+          <mat-icon class="hinweis-icon">info_outline</mat-icon>
+          <span>Wählen Sie einen Standort aus oder verwenden Sie Ihren aktuellen Standort.</span>
+        </div>
+      }
 
       <button
         mat-raised-button
         style="margin-bottom: 3%"
         color="primary"
         (click)="useCurrentLocation()"
+        [disabled]="isLoadingLocation"
       >
-        Aktuellen Standort verwenden
+        {{ isLoadingLocation ? 'Standort wird ermittelt...' : 'Aktuellen Standort verwenden' }}
       </button>
+
+      @if (errorMessage) {
+        <mat-card class="error-card">
+          {{ errorMessage }}
+        </mat-card>
+      }
 
       <!-- Map -->
       <div
@@ -31,6 +33,13 @@
         (leafletMapReady)="onMapReady($event)"
         style="height: 400px; width: 100%"
       ></div>
+
+      @if (hasLocation()) {
+        <div class="success-box">
+          ✓ Standort ausgewählt: {{ formattedLat }}, {{ formattedLng }}
+        </div>
+      }
+
     </div>
   </div>
 }

@@ -11,6 +11,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { PhotoUpload } from '../photo-upload/photo-upload';
 import { Camera } from '../camera/camera';
 import { Karte } from '../karte/karte';
+import { CommonModule } from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
 
 /**
  * Komponente für das Mängelmelden-Formular.
@@ -20,6 +22,7 @@ import { Karte } from '../karte/karte';
 @Component({
   selector: 'app-formular',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormField,
@@ -32,7 +35,9 @@ import { Karte } from '../karte/karte';
     MatButton,
     MatOption,
     PhotoUpload,
+    MatIconModule,
     Camera,
+    Karte,
   ],
   templateUrl: './formular.html',
   styleUrl: './formular.css',
@@ -60,6 +65,10 @@ export class Formular implements OnInit {
    **/
   @ViewChild('photoUpload') photoUpload!: PhotoUpload;
 
+  /**
+   * Referenz zur untergeordneten Karten-Komponente, um deren Methode aufzurufen.
+   */
+  @ViewChild('karteComp') karte!: Karte;
 
   /**
    * Konstruktor der Klasse.
@@ -100,7 +109,6 @@ export class Formular implements OnInit {
   * und alle ausgewählten Fotos enthält.
    * @param photoUpload - Referenz zur PhotoUpload-Komponente, um nach dem Senden den Upload-Zustand zurückzusetzen
   */
-  @ViewChild(Karte) karte!: Karte;
 
   /**
    * Sendet die Mängel-Meldung an das Backend
@@ -133,11 +141,6 @@ export class Formular implements OnInit {
   this.selectedFiles.forEach((file: File) => {
   formData.append('photos', file, file.name);
   });
-
-    // send fotos with same name than backend
-    this.selectedFiles.forEach((file: File) => {
-      formData.append('photos', file, file.name);
-    });
 
     this.isLoading.set(true);
     console.log('Sende FormData ab...');
