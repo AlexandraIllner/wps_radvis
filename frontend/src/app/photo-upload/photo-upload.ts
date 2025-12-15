@@ -11,24 +11,54 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './photo-upload.html',
   styleUrls: ['./photo-upload.css'],
 })
+
+
+/**
+ * Komponente zum Hochladen und Verwalten von Fotos.
+ *
+ * Ermöglicht die Auswahl von bis zu drei Bildern aus der Galerie,
+ * prüft Dateityp und -größe und zeigt eine Vorschau der Bilder an.
+ *
+ * Gültige Bilder werden an die Parent-Komponente weitergegeben.
+ */
 export class PhotoUpload {
+
+  /** Alle aktuell ausgewählten Dateien */
   selectedFiles: File[] = [];
+
+  /** Base64-URLs zur Anzeige der Bildvorschauen */
   previewUrls: string[] = [];
+
+  /** Zeigt an, ob gerade Dateien geladen/verarbeitet werden */
   isLoading = false;
+
+  /** Liste der gültigen Dateien nach Prüfung */
   validFiles: File[] = [];
+
+  /** Anzahl der ungültigen Dateien */
   invalidCount = 0;
 
+  /** Referenz auf das Datei-Input-Element */
   @ViewChild('galleryInput') galleryInput!: ElementRef<HTMLInputElement>;
+
+  /**
+   * Gibt die gültigen, ausgewählten Fotos an die Parent-Komponente weiter.
+   */
   @Output() photosSelected = new EventEmitter<File[]>();
 
   constructor(private snackBar: MatSnackBar) {}
 
   /**
-   * Setzt alle Upload-bezogenen Zustände zurück.
-   * Wird nach einem erfolgreichen Upload aufgerufen,
-   * damit keine alten Dateien oder Vorschauen sichtbar bleiben.
+   * Wird aufgerufen, wenn der Benutzer Dateien auswählt.
+   *
+   * - Verhindert Duplikate
+   * - Prüft Dateityp und Größe
+   * - Begrenzt die Anzahl auf maximal 3 Bilder
+   * - Erstellt Vorschaubilder
+   * - Gibt gültige Dateien per Event an die Parent-Komponente weiter
+   *
+   * @param event Change-Event des Datei-Inputs
    */
-
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
