@@ -1,13 +1,35 @@
 .image-container {
-  width: 4vw;
-  height: 8vh;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: flex-end;
+  width: 80px;
+  height: auto;
 }
 
 .image-container img {
   width: 100%;
-  height: 100%;
-  object-fit: fill;
+  height: auto;
+  object-fit: contain;
 }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-group {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.title-main {
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.title-sub {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+
