@@ -13,17 +13,47 @@ import java.math.RoundingMode;
 
 import static de.htw.radvis.app.PhotoValidator.log;
 
+/**
+ * Service-Klasse für die Verarbeitung von Meldungen (Reports).
+ *
+ * Enthält die Geschäftslogik zum Erstellen neuer Meldungen
+ * inklusive Validierung und Speicherung von hochgeladenen Fotos.
+ *
+ * Der Service verbindet Controller, Repository und Foto-Validierung.
+ */
 @Service
 public class ReportService {
 
+    /** Repository für den Zugriff auf Report-Entitäten */
     private final ReportRepository reportRepository;
+
+    /** Validator für hochgeladene Fotos */
     private final PhotoValidator photoValidator;
 
+    /**
+     * Erstellt einen neuen ReportService.
+     *
+     * @param reportRepository Repository zum Speichern von Reports
+     * @param photoValidator   Validator für Bild-Uploads
+     */
     public ReportService(ReportRepository reportRepository, PhotoValidator photoValidator) {
         this.reportRepository = reportRepository;
         this.photoValidator = photoValidator;
     }
 
+    /**
+     * Erstellt eine neue Meldung (Report) inklusive optionaler Fotos.
+     *
+     * - Wandelt das DTO in eine Report-Entität um
+     * - Validiert hochgeladene Fotos
+     * - Speichert Fotos als ReportPhoto
+     * - Persistiert den Report in der Datenbank
+     *
+     * @param dto    DTO mit den Report-Daten (Kategorie, Beschreibung, Koordinaten)
+     * @param photos Optionale hochgeladene Bilder
+     * @return Antwort-DTO mit Basisinformationen zur erstellten Meldung
+     * @throws IOException wenn ein Fehler beim Lesen der Bilddaten auftritt
+     */
     public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile[] photos) throws IOException {
         Report report = getReport(dto);
 
@@ -48,6 +78,17 @@ public class ReportService {
 
     }
 
+    /**
+     * Erstellt eine Report-Entität aus den Daten des Create-DTOs.
+     *
+     * Dabei werden:
+     * - optionale Felder geprüft
+     * - Texte getrimmt
+     * - Koordinaten auf 6 Nachkommastellen gerundet
+     *
+     * @param dto DTO mit den Eingabedaten des Reports
+     * @return Neue, noch nicht gespeicherte Report-Entität
+     */
     private static Report getReport(ReportCreateDTO dto) {
         Report report = new Report();
 
