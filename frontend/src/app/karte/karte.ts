@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [LeafletDirective, NgxLeafletLocateModule, MatButton, MatCard, MatIconModule],
   standalone: true,
 })
+
 /**
  * Karten-Komponente zur Auswahl eines Standorts.
  *
@@ -26,15 +27,21 @@ import { MatIconModule } from '@angular/material/icon';
  * Die ausgewählten Koordinaten werden intern gespeichert und können
  * von anderen Komponenten weiterverarbeitet werden.
  */
-export class Karte {
 
+export class Karte {
   /** Steuert, ob die Karte angezeigt wird */
   showMap = true;
+
+  /** Zeigt an, ob gerade der Standort geladen wird */
   isLoadingLocation = false;
+
+  /** Fehlermeldung bei Problemen mit der Standort-Ermittlung */
   errorMessage: string | null = null;
+
+  /** URL für OpenStreetMap-Kartenkacheln */
   osmUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-  /** Copyright-Hinweis für OpenStreetMap */
+  /** URL für OpenStreetMap-Kartenkacheln */
   osmAttrib = 'Map data © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
 
   /** Startposition der Karte (Default-Zentrum) */
@@ -70,6 +77,7 @@ export class Karte {
     zoom: 8,
     center: latLng(this.lat_long[0], this.lat_long[1]),
   };
+
 
   /**
    * Speichert den aktuellen Standort aus einem Leaflet-Event.
@@ -107,7 +115,7 @@ export class Karte {
     this.map = map;
 
     this.lc = L.control.locate({
-      setView: 'always',
+      setView: 'always', // or true; recent versions accept 'always'
       keepCurrentZoomLevel: false,
       flyTo: true,
     });
@@ -116,10 +124,13 @@ export class Karte {
 
     this.map.on('locationfound', (e) => {
       const latLng = e.latlng;
+      console.log('Location found:', latLng.lat, latLng.lng);
+      // Call your function with the latLng
       this.getCurrentLocation(latLng);
+      console.log(this.currentLocation);
     });
 
-    // Klick-Event auf der Karte aktivieren
+    // Aktiviert Click Event auf Karte
     this.map.on('click', (event: L.LeafletMouseEvent) => this.onMapClick(event));
   }
 
@@ -133,10 +144,12 @@ export class Karte {
   setMarker(lat: number, lng: number): void {
     if (!this.map) return;
 
+    // alten Marker entfernen
     if (this.marker) {
       this.map.removeLayer(this.marker);
     }
 
+    // neuen CircleMarker setzen
     this.marker = L.circleMarker([lat, lng], {
       radius: 10,
       color: '#d32f2f',
@@ -148,6 +161,7 @@ export class Karte {
     this.marker.addTo(this.map);
   }
 
+
   /**
    * Wird ausgelöst, wenn auf die Karte geklickt wird.
    * Speichert die Koordinaten und setzt einen Marker.
@@ -157,6 +171,11 @@ export class Karte {
   onMapClick(event: L.LeafletMouseEvent): void {
     this.selectedLat = event.latlng.lat;
     this.selectedLng = event.latlng.lng;
+
+    console.log('Ausgewählte Koordinaten:', {
+      lat: this.selectedLat,
+      lng: this.selectedLng,
+    });
 
     if (this.selectedLat !== null && this.selectedLng !== null) {
       this.setMarker(this.selectedLat, this.selectedLng);
@@ -169,6 +188,7 @@ export class Karte {
    */
   sendLocation() {
     this.showMap = false;
+    console.log('loc sent!', this.currentLocation);
   }
 
   /**
@@ -177,7 +197,9 @@ export class Karte {
    */
   selectLocation() {
     this.showMap = false;
+    console.log('noch nicht implementiert, sende currentLocation', this.currentLocation);
   }
+
 
   /**
    * Ermittelt den aktuellen Standort über die Browser-Geolocation.
@@ -197,9 +219,15 @@ export class Karte {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
+        console.log('Standort über Button geholt:', lat, lng);
+
+        // Karte auf Standort setzen
         this.map.flyTo([lat, lng], 150);
+
+        // Marker setzen
         this.setMarker(lat, lng);
 
+        // Werte für später speichern
         this.selectedLat = lat;
         this.selectedLng = lng;
         this.currentLocation = [lat, lng];
@@ -207,6 +235,8 @@ export class Karte {
         this.isLoadingLocation = false;
       },
       (error) => {
+        console.error('Geolocation error:', error);
+
         switch (error.code) {
           case error.PERMISSION_DENIED:
             this.errorMessage = 'Zugriff auf Standort wurde verweigert.';
@@ -235,6 +265,7 @@ export class Karte {
     return this.selectedLat !== null && this.selectedLng !== null;
   }
 
+
   /** Formatierter Breitengrad für die Anzeige */
   get formattedLat(): string {
     return this.selectedLat?.toFixed(6) ?? '';
@@ -244,4 +275,6 @@ export class Karte {
   get formattedLng(): string {
     return this.selectedLng?.toFixed(6) ?? '';
   }
+
+
 }

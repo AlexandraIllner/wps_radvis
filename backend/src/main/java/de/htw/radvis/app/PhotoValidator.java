@@ -9,14 +9,46 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 
+/**
+ * Validiert hochgeladene Fotos.
+ *
+ * Diese Klasse prüft Bilder, die vom Backend empfangen werden,
+ * z. B. beim Erstellen einer neuen Meldung.
+ *
+ * Dabei wird kontrolliert:
+ * - erlaubte Dateitypen (jpg, jpeg, png)
+ * - maximale Dateigröße pro Bild (10 MB)
+ * - maximale Gesamtgröße aller Bilder (30 MB)
+ *
+ * Bei ungültigen Dateien wird eine passende HTTP-Fehlermeldung zurückgegeben.
+ */
 @Component
 public class PhotoValidator {
+
+    /** Maximale Dateigröße pro Bild (10 MB) */
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    /** Maximale Gesamtgröße aller Bilder (30 MB) */
     private static final long MAX_TOTAL_SIZE = 30 * 1024 * 1024;
+
+    /** Erlaubte MIME-Typen für Bilder */
     private static final Set<String> ALLOWED_IMAGE_TYPES = Set.of("image/jpg", "image/jpeg", "image/png");
+
+    /** Logger für Debug- und Info-Ausgaben */
     public static final Logger log = LoggerFactory.getLogger(PhotoValidator.class);
 
 
+    /**
+     * Prüft ein Array von hochgeladenen Bildern auf Gültigkeit.
+     *
+     * - Leere oder null-Dateien werden ignoriert
+     * - Ungültige Dateitypen führen zu HTTP 415
+     * - Zu große Dateien oder Gesamtgrößen führen zu HTTP 413
+     *
+     * @param photos Array mit hochgeladenen Bildern (MultipartFile)
+     * @throws ResponseStatusException
+     *         wenn ein Bild ungültig ist oder Größenlimits überschritten werden
+     */
     public void validatePhotos(MultipartFile[] photos) {
 
         if (photos == null) {
