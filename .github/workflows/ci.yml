@@ -26,4 +26,4 @@ jobs:
 
       - name: Frontend Tests ausführen
         working-directory: frontend
-        run: ng test --browsers=ChromeHeadless
+        run: npx ng test --browsers=ChromeHeadless --watch=false
