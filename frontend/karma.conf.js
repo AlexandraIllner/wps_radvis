@@ -1,6 +1,7 @@
 import generated from '@angular-devkit/build-angular/plugins/karma';
 
 module.exports = function (config) {
+  const isCI = !!process.env.CI;
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -8,6 +9,7 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
+      require('karma-junit-reporter'),
       generated,
     ],
     client: {
@@ -16,7 +18,14 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true,
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'junit'],
+
+    junitReporter: {
+      outputDir: 'test-results',
+      outputFile: 'junit.xml',
+      useBrowserName: false,
+    },
+
     /*
     auskommentierte Teile für Linux-Systeme,
     die ChromeHeadless nicht out of the box unterstützen
@@ -24,8 +33,8 @@ module.exports = function (config) {
     browsers: ['google-chrome-stable --headless', 'ChromeHeadlessCI'],
     */
     browsers: ['ChromeHeadless'],
-    singleRun: false,
-    restartOnFileChange: true,
+    singleRun: isCI,
+    restartOnFileChange: !isCI,
     customLaunchers: {
       ChromeHeadlessCI: {
         // LINUX

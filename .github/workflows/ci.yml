@@ -26,3 +26,11 @@ jobs:
       - name: Frontend Tests ausführen
         working-directory: frontend
         run: npx ng test --browsers=ChromeHeadless --watch=false
+
+      - name: Test Ergebnisse hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-results
+          path: frontend/test-results
+          if-no-files-found: warn
