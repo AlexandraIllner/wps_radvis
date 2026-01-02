@@ -1,7 +1,7 @@
-import generated from '@angular-devkit/build-angular/plugins/karma';
+import generated from '@angular-devkit/build-angular/plugins/karma'
 
 module.exports = function (config) {
-  const isCI = !!process.env.CI;
+  const isCI = !!process.env.CI
 
   config.set({
     basePath: '',
@@ -11,30 +11,30 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-junit-reporter'),
-      generated,
+      generated
     ],
     client: {
-      clearContext: false,
+      clearContext: false
     },
     jasmineHtmlReporter: {
-      suppressAll: true,
+      suppressAll: true
     },
     reporters: ['progress', 'kjhtml', 'junit'],
     junitReporter: {
       outputDir: 'test-results',
       outputFile: 'junit.xml',
-      useBrowserName: false,
+      useBrowserName: false
     },
 
-    browsers: ['ChromeHeadless'],
+    browsers: isCI ? ['ChromeHeadlessCI'] : ['ChromeHeadless'],
     singleRun: isCI,
     restartOnFileChange: !isCI,
 
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu'],
-      },
-    },
-  });
-};
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    }
+  })
+}
