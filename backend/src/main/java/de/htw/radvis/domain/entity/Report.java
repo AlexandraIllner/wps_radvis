@@ -1,6 +1,6 @@
-package de.htw.radvis.domain.report;
+package de.htw.radvis.domain.entity;
 
-import de.htw.radvis.domain.issue.Issue;
+import de.htw.radvis.domain.valueObjects.Issue;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

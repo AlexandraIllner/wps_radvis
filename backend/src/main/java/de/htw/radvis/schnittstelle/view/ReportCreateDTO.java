@@ -1,6 +1,6 @@
-package de.htw.radvis.web.report;
+package de.htw.radvis.schnittstelle.view;
 
-import de.htw.radvis.domain.issue.Issue;
+import de.htw.radvis.domain.valueObjects.Issue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Size;
