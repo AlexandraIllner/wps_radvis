@@ -34,7 +34,7 @@ jobs:
           name: frontend-test-results
           path: frontend/test-results
           if-no-files-found: warn
-          
+
   backend-tests:
     runs-on: ubuntu-latest
 
