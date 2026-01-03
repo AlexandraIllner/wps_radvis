@@ -34,3 +34,31 @@ jobs:
           name: frontend-test-results
           path: frontend/test-results
           if-no-files-found: warn
+          
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Java installieren
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21" # falls ihr 17 nutzt, hier auf "17" ändern
+          cache: maven
+
+      - name: Backend Build + Tests
+        working-directory: backend
+        run: mvn -B -ntp clean verify
+
+      - name: Test Reports hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-reports
+          path: |
+            backend/**/target/surefire-reports
+            backend/**/target/failsafe-reports
+          if-no-files-found: warn
