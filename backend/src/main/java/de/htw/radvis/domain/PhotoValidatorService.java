@@ -16,7 +16,7 @@ import java.util.Set;
  * Dabei wird kontrolliert:
  * - erlaubte Dateitypen (jpg, jpeg, png)
  * - maximale Dateigröße pro Bild (10 MB)
- * - maximale Gesamtgröße aller Bilder (30 MB)
+ * - maximale Gesamtgröße aller Bilder (30 MB).
  * Bei ungültigen Dateien wird eine passende HTTP-Fehlermeldung zurückgegeben.
  */
 @Component
