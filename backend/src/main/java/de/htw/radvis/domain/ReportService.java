@@ -4,8 +4,10 @@ import de.htw.radvis.domain.entity.Report;
 import de.htw.radvis.domain.entity.ReportPhoto;
 import de.htw.radvis.schnittstelle.view.ReportCreateDTO;
 import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.math.RoundingMode;
@@ -126,5 +128,13 @@ public class ReportService {
             report.setLongitude(dto.getLongitude().setScale(6, RoundingMode.HALF_UP));
         }
         return report;
+    }
+
+    public ReportResponseDTO getReportById(Long id) {
+        Report report = reportRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Report not found"));
+
+        return toResponseDTO(report);
     }
 }
