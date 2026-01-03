@@ -1,6 +1,8 @@
-package de.htw.radvis.web.report;
+package de.htw.radvis.schnittstelle;
 
-import de.htw.radvis.app.ReportService;
+import de.htw.radvis.domain.ReportService;
+import de.htw.radvis.schnittstelle.view.ReportCreateDTO;
+import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

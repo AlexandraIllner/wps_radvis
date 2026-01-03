@@ -1,6 +1,6 @@
-package de.htw.radvis.data;
+package de.htw.radvis.domain;
 
-import de.htw.radvis.domain.report.Report;
+import de.htw.radvis.domain.entity.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

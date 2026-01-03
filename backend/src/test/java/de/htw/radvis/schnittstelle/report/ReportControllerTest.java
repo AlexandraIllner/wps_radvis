@@ -1,7 +1,8 @@
-package de.htw.radvis.web.report;
+package de.htw.radvis.schnittstelle.report;
 
-import de.htw.radvis.app.ReportService;
-import de.htw.radvis.domain.issue.Issue;
+import de.htw.radvis.domain.ReportService;
+import de.htw.radvis.domain.valueObjects.Issue;
+import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

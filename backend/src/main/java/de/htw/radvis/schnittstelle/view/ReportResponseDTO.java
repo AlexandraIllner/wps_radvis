@@ -1,7 +1,6 @@
-package de.htw.radvis.web.report;
+package de.htw.radvis.schnittstelle.view;
 
-import de.htw.radvis.domain.issue.Issue;
-
+import de.htw.radvis.domain.valueObjects.Issue;
 import java.time.Instant;
 
 public record ReportResponseDTO(Long id, Issue issue, Instant created) {

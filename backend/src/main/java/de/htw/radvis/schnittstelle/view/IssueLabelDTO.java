@@ -1,3 +1,3 @@
-package de.htw.radvis.web.issue;
+package de.htw.radvis.schnittstelle.view;
 
 public record IssueLabelDTO(String key, String label) {}
