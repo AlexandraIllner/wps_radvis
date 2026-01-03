@@ -1,4 +1,4 @@
-package de.htw.radvis.web;
+package de.htw.radvis.schnittstelle;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

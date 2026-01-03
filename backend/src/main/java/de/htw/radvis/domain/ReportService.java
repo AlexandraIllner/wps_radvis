@@ -1,17 +1,16 @@
-package de.htw.radvis.app;
+package de.htw.radvis.domain;
 
-import de.htw.radvis.data.ReportRepository;
-import de.htw.radvis.domain.report.Report;
-import de.htw.radvis.domain.report.ReportPhoto;
-import de.htw.radvis.web.report.ReportCreateDTO;
-import de.htw.radvis.web.report.ReportResponseDTO;
+import de.htw.radvis.domain.entity.Report;
+import de.htw.radvis.domain.entity.ReportPhoto;
+import de.htw.radvis.schnittstelle.view.ReportCreateDTO;
+import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.RoundingMode;
 
-import static de.htw.radvis.app.PhotoValidator.log;
+import static de.htw.radvis.domain.PhotoValidatorService.log;
 
 /**
  * Service-Klasse für die Verarbeitung von Meldungen (Reports).
@@ -28,17 +27,17 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     /** Validator für hochgeladene Fotos */
-    private final PhotoValidator photoValidator;
+    private final PhotoValidatorService photoValidatorService;
 
     /**
      * Erstellt einen neuen ReportService.
      *
      * @param reportRepository Repository zum Speichern von Reports
-     * @param photoValidator   Validator für Bild-Uploads
+     * @param photoValidatorService   Validator für Bild-Uploads
      */
-    public ReportService(ReportRepository reportRepository, PhotoValidator photoValidator) {
+    public ReportService(ReportRepository reportRepository, PhotoValidatorService photoValidatorService) {
         this.reportRepository = reportRepository;
-        this.photoValidator = photoValidator;
+        this.photoValidatorService = photoValidatorService;
     }
 
     /**
@@ -58,7 +57,7 @@ public class ReportService {
         Report report = getReport(dto);
 
         if (photos != null) {
-            photoValidator.validatePhotos(photos);
+            photoValidatorService.validatePhotos(photos);
             log.info("Received {} photos for report", photos.length);
 
             for (MultipartFile file : photos) {

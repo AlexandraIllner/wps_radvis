@@ -1,4 +1,4 @@
-package de.htw.radvis.web;
+package de.htw.radvis.schnittstelle;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

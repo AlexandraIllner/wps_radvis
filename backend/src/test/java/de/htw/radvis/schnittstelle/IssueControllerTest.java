@@ -1,7 +1,6 @@
-package de.htw.radvis.web;
+package de.htw.radvis.schnittstelle;
 
-import de.htw.radvis.domain.issue.Issue;
-import de.htw.radvis.web.issue.IssueController;
+import de.htw.radvis.domain.valueObjects.Issue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

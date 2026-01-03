@@ -33,7 +33,7 @@
 - **Database**: H2 in-memory (jdbc:h2:mem:radvis)
 - **H2 Console**: Enabled at `/h2-console`
 - **Packages**:
-  - `de.htw.radvis.web`: Controllers (PingController, IssueController, ReportController)
+  - `de.htw.radvis.schnittstelle`: Controllers (PingController, IssueController, ReportController)
   - `de.htw.radvis.app`: Services (ReportService)
   - `de.htw.radvis.domain`: Entities (Issue, Report)
   - `de.htw.radvis.data`: Repositories (ReportRepository)

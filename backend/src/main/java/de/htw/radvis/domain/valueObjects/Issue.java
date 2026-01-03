@@ -1,4 +1,4 @@
-package de.htw.radvis.domain.issue;
+package de.htw.radvis.domain.valueObjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
