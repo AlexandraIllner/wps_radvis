@@ -35,6 +35,15 @@ public class ReportPhoto implements Serializable {
     @Column(columnDefinition = "LONGBLOB", nullable = false)
     private byte[] data;
 
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+
+    @Column(name = "content_type", nullable = false)
+    private String contentType;
+
+    @Column(name = "size_bytes", nullable = false)
+    private long size;
+
     /**
      * Zugehöriger Report, zu dem das Foto gehört.
      * Jedes Foto ist genau einem Report zugeordnet.
