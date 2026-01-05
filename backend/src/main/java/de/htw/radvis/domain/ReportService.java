@@ -5,6 +5,7 @@ import de.htw.radvis.domain.entity.ReportPhoto;
 import de.htw.radvis.schnittstelle.view.PhotoMetadataDTO;
 import de.htw.radvis.schnittstelle.view.ReportCreateDTO;
 import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,17 +68,7 @@ public class ReportService {
 
             for (MultipartFile file : photos) {
                 if (file != null && !file.isEmpty()) {
-                    ReportPhoto photoEntity = new ReportPhoto();
-                    photoEntity.setData(file.getBytes());
-
-                    String fileName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "upload";
-                    String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
-
-                    photoEntity.setFileName(fileName);
-                    photoEntity.setContentType(contentType);
-                    photoEntity.setSize(file.getSize());
-
-                    photoEntity.setReport(report);
+                    ReportPhoto photoEntity = getReportPhoto(file, report);
                     report.getPhotos().add(photoEntity);
                 }
             }
@@ -88,6 +79,21 @@ public class ReportService {
                 saved.getId(), saved.getLatitude(), saved.getLongitude());
         return toResponseDTO(saved);
 
+    }
+
+    private static @NonNull ReportPhoto getReportPhoto(MultipartFile file, Report report) throws IOException {
+        ReportPhoto photoEntity = new ReportPhoto();
+        photoEntity.setData(file.getBytes());
+
+        String fileName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "upload";
+        String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
+
+        photoEntity.setFileName(fileName);
+        photoEntity.setContentType(contentType);
+        photoEntity.setSize(file.getSize());
+
+        photoEntity.setReport(report);
+        return photoEntity;
     }
 
     public List<ReportResponseDTO> getAllReports() {
