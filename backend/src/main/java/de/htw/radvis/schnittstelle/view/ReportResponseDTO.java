@@ -6,5 +6,5 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public record ReportResponseDTO(Long id, Issue issue, String description, BigDecimal latitude, BigDecimal longitude,
-                                Instant created) {
+                                Instant createdAt, java.util.List<PhotoMetadataDTO> photos) {
 }
