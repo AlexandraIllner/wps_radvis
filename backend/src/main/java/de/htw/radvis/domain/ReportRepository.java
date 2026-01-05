@@ -10,6 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Erweitert {@link JpaRepository} und nutzt dessen Standardmethoden.
  */
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    Long id(Long id);
 }
 
