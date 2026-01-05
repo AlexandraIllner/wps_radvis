@@ -2,6 +2,7 @@ package de.htw.radvis.domain;
 
 import de.htw.radvis.domain.entity.Report;
 import de.htw.radvis.domain.entity.ReportPhoto;
+import de.htw.radvis.schnittstelle.view.PhotoMetadataDTO;
 import de.htw.radvis.schnittstelle.view.ReportCreateDTO;
 import de.htw.radvis.schnittstelle.view.ReportResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,14 @@ public class ReportService {
                 if (file != null && !file.isEmpty()) {
                     ReportPhoto photoEntity = new ReportPhoto();
                     photoEntity.setData(file.getBytes());
+
+                    String fileName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "upload";
+                    String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
+
+                    photoEntity.setFileName(fileName);
+                    photoEntity.setContentType(contentType);
+                    photoEntity.setSize(file.getSize());
+
                     photoEntity.setReport(report);
                     report.getPhotos().add(photoEntity);
                 }
@@ -77,7 +86,7 @@ public class ReportService {
         var saved = reportRepository.save(report);
         log.info("Created report with id={} (lat={}, lon={})",
                 saved.getId(), saved.getLatitude(), saved.getLongitude());
-        return toResponseDTO(report);
+        return toResponseDTO(saved);
 
     }
 
@@ -89,13 +98,26 @@ public class ReportService {
     }
 
     private ReportResponseDTO toResponseDTO(Report report) {
+        var photoDtos = report.getPhotos() == null
+                ? List.<PhotoMetadataDTO>of()
+                : report.getPhotos().stream()
+                .map(p -> new PhotoMetadataDTO(
+                        p.getId(),
+                        p.getFileName(),
+                        p.getContentType(),
+                        p.getSize(),
+                        "/api/photos/" + p.getId()
+                ))
+                .toList();
+
         return new ReportResponseDTO(
                 report.getId(),
                 report.getIssue(),
                 report.getDescription(),
                 report.getLatitude(),
                 report.getLongitude(),
-                report.getCreationDate()
+                report.getCreationDate(),
+                photoDtos
         );
     }
 
