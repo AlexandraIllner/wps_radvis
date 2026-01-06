@@ -1,16 +1,19 @@
-package de.htw.radvis.domain.report;
+package de.htw.radvis.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
  * Entity-Klasse für ein Foto, das zu einem Report gehört.
- *
  * Speichert die Bilddaten direkt in der Datenbank
  * und ist über eine Many-to-One-Beziehung einem Report zugeordnet.
- *
  * Ein Report kann mehrere Fotos besitzen.
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "report_photo")
 public class ReportPhoto implements Serializable {
@@ -26,7 +29,6 @@ public class ReportPhoto implements Serializable {
 
     /**
      * Binäre Bilddaten des Fotos.
-     *
      * Wird als LONGBLOB in der Datenbank gespeichert.
      */
     @Lob
@@ -35,36 +37,9 @@ public class ReportPhoto implements Serializable {
 
     /**
      * Zugehöriger Report, zu dem das Foto gehört.
-     *
      * Jedes Foto ist genau einem Report zugeordnet.
      */
     @ManyToOne
     @JoinColumn(name = "report_id", nullable = false)
     private Report report;
-
-    // ------------- Getter & Setter
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
-
-    public Report getReport() {
-        return report;
-    }
-
-    public void setReport(Report report) {
-        this.report = report;
-    }
 }

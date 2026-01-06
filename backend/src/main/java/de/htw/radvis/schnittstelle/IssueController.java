@@ -1,6 +1,7 @@
-package de.htw.radvis.web.issue;
+package de.htw.radvis.schnittstelle;
 
-import de.htw.radvis.domain.issue.Issue;
+import de.htw.radvis.domain.valueObjects.Issue;
+import de.htw.radvis.schnittstelle.view.IssueLabelDTO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

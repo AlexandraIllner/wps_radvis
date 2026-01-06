@@ -1,15 +1,13 @@
-package de.htw.radvis.domain.issue;
+package de.htw.radvis.domain.valueObjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Enum für die verschiedenen Mangel-Kategorien (Issues).
- *
  * Wird verwendet, um Meldungen im Backend eindeutig zu kategorisieren.
  * Jede Kategorie besitzt ein lesbares Label, das z.B. im Frontend
  * oder in JSON-Antworten verwendet wird.
- *
  * Die Annotationen {@link JsonValue} und {@link JsonCreator} sorgen dafür,
  * dass die Umwandlung zwischen Enum und String automatisch erfolgt.
  */
@@ -31,9 +29,7 @@ public enum Issue {
 
     /**
      * Gibt das lesbare Label der Kategorie zurück.
-     *
      * Wird durch {@link JsonValue} beim Serialisieren als String verwendet.
-     *
      * @return Anzeigename der Kategorie
      */
     @JsonValue
@@ -41,9 +37,7 @@ public enum Issue {
 
     /**
      * Wandelt ein String-Label in das passende Issue-Enum um.
-     *
      * Wird durch {@link JsonCreator} beim Deserialisieren von JSON genutzt.
-     *
      * @param value Label der Kategorie (z.B. "Schlagloch")
      * @return Passendes {@link Issue}-Enum
      * @throws IllegalArgumentException wenn kein passendes Issue existiert

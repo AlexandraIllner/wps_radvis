@@ -1,6 +1,6 @@
-package de.htw.radvis.domain.report;
+package de.htw.radvis.domain.entity;
 
-import de.htw.radvis.domain.issue.Issue;
+import de.htw.radvis.domain.valueObjects.Issue;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +8,11 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+
 /**
  * Entity-Klasse für eine Mängelmeldung (Report).
- *
  * Repräsentiert eine vom Benutzer gemeldete Stelle mit optionaler
  * Kategorie, Beschreibung, Koordinaten und Fotos.
- *
  * Die Daten werden in der Datenbank persistiert und über das Backend
  * verarbeitet und bereitgestellt.
  */
@@ -43,28 +42,28 @@ public class Report implements Serializable {
      * Wird als String in der Datenbank gespeichert.
      */
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
+    @Column()
     private Issue issue;
 
     /**
      * Freitext-Beschreibung des Mangels.
      * Maximal 1000 Zeichen.
      */
-    @Column(length = 1000, nullable= true)
+    @Column(length = 1000)
     private String description;
 
     /**
      * Breitengrad der gemeldeten Position.
      * Auf 6 Nachkommastellen begrenzt.
      */
-    @Column(precision = 10, scale = 6, nullable = true)
+    @Column(precision = 10, scale = 6)
     private BigDecimal latitude;
 
     /**
      * Längengrad der gemeldeten Position.
      * Auf 6 Nachkommastellen begrenzt.
      */
-    @Column(precision = 10, scale = 6, nullable = true)
+    @Column(precision = 10, scale = 6)
     private BigDecimal longitude;
 
     /**
@@ -77,7 +76,6 @@ public class Report implements Serializable {
 
     /**
      * Liste der zugehörigen Fotos.
-     *
      * Ein Report kann mehrere Fotos besitzen.
      * Die Fotos werden zusammen mit dem Report gespeichert und gelöscht.
      */

@@ -1,7 +1,6 @@
-package de.htw.radvis.web;
+package de.htw.radvis.schnittstelle;
 
-import de.htw.radvis.domain.issue.Issue;
-import de.htw.radvis.web.issue.IssueController;
+import de.htw.radvis.domain.valueObjects.Issue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,18 +18,18 @@ public class IssueControllerTest {
         @Autowired
         MockMvc mvc;
 
-        @Test
-        void getIssues_returnsAllEnumValues_asJsonArray() throws Exception {
-            var expected = java.util.Arrays.stream(Issue.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
+    @Test
+    void getIssues_returnsAllEnumValues_asJsonArray() throws Exception {
+        var expected = java.util.Arrays.stream(Issue.values())
+                .map(Issue::getLabel)   // ✅ statt Enum::name
+                .toArray(String[]::new);
 
-            mvc.perform(get("/api/issues").accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$", hasSize(expected.length)))
-                    .andExpect(jsonPath("$", containsInAnyOrder(expected)));
-        }
+        mvc.perform(get("/api/issues").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(expected.length)))
+                .andExpect(jsonPath("$", containsInAnyOrder(expected)));
+    }
 
         @Test
         void getIssues_includesCorsHeader_forLocalhost4200() throws Exception {

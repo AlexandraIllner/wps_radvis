@@ -1,6 +1,8 @@
-import generated from '@angular-devkit/build-angular/plugins/karma';
+import generated from '@angular-devkit/build-angular/plugins/karma'
 
 module.exports = function (config) {
+  const isCI = !!process.env.CI
+
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -8,31 +10,31 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      generated,
+      require('karma-junit-reporter'),
+      generated
     ],
     client: {
-      clearContext: false,
+      clearContext: false
     },
     jasmineHtmlReporter: {
-      suppressAll: true,
+      suppressAll: true
     },
-    reporters: ['progress', 'kjhtml'],
-    /*
-    auskommentierte Teile für Linux-Systeme,
-    die ChromeHeadless nicht out of the box unterstützen
-    LINUX:
-    browsers: ['google-chrome-stable --headless', 'ChromeHeadlessCI'],
-    */
-    browsers: ['ChromeHeadless'],
-    singleRun: false,
-    restartOnFileChange: true,
+    reporters: ['progress', 'kjhtml', 'junit'],
+    junitReporter: {
+      outputDir: 'test-results',
+      outputFile: 'junit.xml',
+      useBrowserName: false
+    },
+
+    browsers: isCI ? ['ChromeHeadlessCI'] : ['ChromeHeadless'],
+    singleRun: isCI,
+    restartOnFileChange: !isCI,
+
     customLaunchers: {
       ChromeHeadlessCI: {
-        // LINUX
-        // base: 'google-chrome-stable --headless',
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu'],
-      },
-    },
-  });
-};
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    }
+  })
+}

@@ -1,4 +1,4 @@
-package de.htw.radvis.app;
+package de.htw.radvis.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,19 +11,16 @@ import java.util.Set;
 
 /**
  * Validiert hochgeladene Fotos.
- *
  * Diese Klasse prüft Bilder, die vom Backend empfangen werden,
  * z. B. beim Erstellen einer neuen Meldung.
- *
  * Dabei wird kontrolliert:
  * - erlaubte Dateitypen (jpg, jpeg, png)
  * - maximale Dateigröße pro Bild (10 MB)
- * - maximale Gesamtgröße aller Bilder (30 MB)
- *
+ * - maximale Gesamtgröße aller Bilder (30 MB).
  * Bei ungültigen Dateien wird eine passende HTTP-Fehlermeldung zurückgegeben.
  */
 @Component
-public class PhotoValidator {
+public class PhotoValidatorService {
 
     /** Maximale Dateigröße pro Bild (10 MB) */
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -35,12 +32,11 @@ public class PhotoValidator {
     private static final Set<String> ALLOWED_IMAGE_TYPES = Set.of("image/jpg", "image/jpeg", "image/png");
 
     /** Logger für Debug- und Info-Ausgaben */
-    public static final Logger log = LoggerFactory.getLogger(PhotoValidator.class);
+    public static final Logger log = LoggerFactory.getLogger(PhotoValidatorService.class);
 
 
     /**
      * Prüft ein Array von hochgeladenen Bildern auf Gültigkeit.
-     *
      * - Leere oder null-Dateien werden ignoriert
      * - Ungültige Dateitypen führen zu {@link HttpStatus#UNSUPPORTED_MEDIA_TYPE} (HTTP 415)
      * - Zu große Dateien oder Gesamtgrößen führen zu {@link HttpStatus#PAYLOAD_TOO_LARGE} (HTTP 413)
