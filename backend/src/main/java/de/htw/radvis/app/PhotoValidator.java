@@ -42,10 +42,10 @@ public class PhotoValidator {
      * Prüft ein Array von hochgeladenen Bildern auf Gültigkeit.
      *
      * - Leere oder null-Dateien werden ignoriert
-     * - Ungültige Dateitypen führen zu HTTP 415
-     * - Zu große Dateien oder Gesamtgrößen führen zu HTTP 413
+     * - Ungültige Dateitypen führen zu {@link HttpStatus#UNSUPPORTED_MEDIA_TYPE} (HTTP 415)
+     * - Zu große Dateien oder Gesamtgrößen führen zu {@link HttpStatus#PAYLOAD_TOO_LARGE} (HTTP 413)
      *
-     * @param photos Array mit hochgeladenen Bildern (MultipartFile)
+     * @param photos Array mit hochgeladenen Bildern ({@link MultipartFile})
      * @throws ResponseStatusException
      *         wenn ein Bild ungültig ist oder Größenlimits überschritten werden
      */

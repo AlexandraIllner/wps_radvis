@@ -46,13 +46,16 @@ public class ReportService {
      *
      * - Wandelt das DTO in eine Report-Entität um
      * - Validiert hochgeladene Fotos
-     * - Speichert Fotos als ReportPhoto
+     * - Speichert Fotos als ReportPhoto.
      * - Persistiert den Report in der Datenbank
      *
      * @param dto    DTO mit den Report-Daten (Kategorie, Beschreibung, Koordinaten)
      * @param photos Optionale hochgeladene Bilder
      * @return Antwort-DTO mit Basisinformationen zur erstellten Meldung
-     * @throws IOException wenn ein Fehler beim Lesen der Bilddaten auftritt
+     * @throws IOException
+     *         wenn ein Fehler beim Lesen der Bilddaten auftritt
+     * @throws ResponseStatusException
+     *       wenn die hochgeladenen Bilder ungültig sind oder Größenlimits überschreiten
      */
     public ReportResponseDTO create(ReportCreateDTO dto, MultipartFile[] photos) throws IOException {
         Report report = getReport(dto);
